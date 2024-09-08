@@ -1,5 +1,7 @@
 <?php
-session_start(); // Ajoutez ceci en haut de votre fichier PHP
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Vérifie si une session est active avant de démarrer une nouvelle session
+}
 
 // Affiche le message d'erreur s'il existe
 if (isset($messageErreur)) {
@@ -11,6 +13,7 @@ if (isset($_SESSION['tenrac'])) {
     echo "<p>Vous êtes déjà connecté en tant que " . $_SESSION['tenrac']['nom'] . ".</p>";
     echo "<a href='/login/deconnecter'>Se déconnecter</a>";
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +27,7 @@ if (isset($_SESSION['tenrac'])) {
     <h1>Connexion</h1>
 
     <!-- Formulaire de connexion -->
-    <form action="/ternac/connecter" method="POST">
+    <form action="/tenrac/connecter" method="POST">
         <label>Id :</label>
         <input type="id" name="id" required><br>
 
