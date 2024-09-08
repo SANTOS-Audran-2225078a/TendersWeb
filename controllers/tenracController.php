@@ -36,13 +36,20 @@ class tenracController
 
     public function acceuil()
     {
-        // Vérifier si l'utilisateur est connecté
+        // Vérifier si l'tenrac est connecté
         if (isset($_SESSION['tenrac'])) {
             $tenrac = $_SESSION['tenrac'];
-            $nomtenrac = $tenrac['nom']; // Assurez-vous que la clé 'nom' existe dans votre tableau tenrac
+            $data = [
+                'nom' => $tenrac['nom'],
+                'email' => $tenrac['email'],
+                'tel' => $tenrac['tel'],
+                'adresse' => $tenrac['adresse'],
+                'grade' => $tenrac['grade']
+            ];
+            // Charger la vue avec les données
             require_once 'views/acceuil.php';
         } else {
-            // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+            // Si l'tenrac n'est pas connecté, rediriger vers la page de connexion
             header('Location: /login');
             exit();
         }
@@ -51,9 +58,8 @@ class tenracController
     public function deconnecter()
     {
         session_start();
-        session_unset(); // Supprime toutes les variables de session
-        session_destroy(); // Détruit la session
-        header('Location: /login'); // Redirige vers la page de connexion relative
+        session_destroy();
+        header('Location: /login');
         exit();
     }
 }
