@@ -17,14 +17,12 @@ class RepasController
     {
         $repasModel = new RepasModel();
         
-        // Si un ID est présent, on modifie sinon on ajoute
         if (isset($_POST['id']) && $_POST['id'] !== '') {
-            $repasModel->modifierRepas($_POST['id'], $_POST['nom'], $_POST['date'], $_POST['lieu']);
+            $repasModel->modifierRepas($_POST['id'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['plats']);
         } else {
-            $repasModel->ajouterRepas($_POST['nom'], $_POST['date'], $_POST['lieu']);
+            $repasModel->ajouterRepas($_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['plats']);
         }
 
-        // Redirection après la sauvegarde
         header('Location: /repas');
         exit();
     }
@@ -34,7 +32,6 @@ class RepasController
     {
         $repasModel = new RepasModel();
         $repas = $repasModel->getRepasById($id);
-        $repasList = $repasModel->getAllRepas();
         require_once 'views/repas/gestion_repas.php';
     }
 

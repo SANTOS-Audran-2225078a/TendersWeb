@@ -10,7 +10,6 @@ if (isset($_SESSION['tenrac'])) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +30,11 @@ if (isset($_SESSION['tenrac'])) {
     <!-- Bouton pour accéder à la gestion des plats -->
     <a href="/plat">
         <button>Gérer les Plats</button>
+    </a>
+
+    <!-- Bouton pour accéder à la gestion des repas -->
+    <a href="/repas">
+        <button>Gérer les Repas</button>
     </a>
 
     <!-- Bouton de déconnexion -->

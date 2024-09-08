@@ -22,23 +22,25 @@ class RepasModel
     }
 
     // Ajouter un nouveau repas
-    public function ajouterRepas($nom, $date, $lieu)
+    public function ajouterRepas($adresse, $date, $participants, $plats)
     {
-        $query = $this->db->prepare('INSERT INTO repas (nom, date, lieu) VALUES (:nom, :date, :lieu)');
-        $query->bindParam(':nom', $nom);
+        $query = $this->db->prepare('INSERT INTO repas (adresse, date, participants, plats) VALUES (:adresse, :date, :participants, :plats)');
+        $query->bindParam(':adresse', $adresse);
         $query->bindParam(':date', $date);
-        $query->bindParam(':lieu', $lieu);
+        $query->bindParam(':participants', $participants);
+        $query->bindParam(':plats', $plats);
         $query->execute();
     }
 
     // Modifier un repas existant
-    public function modifierRepas($id, $nom, $date, $lieu)
+    public function modifierRepas($id, $adresse, $date, $participants, $plats)
     {
-        $query = $this->db->prepare('UPDATE repas SET nom = :nom, date = :date, lieu = :lieu WHERE id = :id');
+        $query = $this->db->prepare('UPDATE repas SET adresse = :adresse, date = :date, participants = :participants, plats = :plats WHERE id = :id');
         $query->bindParam(':id', $id);
-        $query->bindParam(':nom', $nom);
+        $query->bindParam(':adresse', $adresse);
         $query->bindParam(':date', $date);
-        $query->bindParam(':lieu', $lieu);
+        $query->bindParam(':participants', $participants);
+        $query->bindParam(':plats', $plats);
         $query->execute();
     }
 
