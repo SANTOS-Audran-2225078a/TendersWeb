@@ -22,21 +22,23 @@ class PlatModel
     }
 
     // Ajouter un nouveau plat
-    public function ajouterPlat($nom, $description)
+    public function ajouterPlat($nom, $ingredients, $aliment_a_risque)
     {
-        $query = $this->db->prepare('INSERT INTO plat (nom, description) VALUES (:nom, :description)');
+        $query = $this->db->prepare('INSERT INTO plat (nom, ingredients, aliment_a_risque) VALUES (:nom, :ingredients, :aliment_a_risque)');
         $query->bindParam(':nom', $nom);
-        $query->bindParam(':description', $description);
+        $query->bindParam(':ingredients', $ingredients);
+        $query->bindParam(':aliment_a_risque', $aliment_a_risque);
         $query->execute();
     }
 
     // Modifier un plat existant
-    public function modifierPlat($id, $nom, $description)
+    public function modifierPlat($id, $nom, $ingredients, $aliment_a_risque)
     {
-        $query = $this->db->prepare('UPDATE plat SET nom = :nom, description = :description WHERE id = :id');
+        $query = $this->db->prepare('UPDATE plat SET nom = :nom, ingredients = :ingredients, aliment_a_risque = :aliment_a_risque WHERE id = :id');
         $query->bindParam(':id', $id);
         $query->bindParam(':nom', $nom);
-        $query->bindParam(':description', $description);
+        $query->bindParam(':ingredients', $ingredients);
+        $query->bindParam(':aliment_a_risque', $aliment_a_risque);
         $query->execute();
     }
 

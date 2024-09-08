@@ -16,12 +16,12 @@ class PlatController
     public function sauvegarder()
     {
         $platModel = new PlatModel();
-        
+
         // Si un ID est présent, on modifie sinon on ajoute
         if (isset($_POST['id']) && $_POST['id'] !== '') {
-            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $_POST['description']);
+            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque']);
         } else {
-            $platModel->ajouterPlat($_POST['nom'], $_POST['description']);
+            $platModel->ajouterPlat($_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque']);
         }
 
         // Redirection après la sauvegarde
