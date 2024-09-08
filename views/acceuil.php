@@ -1,5 +1,5 @@
 <?php
-//session_start();
+
 
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['tenrac'])) {
@@ -24,6 +24,13 @@ if (isset($_SESSION['tenrac'])) {
     <p>Téléphone: <?= htmlspecialchars($tenrac['tel']) ?></p>
     <p>Adresse: <?= htmlspecialchars($tenrac['adresse']) ?></p>
     <p>Grade: <?= htmlspecialchars($tenrac['grade']) ?></p>
+
+    <!-- Bouton pour accéder à la gestion des clubs -->
+    <a href="/club">
+        <button>Gérer les Clubs</button>
+    </a>
+
+    <!-- Bouton de déconnexion -->
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
 </body>
 
