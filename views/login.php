@@ -11,7 +11,6 @@ if (isset($messageErreur)) {
 // Si l'utilisateur est connecté
 if (isset($_SESSION['tenrac'])) {
     echo "<p>Vous êtes déjà connecté en tant que " . $_SESSION['tenrac']['nom'] . ".</p>";
-    echo "<a href='/login/deconnecter'>Se déconnecter</a>";
 }
 
 ?>
@@ -27,7 +26,7 @@ if (isset($_SESSION['tenrac'])) {
     <h1>Connexion</h1>
 
     <!-- Formulaire de connexion -->
-    <form action="http://localhost:8000/index.php?url=tenrac/connecter" method="POST">
+    <form action="/tenrac/connecter" method="POST">
         <label>Id :</label>
         <input type="text" name="id" required><br>
 
@@ -36,6 +35,7 @@ if (isset($_SESSION['tenrac'])) {
 
         <button type="submit">Se connecter</button>
     </form>
+    <a href='/tenrac/deconnecter'>Se déconnecter</a>
 </body>
 
 </html>

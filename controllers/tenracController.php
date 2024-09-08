@@ -11,39 +11,49 @@ class tenracController
 
     public function connecter()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        session_start(); // Démarre la session une fois
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
             $motDePasse = $_POST['password'];
-            echo "ID: " . htmlspecialchars($id) . "<br>";
-            echo "Mot de passe: " . htmlspecialchars($motDePasse) . "<br>";
 
             $tenracModel = new tenracModel();
             $tenrac = $tenracModel->verifierTenrac($id, $motDePasse);
-            var_dump($tenrac);
+
             if ($tenrac) {
+                // Connexion réussie, stockage de l'utilisateur en session
                 $_SESSION['tenrac'] = $tenrac;
-                header('Location: /acceuil');
+                header('Location: /tenrac/acceuil'); // Redirige vers la page d'accueil relative
                 exit();
             } else {
+                // Échec de la connexion, définir le message d'erreur
                 $messageErreur = "Identifiant ou mot de passe incorrect.";
                 require_once 'views/login.php'; // Réafficher la vue de connexion
             }
+        }
+    }
+
+
+    public function acceuil()
+    {
+        // Vérifier si l'utilisateur est connecté
+        if (isset($_SESSION['tenrac'])) {
+            $tenrac = $_SESSION['tenrac'];
+            $nomtenrac = $tenrac['nom']; // Assurez-vous que la clé 'nom' existe dans votre tableau tenrac
+            require_once 'views/acceuil.php';
         } else {
-            // Gérer les requêtes GET si nécessaire
-            require_once 'views/login.php';
+            // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+            header('Location: /login');
+            exit();
         }
     }
 
     public function deconnecter()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        session_destroy();
-        header('Location: /login');
+        session_start();
+        session_unset(); // Supprime toutes les variables de session
+        session_destroy(); // Détruit la session
+        header('Location: /login'); // Redirige vers la page de connexion relative
+        exit();
     }
 }

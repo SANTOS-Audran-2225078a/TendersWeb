@@ -5,11 +5,12 @@ class Routeur
     {
         // Vérifiez la méthode de la requête
         $requestMethod = $_SERVER['REQUEST_METHOD'];
-        $url = isset($_GET['url']) ? $_GET['url'] : '/';
-
+        // Récupérer l'URL
+        $url = $_SERVER['REQUEST_URI'];
+        echo $url . "<br>";
         // Découpe l'URL pour obtenir le contrôleur et l'action
         $urlParts = explode('/', trim($url, '/'));
-
+        var_dump($urlParts) . "<br>";
         // Définir le contrôleur et l'action par défaut
         $controleurNom = !empty($urlParts[0]) ? ucfirst($urlParts[0]) . 'Controller' : 'tenracController';
         $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
@@ -27,11 +28,7 @@ class Routeur
             // Vérifiez si l'action est valide et existe
             if (method_exists($controleur, $action)) {
                 // Vérifiez la méthode de la requête (GET/POST)
-                if ($requestMethod === 'POST') {
-
-                    $controleur->$action();
-                } else {
-                    // Pour les requêtes GET, vous pouvez appeler une autre méthode si nécessaire
+                if ($requestMethod === 'POST' || $requestMethod === 'GET') {
                     $controleur->$action();
                 }
             } else {
