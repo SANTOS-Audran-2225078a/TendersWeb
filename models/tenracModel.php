@@ -21,6 +21,15 @@ class tenracModel
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+    // voir un tenrac spécifique
+    public function getTenracById($id)
+{
+    $query = $this->db->prepare('SELECT * FROM tenrac WHERE id = :id');
+    $query->bindParam(':id', $id);
+    $query->execute();
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
+
 
     // Ajouter un nouveau tenrac
     public function addTenrac($nom, $email, $tel, $adresse, $grade, $ordre_id, $club_id)
@@ -58,4 +67,5 @@ class tenracModel
         $query->bindParam(':id', $id);
         return $query->execute();
     }
+
 }

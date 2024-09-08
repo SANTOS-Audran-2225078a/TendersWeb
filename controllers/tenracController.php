@@ -30,7 +30,15 @@ class tenracController
         }
     }
 
-    // Modifier un tenrac
+    // Voir un Tenrac spécifique
+    public function voir($id)
+    {
+        $tenracModel = new tenracModel();
+        $tenrac = $tenracModel->getTenracById($id);
+        require_once 'views/tenrac/voir.php';
+    }
+
+    // Modifier un Tenrac (existe déjà mais voici une version complète)
     public function modifier($id)
     {
         $tenracModel = new tenracModel();
@@ -48,12 +56,12 @@ class tenracController
             header('Location: /tenrac/liste');
             exit();
         } else {
-            $tenrac = $tenracModel->getTenracById($id); // Créez une méthode pour récupérer un tenrac par ID
+            $tenrac = $tenracModel->getTenracById($id);
             require_once 'views/tenrac/modifier.php';
         }
     }
 
-    // Supprimer un tenrac
+    // Supprimer un Tenrac
     public function supprimer($id)
     {
         $tenracModel = new tenracModel();
@@ -62,4 +70,5 @@ class tenracController
         header('Location: /tenrac/liste');
         exit();
     }
+    
 }
