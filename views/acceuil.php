@@ -13,11 +13,9 @@ if (isset($_SESSION['tenrac'])) {
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Accueil</title>
 </head>
-
 <body>
     <h1>Bienvenue, <?= htmlspecialchars($tenrac['nom']) ?> !</h1>
     <p>Email: <?= htmlspecialchars($tenrac['email']) ?></p>
@@ -30,8 +28,12 @@ if (isset($_SESSION['tenrac'])) {
         <button>Gérer les Clubs</button>
     </a>
 
+    <!-- Bouton pour accéder à la gestion des plats -->
+    <a href="/plat">
+        <button>Gérer les Plats</button>
+    </a>
+
     <!-- Bouton de déconnexion -->
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
 </body>
-
 </html>

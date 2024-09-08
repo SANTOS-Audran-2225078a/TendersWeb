@@ -27,6 +27,7 @@ class Routeur
 
             // Vérifier si l'action existe dans le contrôleur
             if (method_exists($controleur, $action)) {
+                // Gérer les paramètres (ex: /club/editer/1)
                 if (isset($urlParts[2])) {
                     $controleur->$action($urlParts[2]);
                 } else {
