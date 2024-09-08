@@ -12,20 +12,50 @@ class tenracModel
         } catch (PDOException $e) {
             echo 'Erreur de connexion : ' . $e->getMessage();
         }
-
     }
 
-    public function verifierTenrac($id, $motDePasse)
+    // Récupérer tous les tenracs
+    public function getAllTenracs()
     {
-        if ($this->db === null) {
-            throw new Exception('La connexion à la base de données a échoué.');
-        }
-
-        $query = $this->db->prepare('SELECT * FROM tenrac WHERE id = :id AND password = :password');
-        $query->bindParam(':id', $id);
-        $query->bindParam(':password', $motDePasse);
+        $query = $this->db->prepare('SELECT * FROM tenrac');
         $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-        return $query->fetch(PDO::FETCH_ASSOC); // Renvoie les résultats ou false si non trouvé
+    // Ajouter un nouveau tenrac
+    public function addTenrac($nom, $email, $tel, $adresse, $grade, $ordre_id, $club_id)
+    {
+        $query = $this->db->prepare('INSERT INTO tenrac (nom, email, tel, adresse, grade, ordre_id, club_id) VALUES (:nom, :email, :tel, :adresse, :grade, :ordre_id, :club_id)');
+        $query->bindParam(':nom', $nom);
+        $query->bindParam(':email', $email);
+        $query->bindParam(':tel', $tel);
+        $query->bindParam(':adresse', $adresse);
+        $query->bindParam(':grade', $grade);
+        $query->bindParam(':ordre_id', $ordre_id);
+        $query->bindParam(':club_id', $club_id);
+        return $query->execute();
+    }
+
+    // Modifier un tenrac existant
+    public function updateTenrac($id, $nom, $email, $tel, $adresse, $grade, $ordre_id, $club_id)
+    {
+        $query = $this->db->prepare('UPDATE tenrac SET nom = :nom, email = :email, tel = :tel, adresse = :adresse, grade = :grade, ordre_id = :ordre_id, club_id = :club_id WHERE id = :id');
+        $query->bindParam(':id', $id);
+        $query->bindParam(':nom', $nom);
+        $query->bindParam(':email', $email);
+        $query->bindParam(':tel', $tel);
+        $query->bindParam(':adresse', $adresse);
+        $query->bindParam(':grade', $grade);
+        $query->bindParam(':ordre_id', $ordre_id);
+        $query->bindParam(':club_id', $club_id);
+        return $query->execute();
+    }
+
+    // Supprimer un tenrac
+    public function deleteTenrac($id)
+    {
+        $query = $this->db->prepare('DELETE FROM tenrac WHERE id = :id');
+        $query->bindParam(':id', $id);
+        return $query->execute();
     }
 }
