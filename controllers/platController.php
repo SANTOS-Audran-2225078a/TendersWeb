@@ -1,6 +1,7 @@
 <?php
 
 require_once 'models/PlatModel.php';
+require_once 'models/ClubModel.php';
 
 class PlatController
 {
@@ -8,23 +9,34 @@ class PlatController
     public function index()
     {
         $platModel = new PlatModel();
-        $plats = $platModel->getAllPlats();
+        $clubModel = new ClubModel();
+        $clubs = $clubModel->getAllClubs();
+
+        // Récupérer les plats par club
+        $platsParClub = [];
+        foreach ($clubs as $club) {
+            $platsParClub[$club['id']] = $platModel->getPlatsByClub($club['id']);
+        }
+
         require_once 'views/plat/gestion_plat.php';
     }
 
-    // Ajouter ou modifier un plat
+    // Sauvegarder un plat (ajouter ou modifier)
     public function sauvegarder()
     {
         $platModel = new PlatModel();
+        
+        // Récupérer le club sélectionné
+        $club_id = $_POST['club_id'];
 
-        // Si un ID est présent, on modifie sinon on ajoute
         if (isset($_POST['id']) && $_POST['id'] !== '') {
-            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque']);
+            // Modification du plat
+            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque'], $club_id);
         } else {
-            $platModel->ajouterPlat($_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque']);
+            // Création d'un nouveau plat
+            $platModel->ajouterPlat($_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque'], $club_id);
         }
 
-        // Redirection après la sauvegarde
         header('Location: /plat');
         exit();
     }
@@ -34,7 +46,10 @@ class PlatController
     {
         $platModel = new PlatModel();
         $plat = $platModel->getPlatById($id);
-        $plats = $platModel->getAllPlats();
+
+        $clubModel = new ClubModel();
+        $clubs = $clubModel->getAllClubs(); // Récupérer tous les clubs
+
         require_once 'views/plat/gestion_plat.php';
     }
 
