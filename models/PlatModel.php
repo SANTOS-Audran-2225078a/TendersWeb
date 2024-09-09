@@ -63,10 +63,11 @@ class PlatModel
 
     // Récupérer les plats par club
     public function getPlatsByClub($club_id)
-    {
-        $query = $this->db->prepare('SELECT * FROM plat WHERE club_id = :club_id');
-        $query->bindParam(':club_id', $club_id);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
+{
+    $query = $this->db->prepare('SELECT * FROM plat WHERE club_id = :club_id');
+    $query->bindParam(':club_id', $club_id);
+    $query->execute();
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

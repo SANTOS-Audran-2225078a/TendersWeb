@@ -60,4 +60,11 @@ class RepasModel
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getRepasImportant()
+{
+    $query = $this->db->query('SELECT * FROM repas WHERE date >= CURDATE() ORDER BY date ASC LIMIT 5');
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

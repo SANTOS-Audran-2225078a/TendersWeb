@@ -39,5 +39,24 @@ if (isset($_SESSION['tenrac'])) {
 
     <!-- Bouton de déconnexion -->
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
+
+
+    <h2>Rendez-vous importants</h2>
+<?php if (!empty($repasImportant)): ?>
+    <ul>
+        <?php foreach ($repasImportant as $repas): ?>
+            <li>
+                <strong>Club :</strong> <?= htmlspecialchars($repas['club_id']) ?><br>
+                <strong>Date :</strong> <?= htmlspecialchars($repas['date']) ?><br>
+                <strong>Participants :</strong> <?= htmlspecialchars($repas['participants']) ?><br>
+                <strong>Plats :</strong> <?= htmlspecialchars($repas['plats']) ?><br>
+                <strong>Adresse :</strong> <?= htmlspecialchars($repas['adresse']) ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p>Aucun repas à venir.</p>
+<?php endif; ?>
+
 </body>
 </html>
