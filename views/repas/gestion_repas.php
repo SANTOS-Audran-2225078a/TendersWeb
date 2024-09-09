@@ -28,7 +28,7 @@
                 <?php if (is_array($repasItem)): ?>
                     <li>
                         <p>Adresse : <?= htmlspecialchars($repasItem['adresse'] ?? 'N/A') ?></p>
-                        <p>Date : <?= htmlspecialchars($repasItem['date'] ?? 'N/A') ?></p>
+                        <p>Date : <?= isset($repasItem['date']) ? date('d/m/Y', strtotime($repasItem['date'])) : 'N/A' ?></p>
                         <p>Participants : <?= htmlspecialchars($repasItem['participants'] ?? 'N/A') ?></p>
                         <p>Plats : <?= htmlspecialchars($repasItem['plats'] ?? 'N/A') ?></p>
                         <a href="/repas/editer/<?= $repasItem['id'] ?>">Modifier</a> | 
