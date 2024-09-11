@@ -27,8 +27,8 @@ if (isset($_SESSION['tenrac'])) {
 
     <!-- Formulaire de connexion -->
     <form action="/tenrac/connecter" method="POST">
-        <label>Id :</label>
-        <input type="text" name="id" required><br>
+        <label>Nom :</label>
+        <input type="text" name="nom" required><br>
 
         <label>Mot de passe :</label>
         <input type="password" name="password" required><br>

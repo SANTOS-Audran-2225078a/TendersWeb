@@ -15,17 +15,25 @@ class tenracModel
 
     }
 
-    public function verifierTenrac($id, $motDePasse)
+    public function verifierTenrac($nom, $motDePasse)
     {
         if ($this->db === null) {
             throw new Exception('La connexion à la base de données a échoué.');
         }
 
-        $query = $this->db->prepare('SELECT * FROM tenrac WHERE id = :id AND password = :password');
-        $query->bindParam(':id', $id);
-        $query->bindParam(':password', $motDePasse);
+        $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom');
+        $query->bindParam(':nom', $nom);
         $query->execute();
 
-        return $query->fetch(PDO::FETCH_ASSOC); // Renvoie les résultats ou false si non trouvé
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!$result) {
+            return false;
+        }
+        if ($result['password'] == $motDePasse) {
+            return $result;
+        } else {
+            return false;
+        }
     }
 }

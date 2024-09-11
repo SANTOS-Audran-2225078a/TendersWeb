@@ -12,14 +12,16 @@ class tenracController
 
     public function connecter()
     {
-        session_start(); // Démarre la session une fois
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); // Vérifie si une session est active avant de démarrer une nouvelle session
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
+            $nom = $_POST['nom'];
             $motDePasse = $_POST['password'];
 
             $tenracModel = new tenracModel();
-            $tenrac = $tenracModel->verifierTenrac($id, $motDePasse);
+            $tenrac = $tenracModel->verifierTenrac($nom, $motDePasse);
 
             if ($tenrac) {
                 // Connexion réussie, stockage de l'utilisateur en session
@@ -36,39 +38,41 @@ class tenracController
 
 
     public function acceuil()
-{
-    // Vérifier si l'utilisateur est connecté
-    if (isset($_SESSION['tenrac'])) {
-        $tenrac = $_SESSION['tenrac'];
+    {
+        // Vérifier si l'utilisateur est connecté
+        if (isset($_SESSION['tenrac'])) {
+            $tenrac = $_SESSION['tenrac'];
 
-        // Récupérer les repas importants
-        $repasModel = new RepasModel();
-        $repasImportant = $repasModel->getRepasImportant(); // Méthode à ajouter dans le modèle
+            // Récupérer les repas importants
+            $repasModel = new RepasModel();
+            $repasImportant = $repasModel->getRepasImportant(); // Méthode à ajouter dans le modèle
 
-        $data = [
-            'nom' => $tenrac['nom'],
-            'email' => $tenrac['email'],
-            'tel' => $tenrac['tel'],
-            'adresse' => $tenrac['adresse'],
-            'grade' => $tenrac['grade'],
-            'repasImportant' => $repasImportant // Ajouter les repas dans la vue
-        ];
+            $data = [
+                'nom' => $tenrac['nom'],
+                'email' => $tenrac['email'],
+                'tel' => $tenrac['tel'],
+                'adresse' => $tenrac['adresse'],
+                'grade' => $tenrac['grade'],
+                'repasImportant' => $repasImportant // Ajouter les repas dans la vue
+            ];
 
-        // Charger la vue avec les données
-        require_once 'views/acceuil.php';
-    } else {
-        // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
-        header('Location: /login');
-        exit();
+            // Charger la vue avec les données
+            require_once 'views/acceuil.php';
+        } else {
+            // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+            header('Location: /login');
+            exit();
+        }
     }
-}
 
 
     public function deconnecter()
     {
         session_start();
+        $_SESSION = []; // Réinitialiser toutes les variables de session
         session_destroy();
         header('Location: /');
         exit();
     }
+
 }
