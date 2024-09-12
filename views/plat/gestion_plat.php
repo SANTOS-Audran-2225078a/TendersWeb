@@ -4,41 +4,21 @@
 <head>
     <title>Gestion des Plats</title>
     <style>
-        .plat {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .plat h3 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-
-        .plat p {
-            margin: 5px 0;
-        }
-
-        .club {
-            margin-bottom: 30px;
-        }
-
-        .risque {
-            color: red;
-            font-weight: bold;
-        }
+        /* Votre CSS ici */
     </style>
 </head>
 
 <body>
     <h1>Gestion des Plats</h1>
+    <?php
+    var_dump($_POST);
 
+    ?>
     <!-- Formulaire pour ajouter ou modifier un plat -->
-    <form action="/plat/sauvegarder" method="POST">
+    <h2>Ajouter un Plat</h2>
+    <form action="/plat/ajouterPlat" method="POST">
         <label>Nom du plat :</label>
-        <input type="text" name="nom" value="<?= isset($plat['nom']) ? htmlspecialchars($plat['nom']) : '' ?>"
-            required><br>
+        <input type="text" name="nom" value="" required><br>
 
         <label>Ingrédients :</label>
         <div id="ingredients-container">
@@ -58,42 +38,15 @@
         <select name="club_id" required>
             <option value="">Sélectionnez un club</option>
             <?php foreach ($clubs as $club): ?>
-                <option value="<?= $club['id'] ?>" <?= isset($plat['club_id']) && $plat['club_id'] == $club['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($club['nom']) ?>
-                </option>
+                <option value="<?= $club['id'] ?>"><?= htmlspecialchars($club['nom']) ?></option>
             <?php endforeach; ?>
         </select><br>
 
-        <button type="submit">Sauvegarder</button>
+        <button type="submit">Ajouter</button>
     </form>
 
-    <script>
-        function ajouterIngredient() {
-            var container = document.getElementById('ingredients-container');
-            var newRow = document.createElement('div');
-            newRow.classList.add('ingredient-row');
-            newRow.innerHTML = `
-        <select name="ingredient_ids[]" required>
-            <option value="">Sélectionnez un ingrédient</option>
-            <?php foreach ($ingredients as $ingredient): ?>
-                                                                                <option value="<?= $ingredient['id'] ?>"><?= htmlspecialchars($ingredient['nom']) ?></option>
-            <?php endforeach; ?>
-        </select>
-        <button type="button" onclick="supprimerIngredient(this)">Supprimer</button>
-    `;
-            container.appendChild(newRow);
-        }
 
-        function supprimerIngredient(button) {
-            var row = button.parentElement;
-            row.remove();
-        }
-    </script>
-
-
-
-
-
+    <a href="/tenrac/acceuil">Retour à l'accueil</a>
 
     <!-- Afficher les plats existants par club -->
     <h2>Plats existants par club</h2>
@@ -106,42 +59,41 @@
                         <li class="plat">
                             <h4><?= htmlspecialchars($plat['nom']) ?></h4>
                             <p><strong>Ingrédients :</strong>
-                                <?php if (!empty($plat['ingredients'])): ?>
-                                    <?php
-                                    $ingredientCount = count($plat['ingredients']); // Compte le nombre d'ingrédients
-                                    $i = 0;
-                                    ?>
-                                    <?php foreach ($plat['ingredients'] as $ingredient): ?>
-                                        <span class="<?= $ingredient['risque'] ? 'risque' : '' ?>">
-                                            <?= htmlspecialchars($ingredient['nom']); ?>
-                                        </span>
-                                        <?php if (++$i < $ingredientCount): // Si ce n'est pas le dernier ingrédient ?>
-                                            ,
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    Aucun ingrédient
-                                <?php endif; ?>
+                                <?php foreach ($plat['ingredients'] as $ingredient): ?>
+                                    <?= htmlspecialchars($ingredient['nom']) ?>,
+                                <?php endforeach; ?>
                             </p>
-                            <a href="/plat/editer/<?= $plat['id'] ?>">Modifier</a> |
+                            <a href="/plat/editer/<?= $plat['id'] ?>">Modifier</a>
                             <a href="/plat/supprimer/<?= $plat['id'] ?>">Supprimer</a>
                         </li>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <li>Aucun plat pour ce club</li>
+                    <li>Aucun plat trouvé pour ce club</li>
                 <?php endif; ?>
             </ul>
         </div>
     <?php endforeach; ?>
 
+    <script>
+        function ajouterIngredient() {
+            var container = document.getElementById('ingredients-container');
+            var newRow = document.createElement('div');
+            newRow.classList.add('ingredient-row');
+            newRow.innerHTML = `
+                <select name="ingredient_ids[]" required>
+                    <option value="">Sélectionnez un ingrédient</option>
+                    <?php foreach ($ingredients as $ingredient): ?>
+                                                                                                                                                                                                                                        <option value="<?= $ingredient['id'] ?>"><?= htmlspecialchars($ingredient['nom']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <button type="button" onclick="supprimerIngredient(this)">Supprimer</button>
+            `;
+            container.appendChild(newRow);
+        }
 
-
-
-    <!-- Bouton Retour à l'accueil -->
-    <a href="/tenrac/acceuil">
-        <button>Retour à l'Accueil</button>
-    </a>
-
+        function supprimerIngredient(button) {
+            var row = button.parentElement;
+            row.remove();
+        }
+    </script>
 </body>
-
-</html>

@@ -30,14 +30,19 @@ class PlatModel
     // Ajouter un nouveau plat
     public function ajouterPlat($nom, $ingredients, $club_id)
     {
-        $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
-        $query->bindParam(':nom', $nom);
-        $query->bindParam(':club_id', $club_id);
-        $query->execute();
+        try {
+            $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
+            $query->bindParam(':nom', $nom);
+            $query->bindParam(':club_id', $club_id);
+            $query->execute();
 
-        $plat_id = $this->db->lastInsertId();
-        $this->ajouterIngredientsAuPlat($plat_id, $ingredients);
+            $plat_id = $this->db->lastInsertId();
+            $this->ajouterIngredientsAuPlat($plat_id, $ingredients);
+        } catch (PDOException $e) {
+            echo 'Erreur d\'ajout du plat : ' . $e->getMessage();
+        }
     }
+
 
     public function modifierPlat($id, $nom, $ingredients, $club_id)
     {

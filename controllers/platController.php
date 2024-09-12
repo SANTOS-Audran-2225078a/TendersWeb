@@ -27,23 +27,15 @@ class PlatController
         require_once 'views/plat/gestion_plat.php';
     }
 
-
-
-    // Sauvegarder un plat (ajouter ou modifier)
-    public function sauvegarder()
+    // Afficher la vue pour ajouter un plat
+    public function ajouter()
     {
         $platModel = new PlatModel();
-        $club_id = $_POST['club_id'];
-        $ingredient_ids = $_POST['ingredient_ids']; // Récupérer les ingrédients sélectionnés
+        $clubModel = new ClubModel();
+        $clubs = $clubModel->getAllClubs();
+        $ingredients = $platModel->getAllIngredients();
 
-        if (isset($_POST['id']) && $_POST['id'] !== '') {
-            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $ingredient_ids, $club_id);
-        } else {
-            $platModel->ajouterPlat($_POST['nom'], $ingredient_ids, $club_id);
-        }
-
-        header('Location: /plat');
-        exit();
+        require_once 'views/plat/gestion_plats.php';
     }
 
     // Afficher la vue pour modifier un plat
@@ -51,13 +43,52 @@ class PlatController
     {
         $platModel = new PlatModel();
         $plat = $platModel->getPlatById($id);
-
         $ingredients = $platModel->getAllIngredients();
-
+        $plat['ingredients'] = $platModel->getIngredientsByPlat($plat['id']);
         $clubModel = new ClubModel();
-        $clubs = $clubModel->getAllClubs(); // Récupérer tous les clubs
+        $clubs = $clubModel->getAllClubs();
 
-        require_once 'views/plat/gestion_plat.php';
+        // Assurez-vous que $plat et $ingredients sont bien définis et non vides
+        if (!$plat || !$ingredients) {
+            echo "Données manquantes";
+            exit();
+        }
+
+        require_once 'views/plat/modifier_plat.php';
+    }
+
+
+    // Ajouter un nouveau plat
+    public function ajouterPlat()
+    {
+
+        if (isset($_POST['nom']) && isset($_POST['ingredient_ids']) && isset($_POST['club_id'])) {
+            $platModel = new PlatModel();
+            $club_id = $_POST['club_id'];
+            $ingredient_ids = $_POST['ingredient_ids'];
+            $nom = $_POST['nom'];
+
+            $platModel->ajouterPlat($nom, $ingredient_ids, $club_id);
+
+            header('Location: /plat');
+            exit();
+        } else {
+            echo "Les données du formulaire sont manquantes";
+        }
+    }
+
+
+    // Modifier un plat existant
+    public function modifierPlat()
+    {
+        $platModel = new PlatModel();
+        $club_id = $_POST['club_id'];
+        $ingredient_ids = $_POST['ingredient_ids'];
+
+        $platModel->modifierPlat($_POST['id'], $_POST['nom'], $ingredient_ids, $club_id);
+
+        header('Location: /plat');
+        exit();
     }
 
     // Supprimer un plat
