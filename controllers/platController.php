@@ -11,30 +11,35 @@ class PlatController
         $platModel = new PlatModel();
         $clubModel = new ClubModel();
         $clubs = $clubModel->getAllClubs();
+        $ingredients = $platModel->getAllIngredients();
 
-        // Récupérer les plats par club
+        // Récupérer les plats par club et leurs ingrédients
         $platsParClub = [];
         foreach ($clubs as $club) {
-            $platsParClub[$club['id']] = $platModel->getPlatsByClub($club['id']);
+            $plats = $platModel->getPlatsByClub($club['id']);
+            foreach ($plats as &$plat) {
+                // Ajouter les ingrédients et leur statut "à risque" à chaque plat
+                $plat['ingredients'] = $platModel->getIngredientsByPlat($plat['id']);
+            }
+            $platsParClub[$club['id']] = $plats;
         }
 
         require_once 'views/plat/gestion_plat.php';
     }
 
+
+
     // Sauvegarder un plat (ajouter ou modifier)
     public function sauvegarder()
     {
         $platModel = new PlatModel();
-        
-        // Récupérer le club sélectionné
         $club_id = $_POST['club_id'];
+        $ingredient_ids = $_POST['ingredient_ids']; // Récupérer les ingrédients sélectionnés
 
         if (isset($_POST['id']) && $_POST['id'] !== '') {
-            // Modification du plat
-            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque'], $club_id);
+            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $ingredient_ids, $club_id);
         } else {
-            // Création d'un nouveau plat
-            $platModel->ajouterPlat($_POST['nom'], $_POST['ingredients'], $_POST['aliment_a_risque'], $club_id);
+            $platModel->ajouterPlat($_POST['nom'], $ingredient_ids, $club_id);
         }
 
         header('Location: /plat');
@@ -46,6 +51,8 @@ class PlatController
     {
         $platModel = new PlatModel();
         $plat = $platModel->getPlatById($id);
+
+        $ingredients = $platModel->getAllIngredients();
 
         $clubModel = new ClubModel();
         $clubs = $clubModel->getAllClubs(); // Récupérer tous les clubs

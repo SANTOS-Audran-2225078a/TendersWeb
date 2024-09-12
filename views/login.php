@@ -36,6 +36,8 @@ if (isset($_SESSION['tenrac'])) {
         <button type="submit">Se connecter</button>
     </form>
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
+    <br>
+    <a href='/test.php'>Accueil</a>
 </body>
 
 </html>
