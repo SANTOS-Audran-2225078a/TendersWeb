@@ -8,10 +8,10 @@ class Routeur
 
         // Si l'utilisateur accède à '/', on redirige vers la page de connexion
         if ($url === '/') {
-            $controleurNom = 'TenracController';
+            $controleurNom = 'tenracController';
             $action = 'index'; // Affiche la page de connexion
         } elseif ($urlParts[0] === 'login') {
-            $controleurNom = 'TenracController';
+            $controleurNom = 'tenracController';
             $action = 'connecter';
         } elseif ($urlParts[0] === 'repas' && isset($urlParts[1]) && $urlParts[1] === 'getPlatsByClub' && isset($urlParts[2])) {
             // Nouvelle route pour récupérer les plats d'un club en particulier
@@ -19,7 +19,7 @@ class Routeur
             $action = 'getPlatsByClub';
             $param = $urlParts[2];
         } else {
-            $controleurNom = !empty($urlParts[0]) ? ucfirst($urlParts[0]) . 'Controller' : 'ClubController';
+            $controleurNom = !empty($urlParts[0]) ? $urlParts[0] . 'Controller' : 'ClubController'; // Pas de ucfirst()
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
         }
 
@@ -42,3 +42,4 @@ class Routeur
         }
     }
 }
+

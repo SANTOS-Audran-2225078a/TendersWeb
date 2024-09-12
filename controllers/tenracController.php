@@ -1,7 +1,7 @@
 <?php
 
 require_once 'models/tenracModel.php';
-require_once 'models/RepasModel.php';
+require_once 'models/repasModel.php';
 
 class tenracController
 {

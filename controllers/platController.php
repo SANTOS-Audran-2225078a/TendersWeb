@@ -1,7 +1,7 @@
 <?php
 
-require_once 'models/PlatModel.php';
-require_once 'models/ClubModel.php';
+require_once 'models/platModel.php';
+require_once 'models/clubModel.php';
 
 class PlatController
 {
