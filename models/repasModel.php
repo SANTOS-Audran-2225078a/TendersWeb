@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * RepasModel
+ */
 class RepasModel
 {
     private $db;
-
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         try {
@@ -14,14 +22,28 @@ class RepasModel
         }
     }
 
-    // Récupérer tous les repas
+    // Récupérer tous les repas    
+    /**
+     * getAllRepas
+     *
+     * @return void
+     */
     public function getAllRepas()
     {
         $query = $this->db->query('SELECT * FROM repas');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un nouveau repas
+    // Ajouter un nouveau repas    
+    /**
+     * ajouterRepas
+     *
+     * @param  mixed $adresse
+     * @param  mixed $date
+     * @param  mixed $participants
+     * @param  mixed $plats
+     * @return void
+     */
     public function ajouterRepas($adresse, $date, $participants, $plats)
     {
         $query = $this->db->prepare('INSERT INTO repas (adresse, date, participants, plats) VALUES (:adresse, :date, :participants, :plats)');
@@ -32,7 +54,17 @@ class RepasModel
         $query->execute();
     }
 
-    // Modifier un repas existant
+    // Modifier un repas existant    
+    /**
+     * modifierRepas
+     *
+     * @param  mixed $id
+     * @param  mixed $adresse
+     * @param  mixed $date
+     * @param  mixed $participants
+     * @param  mixed $plats
+     * @return void
+     */
     public function modifierRepas($id, $adresse, $date, $participants, $plats)
     {
         $query = $this->db->prepare('UPDATE repas SET adresse = :adresse, date = :date, participants = :participants, plats = :plats WHERE id = :id');
@@ -44,7 +76,13 @@ class RepasModel
         $query->execute();
     }
 
-    // Supprimer un repas
+    // Supprimer un repas    
+    /**
+     * supprimerRepas
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimerRepas($id)
     {
         $query = $this->db->prepare('DELETE FROM repas WHERE id = :id');
@@ -52,7 +90,13 @@ class RepasModel
         $query->execute();
     }
 
-    // Récupérer un repas par son ID
+    // Récupérer un repas par son ID    
+    /**
+     * getRepasById
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function getRepasById($id)
     {
         $query = $this->db->prepare('SELECT * FROM repas WHERE id = :id');
@@ -60,7 +104,12 @@ class RepasModel
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-
+    
+    /**
+     * getRepasImportant
+     *
+     * @return void
+     */
     public function getRepasImportant()
 {
     $query = $this->db->query('SELECT * FROM repas WHERE date >= CURDATE() ORDER BY date ASC LIMIT 5');

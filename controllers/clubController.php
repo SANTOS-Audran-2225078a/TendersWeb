@@ -2,9 +2,17 @@
 
 require_once 'models/clubModel.php';
 
+/**
+ * ClubController
+ */
 class ClubController
 {
-    // Vérification de connexion
+    // Vérification de connexion    
+    /**
+     * verifierConnexion
+     *
+     * @return void
+     */
     private function verifierConnexion()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -17,7 +25,12 @@ class ClubController
         }
     }
 
-    // Afficher la liste des clubs
+    // Afficher la liste des clubs    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté avant d'afficher
@@ -26,7 +39,12 @@ class ClubController
         require_once 'views/club/gestion_club.php';
     }
 
-    // Ajouter ou modifier un club
+    // Ajouter ou modifier un club    
+    /**
+     * sauvegarder
+     *
+     * @return void
+     */
     public function sauvegarder()
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
@@ -42,7 +60,13 @@ class ClubController
         exit();
     }
 
-    // Afficher la vue pour modifier un club
+    // Afficher la vue pour modifier un club    
+    /**
+     * editer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function editer($id)
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
@@ -52,7 +76,13 @@ class ClubController
         require_once 'views/club/gestion_club.php';
     }
 
-    // Supprimer un club
+    // Supprimer un club    
+    /**
+     * supprimer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimer($id)
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté

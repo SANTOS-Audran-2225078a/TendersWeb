@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * tenracModel
+ */
 class tenracModel
 {
     private $db;
-
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         try {
@@ -14,7 +22,14 @@ class tenracModel
         }
 
     }
-
+    
+    /**
+     * verifierTenrac
+     *
+     * @param  mixed $nom
+     * @param  mixed $motDePasse
+     * @return void
+     */
     public function verifierTenrac($nom, $motDePasse)
     {
         if ($this->db === null) {

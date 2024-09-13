@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * PlatModel
+ */
 class PlatModel
 {
     private $db;
-
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         try {
@@ -14,20 +22,38 @@ class PlatModel
         }
     }
 
-    // Récupérer tous les plats
+    // Récupérer tous les plats    
+    /**
+     * getAllPlats
+     *
+     * @return void
+     */    
     public function getAllPlats()
     {
         $query = $this->db->query('SELECT * FROM plat');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
+    /**
+     * getAllIngredients
+     *
+     * @return void
+     */
     public function getAllIngredients()
     {
         $query = $this->db->query('SELECT * FROM ingredient');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un nouveau plat
+    // Ajouter un nouveau plat    
+    /**
+     * ajouterPlat
+     *
+     * @param  mixed $nom
+     * @param  mixed $ingredients
+     * @param  mixed $club_id
+     * @return void
+     */
     public function ajouterPlat($nom, $ingredients, $club_id)
     {
         try {
@@ -43,7 +69,16 @@ class PlatModel
         }
     }
 
-
+    
+    /**
+     * modifierPlat
+     *
+     * @param  mixed $id
+     * @param  mixed $nom
+     * @param  mixed $ingredients
+     * @param  mixed $club_id
+     * @return void
+     */
     public function modifierPlat($id, $nom, $ingredients, $club_id)
     {
         $query = $this->db->prepare('UPDATE plat SET nom = :nom, club_id = :club_id WHERE id = :id');
@@ -56,7 +91,13 @@ class PlatModel
         $this->ajouterIngredientsAuPlat($id, $ingredients);
     }
 
-    // Supprimer un plat
+    // Supprimer un plat    
+    /**
+     * supprimerPlat
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimerPlat($id)
     {
         $query = $this->db->prepare('DELETE FROM plat WHERE id = :id');
@@ -64,7 +105,13 @@ class PlatModel
         $query->execute();
     }
 
-    // Récupérer un plat par son ID
+    // Récupérer un plat par son ID    
+    /**
+     * getPlatById
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function getPlatById($id)
     {
         $query = $this->db->prepare('SELECT * FROM plat WHERE id = :id');
@@ -73,7 +120,13 @@ class PlatModel
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Récupérer les plats par club
+    // Récupérer les plats par club    
+    /**
+     * getPlatsByClub
+     *
+     * @param  mixed $club_id
+     * @return void
+     */
     public function getPlatsByClub($club_id)
     {
         $query = $this->db->prepare('SELECT * FROM plat WHERE club_id = :club_id');
@@ -81,7 +134,14 @@ class PlatModel
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
+    /**
+     * ajouterIngredientsAuPlat
+     *
+     * @param  mixed $plat_id
+     * @param  mixed $ingredients
+     * @return void
+     */
     public function ajouterIngredientsAuPlat($plat_id, $ingredients)
     {
         foreach ($ingredients as $ingredient_id) {
@@ -92,7 +152,13 @@ class PlatModel
         }
     }
     // Récupérer les ingrédients d'un plat à partir de la table associative
-    // Récupérer les ingrédients d'un plat à partir de la table associative
+    // Récupérer les ingrédients d'un plat à partir de la table associative    
+    /**
+     * getIngredientsByPlat
+     *
+     * @param  mixed $plat_id
+     * @return void
+     */
     public function getIngredientsByPlat($plat_id)
     {
         $query = $this->db->prepare('
@@ -106,7 +172,13 @@ class PlatModel
         return $query->fetchAll(PDO::FETCH_ASSOC);  // Renvoie les noms et l'info "aliment_a_risque"
     }
 
-
+    
+    /**
+     * supprimerIngredientsDuPlat
+     *
+     * @param  mixed $plat_id
+     * @return void
+     */
     public function supprimerIngredientsDuPlat($plat_id)
     {
         $query = $this->db->prepare('DELETE FROM plat_ingredient WHERE plat_id = :plat_id');

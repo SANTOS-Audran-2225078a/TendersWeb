@@ -3,9 +3,17 @@
 require_once 'models/platModel.php';
 require_once 'models/clubModel.php';
 
+/**
+ * PlatController
+ */
 class PlatController
 {
-    // Afficher la liste des plats
+    // Afficher la liste des plats    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
         $platModel = new PlatModel();
@@ -27,7 +35,12 @@ class PlatController
         require_once 'views/plat/gestion_plat.php';
     }
 
-    // Afficher la vue pour ajouter un plat
+    // Afficher la vue pour ajouter un plat    
+    /**
+     * ajouter
+     *
+     * @return void
+     */
     public function ajouter()
     {
         $platModel = new PlatModel();
@@ -58,7 +71,12 @@ class PlatController
     }
 
 
-    // Ajouter un nouveau plat
+    // Ajouter un nouveau plat    
+    /**
+     * ajouterPlat
+     *
+     * @return void
+     */
     public function ajouterPlat()
     {
 
@@ -78,7 +96,12 @@ class PlatController
     }
 
 
-    // Modifier un plat existant
+    // Modifier un plat existant    
+    /**
+     * modifierPlat
+     *
+     * @return void
+     */
     public function modifierPlat()
     {
         $platModel = new PlatModel();
@@ -91,7 +114,13 @@ class PlatController
         exit();
     }
 
-    // Supprimer un plat
+    // Supprimer un plat    
+    /**
+     * supprimer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimer($id)
     {
         $platModel = new PlatModel();

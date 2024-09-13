@@ -1,6 +1,14 @@
-<?php
+
+/**
+ * Routeur
+ */<?php
 class Routeur
-{
+{    
+    /**
+     * gererRequete
+     *
+     * @return void
+     */
     public function gererRequete()
     {
         $url = $_SERVER['REQUEST_URI'];

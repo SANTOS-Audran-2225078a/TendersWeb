@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * ClubModel
+ */
 class ClubModel
 {
     private $db;
-
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         try {
@@ -14,14 +22,26 @@ class ClubModel
         }
     }
 
-    // Récupérer tous les clubs
+    // Récupérer tous les clubs    
+    /**
+     * getAllClubs
+     *
+     * @return void
+     */
     public function getAllClubs()
     {
         $query = $this->db->query('SELECT * FROM club');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un nouveau club
+    // Ajouter un nouveau club    
+    /**
+     * ajouterClub
+     *
+     * @param  mixed $nom
+     * @param  mixed $adresse
+     * @return void
+     */
     public function ajouterClub($nom, $adresse)
     {
         $query = $this->db->prepare('INSERT INTO club (nom, adresse) VALUES (:nom, :adresse)');
@@ -30,7 +50,15 @@ class ClubModel
         $query->execute();
     }
 
-    // Modifier un club existant
+    // Modifier un club existant    
+    /**
+     * modifierClub
+     *
+     * @param  mixed $id
+     * @param  mixed $nom
+     * @param  mixed $adresse
+     * @return void
+     */
     public function modifierClub($id, $nom, $adresse)
     {
         $query = $this->db->prepare('UPDATE club SET nom = :nom, adresse = :adresse WHERE id = :id');
@@ -40,7 +68,13 @@ class ClubModel
         $query->execute();
     }
 
-    // Supprimer un club
+    // Supprimer un club    
+    /**
+     * supprimerClub
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimerClub($id)
     {
         $query = $this->db->prepare('DELETE FROM club WHERE id = :id');
@@ -48,7 +82,13 @@ class ClubModel
         $query->execute();
     }
 
-    // Récupérer un club par son ID
+    // Récupérer un club par son ID    
+    /**
+     * getClubById
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function getClubById($id)
     {
         $query = $this->db->prepare('SELECT * FROM club WHERE id = :id');

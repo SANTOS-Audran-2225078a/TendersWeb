@@ -59,8 +59,14 @@
                 <?php endif; ?>
             </ul>
         </div>
-    <?php endforeach; ?>
-
+    <?php endforeach; 
+    
+    /**
+     * ajouterIngredient
+     *
+     * @return void
+     */
+    ?>
     <script>function ajouterIngredient() {
             var container = document.getElementById('ingredients-container');
             var newRow = document.createElement('div');
@@ -71,7 +77,12 @@
             </select><button type="button" onclick="supprimerIngredient(this)">Supprimer</button>`;
             container.appendChild(newRow);
         }
-
+        
+        /**
+         * supprimerIngredient
+         *
+         * @return void
+         */
         function supprimerIngredient(button) {
             var row = button.parentElement;
             row.remove();

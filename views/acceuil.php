@@ -1,6 +1,5 @@
 <?php
 
-
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['tenrac'])) {
     $tenrac = $_SESSION['tenrac'];
@@ -12,11 +11,15 @@ if (isset($_SESSION['tenrac'])) {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
-    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
-    <meta-description>Résumé de page web... Description si on veut.</meta-description>
+    <img url="./favicon.ico">
+    <meta-description>Site de gestion de tenders de poulet à la raclett (plus communément appelés "tenrac").
+        Vous pouvez bien sûr commander, choisir votre menu, renseigner votre club si vous êtes dans un club etc... Bonne
+        chance.</meta-description>
     <title>Accueil</title>
 </head>
+
 <body>
     <h1>Bienvenue, <?= htmlspecialchars($tenrac['nom']) ?> !</h1>
     <p>Email: <?= htmlspecialchars($tenrac['email']) ?></p>
@@ -44,21 +47,22 @@ if (isset($_SESSION['tenrac'])) {
 
 
     <h2>Rendez-vous importants</h2>
-<?php if (!empty($repasImportant)): ?>
-    <ul>
-        <?php foreach ($repasImportant as $repas): ?>
-            <li>
-                <strong>Club :</strong> <?= htmlspecialchars($repas['club_id']) ?><br>
-                <strong>Date :</strong> <?= htmlspecialchars($repas['date']) ?><br>
-                <strong>Participants :</strong> <?= htmlspecialchars($repas['participants']) ?><br>
-                <strong>Plats :</strong> <?= htmlspecialchars($repas['plats']) ?><br>
-                <strong>Adresse :</strong> <?= htmlspecialchars($repas['adresse']) ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php else: ?>
-    <p>Aucun repas à venir.</p>
-<?php endif; ?>
+    <?php if (!empty($repasImportant)): ?>
+        <ul>
+            <?php foreach ($repasImportant as $repas): ?>
+                <li>
+                    <strong>Club :</strong> <?= htmlspecialchars($repas['club_id']) ?><br>
+                    <strong>Date :</strong> <?= htmlspecialchars($repas['date']) ?><br>
+                    <strong>Participants :</strong> <?= htmlspecialchars($repas['participants']) ?><br>
+                    <strong>Plats :</strong> <?= htmlspecialchars($repas['plats']) ?><br>
+                    <strong>Adresse :</strong> <?= htmlspecialchars($repas['adresse']) ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>Aucun repas à venir.</p>
+    <?php endif; ?>
 
 </body>
+
 </html>

@@ -4,9 +4,17 @@ require_once 'models/repasModel.php';
 require_once 'models/platModel.php';
 require_once 'models/clubModel.php';
 
+/**
+ * RepasController
+ */
 class RepasController
 {
-    // Afficher la liste des repas
+    // Afficher la liste des repas    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
         $repasModel = new RepasModel();
@@ -16,7 +24,12 @@ class RepasController
         require_once 'views/repas/gestion_repas.php';
     }
 
-    // Ajouter ou modifier un repas
+    // Ajouter ou modifier un repas    
+    /**
+     * sauvegarder
+     *
+     * @return void
+     */
     public function sauvegarder()
 {
     $repasModel = new RepasModel();
@@ -54,7 +67,13 @@ class RepasController
 
 
 
-    // Afficher la vue pour modifier un repas
+    // Afficher la vue pour modifier un repas    
+    /**
+     * editer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function editer($id)
     {
         $repasModel = new RepasModel();
@@ -64,7 +83,13 @@ class RepasController
         require_once 'views/repas/gestion_repas.php';
     }
 
-    // Supprimer un repas
+    // Supprimer un repas    
+    /**
+     * supprimer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimer($id)
     {
         $repasModel = new RepasModel();
@@ -73,7 +98,13 @@ class RepasController
         exit();
     }
 
-    // Méthode Ajax pour obtenir les plats par club
+    // Méthode Ajax pour obtenir les plats par club    
+    /**
+     * getPlatsByClub
+     *
+     * @param  mixed $club_id
+     * @return void
+     */
     public function getPlatsByClub($club_id)
 {
     $platModel = new PlatModel();

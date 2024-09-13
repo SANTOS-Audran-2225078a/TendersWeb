@@ -4,7 +4,12 @@
 <head>
     <title>Gestion des Repas</title>
     <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
-    <script>
+    <script>        
+        /**
+         * chargerPlatsParClub
+         *
+         * @return void
+         */
         function chargerPlatsParClub(club_id) {
             if (club_id === '') {
                 document.getElementById('plat-select').innerHTML = '<option value="">Sélectionnez un club d\'abord</option>';

@@ -3,13 +3,26 @@
 require_once 'models/tenracModel.php';
 require_once 'models/repasModel.php';
 
+/**
+ * tenracController
+ */
 class tenracController
-{
+{    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
         require_once 'views/login.php';
     }
-
+    
+    /**
+     * connecter
+     *
+     * @return void
+     */
     public function connecter()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -36,7 +49,12 @@ class tenracController
         }
     }
 
-
+    
+    /**
+     * acceuil
+     *
+     * @return void
+     */
     public function acceuil()
     {
         // Vérifier si l'utilisateur est connecté
@@ -65,7 +83,12 @@ class tenracController
         }
     }
 
-
+    
+    /**
+     * deconnecter
+     *
+     * @return void
+     */
     public function deconnecter()
     {
         session_start();
