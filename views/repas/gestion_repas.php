@@ -5,35 +5,62 @@
 </header>
 <head>
     <title>Gestion des Repas</title>
-    <script>        
-        /**
-         * chargerPlatsParClub
-         *
-         * @return void
-         */
-        function chargerPlatsParClub(club_id) {
-            if (club_id === '') {
-                document.getElementById('plat-select').innerHTML = '<option value="">Sélectionnez un club d\'abord</option>';
-                return;
+    <style>
+        .plat {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .plat h4 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .plat p {
+            margin: 5px 0;
+        }
+        .club {
+            margin-bottom: 30px;
+        }
+        .button-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+    <script>
+        let participants = <?= isset($repas['participants']) ? $repas['participants'] : 0 ?>;
+        let selectedPlats = {};
+
+        function ajouterPlat(platId) {
+            if (!selectedPlats[platId]) {
+                selectedPlats[platId] = 0;
             }
 
-            // Requête Ajax pour charger les plats selon le club sélectionné
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/repas/getPlatsByClub/' + club_id, true);
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    var plats = JSON.parse(xhr.responseText);
-                    var platSelect = document.getElementById('plat-select');
-                    platSelect.innerHTML = ''; // Clear current options
-                    plats.forEach(function (plat) {
-                        var option = document.createElement('option');
-                        option.value = plat.id;
-                        option.textContent = plat.nom;
-                        platSelect.appendChild(option);
-                    });
-                }
-            };
-            xhr.send();
+            let totalPlats = Object.values(selectedPlats).reduce((acc, val) => acc + val, 0);
+
+            if (totalPlats < participants) {
+                selectedPlats[platId]++;
+                document.getElementById('quantity-' + platId).innerText = selectedPlats[platId];
+            } else {
+                alert("Le nombre total de plats ne peut pas dépasser le nombre de participants.");
+            }
+        }
+
+        function enleverPlat(platId) {
+            if (selectedPlats[platId] && selectedPlats[platId] > 0) {
+                selectedPlats[platId]--;
+                document.getElementById('quantity-' + platId).innerText = selectedPlats[platId];
+            }
+        }
+
+        function verifierParticipants() {
+            let totalPlats = Object.values(selectedPlats).reduce((acc, val) => acc + val, 0);
+            if (totalPlats !== participants) {
+                alert("Le nombre total de plats doit être égal au nombre de participants.");
+                return false;
+            }
+            return true;
         }
     </script>
 </head>
@@ -42,7 +69,7 @@
     <h1>Gestion des Repas</h1>
 
     <!-- Formulaire pour ajouter ou modifier un repas -->
-    <form action="/repas/sauvegarder" method="POST" id="repas-form">
+    <form action="/repas/sauvegarder" method="POST" onsubmit="return verifierParticipants();">
         <input type="hidden" name="id" value="<?= isset($repas['id']) ? $repas['id'] : '' ?>">
 
         <label>Club :</label>
@@ -56,66 +83,58 @@
         </select><br>
 
         <label>Date :</label>
-        <input type="date" name="date" value="<?= isset($repas['date']) ? htmlspecialchars($repas['date']) : '' ?>"
-            required><br>
+        <input type="date" name="date" value="<?= isset($repas['date']) ? htmlspecialchars($repas['date']) : '' ?>" required><br>
 
         <label>Participants :</label>
-        <input type="number" id="participants" name="participants"
-            value="<?= isset($repas['participants']) ? htmlspecialchars($repas['participants']) : '' ?>" required><br>
+        <input type="number" id="participants" name="participants" value="<?= isset($repas['participants']) ? htmlspecialchars($repas['participants']) : '' ?>" required><br>
 
-        <h3>Plats disponibles pour ce club :</h3>
+        <h2>Sélectionnez les plats (en fonction des participants)</h2>
         <div id="plats-container">
-            <!-- Les plats disponibles seront chargés ici via JavaScript -->
+            <!-- Vérifier si des plats sont disponibles -->
+            <?php if (!empty($plats) && is_array($plats)): ?>
+                <?php foreach ($plats as $plat): ?>
+                    <div class="plat">
+                        <h4><?= htmlspecialchars($plat['nom']) ?></h4>
+                        <p><strong>Ingrédients :</strong> <?= htmlspecialchars($plat['ingredients']) ?></p>
+                        <div class="button-container">
+                            <button type="button" class="sub-plat" onclick="enleverPlat(<?= $plat['id'] ?>)">-</button>
+                            <span id="quantity-<?= $plat['id'] ?>">0</span>
+                            <button type="button" class="add-plat" onclick="ajouterPlat(<?= $plat['id'] ?>)">+</button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Aucun plat disponible pour ce club.</p>
+            <?php endif; ?>
         </div>
 
         <button type="submit">Sauvegarder</button>
     </form>
 
-    <script>
-        document.getElementById('club-select').addEventListener('change', function () {
-            const clubId = this.value;
-            if (clubId) {
-                fetch(`/repas/getPlatsByClub/${clubId}`)
-                    .then(response => response.json())
-                    .then(plats => {
-                        const platsContainer = document.getElementById('plats-container');
-                        platsContainer.innerHTML = '';
-                        plats.forEach(plat => {
-                            platsContainer.innerHTML += `
-                            <div>
-                                <span>${plat.nom} - ${plat.ingredients}</span>
-                                <button type="button" class="add-plat" data-plat-id="${plat.id}">+</button>
-                                <span class="plat-count" id="plat-count-${plat.id}">0</span>
-                            </div>
-                        `;
-                        });
-                    });
-            } else {
-                document.getElementById('plats-container').innerHTML = '';
-            }
-        });
-
-        // Gestion du nombre de plats à ajouter par rapport aux participants
-        document.getElementById('plats-container').addEventListener('click', function (event) {
-            if (event.target.classList.contains('add-plat')) {
-                const platId = event.target.getAttribute('data-plat-id');
-                const countElement = document.getElementById('plat-count-' + platId);
-                const participants = parseInt(document.getElementById('participants').value);
-                let currentCount = parseInt(countElement.innerHTML);
-
-                if (currentCount < participants) {
-                    currentCount++;
-                    countElement.innerHTML = currentCount;
-                }
-            }
-        });
-    </script>
-
+    <!-- Liste des repas existants -->
+    <h2>Repas existants</h2>
+    <ul>
+        <?php if (isset($repasList) && is_array($repasList)): ?>
+            <?php foreach ($repasList as $repasItem): ?>
+                <li>
+                    <p>Club : <?= htmlspecialchars($repasItem['club_nom'] ?? 'N/A') ?></p>
+                    <p>Date : <?= isset($repasItem['date']) ? date('d/m/Y', strtotime($repasItem['date'])) : 'N/A' ?></p>
+                    <p>Participants : <?= htmlspecialchars($repasItem['participants'] ?? 'N/A') ?></p>
+                    <p>Plats : <?= htmlspecialchars($repasItem['plats'] ?? 'N/A') ?></p>
+                    <a href="/repas/editer/<?= $repasItem['id'] ?>">Modifier</a> | 
+                    <a href="/repas/supprimer/<?= $repasItem['id'] ?>">Supprimer</a>
+                </li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucun repas trouvé.</p>
+        <?php endif; ?>
+    </ul>
 
     <!-- Bouton Retour à l'accueil -->
     <a href="/tenrac/acceuil">
         <button>Retour à l'Accueil</button>
     </a>
+
 </body>
 
 </html>

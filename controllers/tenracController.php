@@ -25,9 +25,7 @@ class tenracController
      */
     public function connecter()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start(); // Vérifie si une session est active avant de démarrer une nouvelle session
-        }
+       // session_start(); // Démarre la session une fois
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nom = $_POST['nom'];
