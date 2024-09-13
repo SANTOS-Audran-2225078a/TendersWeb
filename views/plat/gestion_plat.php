@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
-
+<header>
+<img url="./favicon.ico">
+</header>
 <head>
     <title>Gestion des Plats</title>
     <link rel="stylesheet" type="text/css" href="/style/gestion_plat.css">
-    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
+
 
 </head>
 

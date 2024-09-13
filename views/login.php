@@ -18,7 +18,7 @@ if (isset($_SESSION['tenrac'])) {
 <!DOCTYPE html>
 <html>
     <header>
-    <img url="../favicon.ico">
+        <img url="./favicon.ico">
     </header>
 
 <head>

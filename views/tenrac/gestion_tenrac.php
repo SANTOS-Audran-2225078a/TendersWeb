@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+    <header>
+<img url="./favicon.ico">
+</header>
 <head>
     <title>Gestion des Tenracs</title>
-    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
 </head>
 <body>
     <h1>Gestion des Tenracs</h1>

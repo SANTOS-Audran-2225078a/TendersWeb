@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
-
+<header>
+<img url="./favicon.ico">
+</header>
 <head>
     <title>Modifier un Plat</title>
-    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
+
 </head>
 
 <body>

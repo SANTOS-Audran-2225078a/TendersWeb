@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-
+<header>
+<img url="./favicon.ico">
+</header>
 <head>
     <title>Gestion des Repas</title>
-    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
     <script>        
         /**
          * chargerPlatsParClub
