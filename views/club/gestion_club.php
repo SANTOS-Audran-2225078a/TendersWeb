@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Gestion des Clubs</title>
+    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
 </head>
 <body>
     <h1>Gestion des Clubs</h1>

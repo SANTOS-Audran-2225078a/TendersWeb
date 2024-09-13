@@ -3,6 +3,7 @@
 
 <head>
     <title>Gestion des Repas</title>
+    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
     <script>
         function chargerPlatsParClub(club_id) {
             if (club_id === '') {

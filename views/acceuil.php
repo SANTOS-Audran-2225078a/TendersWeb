@@ -13,6 +13,7 @@ if (isset($_SESSION['tenrac'])) {
 <!DOCTYPE html>
 <html>
 <head>
+    <img url="../favicon.ico" alt="Un petit poulet gardant un vieux fromage...">
     <meta-description>Résumé de page web... Description si on veut.</meta-description>
     <title>Accueil</title>
 </head>
