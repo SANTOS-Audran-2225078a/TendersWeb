@@ -20,11 +20,13 @@
                 <div class="ingredient-row">
                     <select name="ingredient_ids[]" required>
                         <option value="">Sélectionnez un ingrédient</option>
-                        <?php foreach ($ingredients as $ingr): ?>
-                            <option value="<?= htmlspecialchars($ingr['id']) ?>" <?= $ingr['id'] == $ingredient['id'] ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($ingr['nom']) ?>
-                            </option>
-                        <?php endforeach; ?>
+                        <?php if (isset($ingredients)) {
+                            foreach ($ingredients as $ingr): ?>
+                                <option value="<?= htmlspecialchars($ingr['id']) ?>" <?= $ingr['id'] == $ingredient['id'] ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($ingr['nom']) ?>
+                                </option>
+                            <?php endforeach;
+                        } ?>
                     </select>
                     <button type="button" onclick="supprimerIngredient(this)">Supprimer</button>
                 </div>
@@ -34,11 +36,13 @@
 
         <label>Club :</label>
         <select name="club_id" required>
-            <?php foreach ($clubs as $club): ?>
-                <option value="<?= htmlspecialchars($club['id']) ?>" <?= $club['id'] == $plat['club_id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($club['nom']) ?>
-                </option>
-            <?php endforeach; ?>
+            <?php if (isset($clubs)) {
+                foreach ($clubs as $club): ?>
+                    <option value="<?= htmlspecialchars($club['id']) ?>" <?= $club['id'] == $plat['club_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($club['nom']) ?>
+                    </option>
+                <?php endforeach;
+            } ?>
         </select><br>
 
         <button type="submit">Modifier</button>

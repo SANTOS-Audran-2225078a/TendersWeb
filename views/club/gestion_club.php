@@ -19,13 +19,15 @@
     <!-- Liste des clubs existants -->
     <h2>Clubs existants</h2>
     <ul>
-        <?php foreach ($clubs as $club): ?>
-            <li>
-                <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
-                <a href="/club/editer/<?= $club['id'] ?>">Modifier</a> | 
-                <a href="/club/supprimer/<?= $club['id'] ?>">Supprimer</a>
-            </li>
-        <?php endforeach; ?>
+        <?php if (isset($clubs)) {
+            foreach ($clubs as $club): ?>
+                <li>
+                    <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
+                    <a href="/club/editer/<?= $club['id'] ?>">Modifier</a> |
+                    <a href="/club/supprimer/<?= $club['id'] ?>">Supprimer</a>
+                </li>
+            <?php endforeach;
+        } ?>
     </ul>
 
     <!-- Bouton Retour à l'accueil -->

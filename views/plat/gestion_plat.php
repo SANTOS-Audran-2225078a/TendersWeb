@@ -17,16 +17,20 @@
         <div id="ingredients-container">
             <div class="ingredient-row"><select name="ingredient_ids[]" required>
                     <option value="">Sélectionnez un ingrédient</option>
-                    <?php foreach ($ingredients as $ingredient): ?>
-                        <option value="<?= $ingredient['id'] ?>"><?= htmlspecialchars($ingredient['nom']) ?></option>
-                    <?php endforeach; ?>
+                    <?php if (isset($ingredients)) {
+                        foreach ($ingredients as $ingredient): ?>
+                            <option value="<?= $ingredient['id'] ?>"><?= htmlspecialchars($ingredient['nom']) ?></option>
+                        <?php endforeach;
+                    } ?>
                 </select><button type="button" onclick="supprimerIngredient(this)">Supprimer</button></div>
         </div><button type="button" onclick="ajouterIngredient()">Ajouter un ingrédient</button><br><label>Club
             :</label><select name="club_id" required>
             <option value="">Sélectionnez un club</option>
-            <?php foreach ($clubs as $club): ?>
-                <option value="<?= $club['id'] ?>"><?= htmlspecialchars($club['nom']) ?></option>
-            <?php endforeach; ?>
+            <?php if (isset($clubs)) {
+                foreach ($clubs as $club): ?>
+                    <option value="<?= $club['id'] ?>"><?= htmlspecialchars($club['nom']) ?></option>
+                <?php endforeach;
+            } ?>
         </select><br><button type="submit">Ajouter</button>
     </form><a href="/tenrac/acceuil">Retour à l'accueil</a>
 

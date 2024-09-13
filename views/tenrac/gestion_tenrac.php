@@ -33,13 +33,15 @@
     <!-- Liste des tenracs existants -->
     <h2>Tenracs existants</h2>
     <ul>
-        <?php foreach ($tenracs as $tenrac): ?>
-            <li>
-                <?= htmlspecialchars($tenrac['nom']) ?> - <?= htmlspecialchars($tenrac['email']) ?> - <?= htmlspecialchars($tenrac['grade']) ?>
-                <a href="/tenrac/editer/<?= $tenrac['id'] ?>">Modifier</a> | 
-                <a href="/tenrac/supprimer/<?= $tenrac['id'] ?>">Supprimer</a>
-            </li>
-        <?php endforeach; ?>
+        <?php if (isset($tenracs)) {
+            foreach ($tenracs as $tenrac): ?>
+                <li>
+                    <?= htmlspecialchars($tenrac['nom']) ?> - <?= htmlspecialchars($tenrac['email']) ?> - <?= htmlspecialchars($tenrac['grade']) ?>
+                    <a href="/tenrac/editer/<?= $tenrac['id'] ?>">Modifier</a> |
+                    <a href="/tenrac/supprimer/<?= $tenrac['id'] ?>">Supprimer</a>
+                </li>
+            <?php endforeach;
+        } ?>
     </ul>
 
     <!-- Bouton Retour à l'accueil -->
