@@ -13,6 +13,7 @@ if (isset($_SESSION['tenrac'])) {
 <!DOCTYPE html>
 <html>
 <head>
+    <meta-description>Résumé de page web... Description si on veut.</meta-description>
     <title>Accueil</title>
 </head>
 <body>
