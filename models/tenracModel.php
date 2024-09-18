@@ -28,9 +28,9 @@ class tenracModel
      *
      * @param  mixed $nom
      * @param  mixed $motDePasse
-     * @return void
+     * @return mixed
      */
-    public function verifierTenrac($nom, $motDePasse)
+    public function verifierTenrac($nom, $motDePasse): mixed
     {
         if ($this->db === null) {
             throw new Exception('La connexion à la base de données a échoué.');

@@ -52,7 +52,7 @@ class PlatController
     }
 
     // Afficher la vue pour modifier un plat
-    public function editer($id)
+    public function editer($id): void
     {
         $platModel = new PlatModel();
         $plat = $platModel->getPlatById($id);
@@ -77,7 +77,7 @@ class PlatController
      *
      * @return void
      */
-    public function ajouterPlat()
+    public function ajouterPlat(): void
     {
 
         if (isset($_POST['nom']) && isset($_POST['ingredient_ids']) && isset($_POST['club_id'])) {
@@ -102,7 +102,7 @@ class PlatController
      *
      * @return void
      */
-    public function modifierPlat()
+    public function modifierPlat(): void
     {
         $platModel = new PlatModel();
         $club_id = $_POST['club_id'];
@@ -121,7 +121,7 @@ class PlatController
      * @param  mixed $id
      * @return void
      */
-    public function supprimer($id)
+    public function supprimer($id): void
     {
         $platModel = new PlatModel();
         $platModel->supprimerPlat($id);

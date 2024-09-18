@@ -28,7 +28,7 @@ class ClubModel
      *
      * @return void
      */
-    public function getAllClubs()
+    public function getAllClubs(): array
     {
         $query = $this->db->query('SELECT * FROM club');
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -42,7 +42,7 @@ class ClubModel
      * @param  mixed $adresse
      * @return void
      */
-    public function ajouterClub($nom, $adresse)
+    public function ajouterClub($nom, $adresse): void
     {
         $query = $this->db->prepare('INSERT INTO club (nom, adresse) VALUES (:nom, :adresse)');
         $query->bindParam(':nom', $nom);
@@ -59,7 +59,7 @@ class ClubModel
      * @param  mixed $adresse
      * @return void
      */
-    public function modifierClub($id, $nom, $adresse)
+    public function modifierClub($id, $nom, $adresse): void
     {
         $query = $this->db->prepare('UPDATE club SET nom = :nom, adresse = :adresse WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -75,7 +75,7 @@ class ClubModel
      * @param  mixed $id
      * @return void
      */
-    public function supprimerClub($id)
+    public function supprimerClub($id): void
     {
         $query = $this->db->prepare('DELETE FROM club WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -89,7 +89,7 @@ class ClubModel
      * @param  mixed $id
      * @return void
      */
-    public function getClubById($id)
+    public function getClubById($id): mixed
     {
         $query = $this->db->prepare('SELECT * FROM club WHERE id = :id');
         $query->bindParam(':id', $id);

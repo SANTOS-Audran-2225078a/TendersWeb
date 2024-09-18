@@ -13,7 +13,7 @@ class ClubController
      *
      * @return void
      */
-    private function verifierConnexion()
+    private function verifierConnexion(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start(); // Démarre la session uniquement si elle n'est pas déjà démarrée
@@ -31,7 +31,7 @@ class ClubController
      *
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté avant d'afficher
         $clubModel = new ClubModel();
@@ -45,7 +45,7 @@ class ClubController
      *
      * @return void
      */
-    public function sauvegarder()
+    public function sauvegarder(): void
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
         $clubModel = new ClubModel();
@@ -67,7 +67,7 @@ class ClubController
      * @param  mixed $id
      * @return void
      */
-    public function editer($id)
+    public function editer($id): void
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
         $clubModel = new ClubModel();
@@ -83,7 +83,7 @@ class ClubController
      * @param  mixed $id
      * @return void
      */
-    public function supprimer($id)
+    public function supprimer($id): void
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
         $clubModel = new ClubModel();

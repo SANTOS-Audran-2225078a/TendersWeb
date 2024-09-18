@@ -28,7 +28,7 @@ class PlatModel
      *
      * @return void
      */    
-    public function getAllPlats()
+    public function getAllPlats(): array
     {
         $query = $this->db->query('SELECT * FROM plat');
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -39,7 +39,7 @@ class PlatModel
      *
      * @return void
      */
-    public function getAllIngredients()
+    public function getAllIngredients(): array
     {
         $query = $this->db->query('SELECT * FROM ingredient');
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -54,7 +54,7 @@ class PlatModel
      * @param  mixed $club_id
      * @return void
      */
-    public function ajouterPlat($nom, $ingredients, $club_id)
+    public function ajouterPlat($nom, $ingredients, $club_id): void
     {
         try {
             $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
@@ -79,7 +79,7 @@ class PlatModel
      * @param  mixed $club_id
      * @return void
      */
-    public function modifierPlat($id, $nom, $ingredients, $club_id)
+    public function modifierPlat($id, $nom, $ingredients, $club_id): void
     {
         $query = $this->db->prepare('UPDATE plat SET nom = :nom, club_id = :club_id WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -98,7 +98,7 @@ class PlatModel
      * @param  mixed $id
      * @return void
      */
-    public function supprimerPlat($id)
+    public function supprimerPlat($id): void
     {
         $query = $this->db->prepare('DELETE FROM plat WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -112,7 +112,7 @@ class PlatModel
      * @param  mixed $id
      * @return void
      */
-    public function getPlatById($id)
+    public function getPlatById($id): mixed
     {
         $query = $this->db->prepare('SELECT * FROM plat WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -127,7 +127,7 @@ class PlatModel
      * @param  mixed $club_id
      * @return void
      */
-    public function getPlatsByClub($club_id)
+    public function getPlatsByClub($club_id): array
     {
         $query = $this->db->prepare('SELECT * FROM plat WHERE club_id = :club_id');
         $query->bindParam(':club_id', $club_id);
@@ -159,7 +159,7 @@ class PlatModel
      * @param  mixed $plat_id
      * @return void
      */
-    public function getIngredientsByPlat($plat_id)
+    public function getIngredientsByPlat($plat_id): array
     {
         $query = $this->db->prepare('
         SELECT ingredient.nom, ingredient.risque 
@@ -179,7 +179,7 @@ class PlatModel
      * @param  mixed $plat_id
      * @return void
      */
-    public function supprimerIngredientsDuPlat($plat_id)
+    public function supprimerIngredientsDuPlat($plat_id): void
     {
         $query = $this->db->prepare('DELETE FROM plat_ingredient WHERE plat_id = :plat_id');
         $query->bindParam(':plat_id', $plat_id);

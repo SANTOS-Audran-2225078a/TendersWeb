@@ -11,4 +11,3 @@ try {
     $end = microtime(true);
     echo "Erreur : " . $e->getMessage() . " (Temps d'exécution : " . ($end - $start) . " secondes)";
 }
-?>

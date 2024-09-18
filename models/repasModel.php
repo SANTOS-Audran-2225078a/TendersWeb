@@ -28,7 +28,7 @@ class RepasModel
      *
      * @return void
      */
-    public function getAllRepas()
+    public function getAllRepas(): array
     {
         $query = $this->db->query('SELECT * FROM repas');
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -44,7 +44,7 @@ class RepasModel
      * @param  mixed $plats
      * @return void
      */
-    public function ajouterRepas($adresse, $date, $participants, $plats)
+    public function ajouterRepas($adresse, $date, $participants, $plats): void
     {
         $query = $this->db->prepare('INSERT INTO repas (adresse, date, participants, plats) VALUES (:adresse, :date, :participants, :plats)');
         $query->bindParam(':adresse', $adresse);
@@ -65,7 +65,7 @@ class RepasModel
      * @param  mixed $plats
      * @return void
      */
-    public function modifierRepas($id, $adresse, $date, $participants, $plats)
+    public function modifierRepas($id, $adresse, $date, $participants, $plats): void
     {
         $query = $this->db->prepare('UPDATE repas SET adresse = :adresse, date = :date, participants = :participants, plats = :plats WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -83,7 +83,7 @@ class RepasModel
      * @param  mixed $id
      * @return void
      */
-    public function supprimerRepas($id)
+    public function supprimerRepas($id): void
     {
         $query = $this->db->prepare('DELETE FROM repas WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -97,7 +97,7 @@ class RepasModel
      * @param  mixed $id
      * @return void
      */
-    public function getRepasById($id)
+    public function getRepasById($id): mixed
     {
         $query = $this->db->prepare('SELECT * FROM repas WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -110,7 +110,7 @@ class RepasModel
      *
      * @return void
      */
-    public function getRepasImportant()
+    public function getRepasImportant(): array
 {
     $query = $this->db->query('SELECT * FROM repas WHERE date >= CURDATE() ORDER BY date ASC LIMIT 5');
     return $query->fetchAll(PDO::FETCH_ASSOC);

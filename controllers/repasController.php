@@ -15,7 +15,7 @@ class RepasController
      *
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $repasModel = new RepasModel();
         $clubModel = new ClubModel();
@@ -30,7 +30,7 @@ class RepasController
      *
      * @return void
      */
-    public function sauvegarder()
+    public function sauvegarder(): void
 {
     $repasModel = new RepasModel();
     $clubModel = new ClubModel();
@@ -74,7 +74,7 @@ class RepasController
      * @param  mixed $id
      * @return void
      */
-    public function editer($id)
+    public function editer($id): void
     {
         $repasModel = new RepasModel();
         $repas = $repasModel->getRepasById($id);
@@ -90,7 +90,7 @@ class RepasController
      * @param  mixed $id
      * @return void
      */
-    public function supprimer($id)
+    public function supprimer($id): void
     {
         $repasModel = new RepasModel();
         $repasModel->supprimerRepas($id);
@@ -105,7 +105,7 @@ class RepasController
      * @param  mixed $club_id
      * @return void
      */
-    public function getPlatsByClub($club_id)
+    public function getPlatsByClub($club_id): void
 {
     $platModel = new PlatModel();
     $plats = $platModel->getPlatsByClub($club_id);

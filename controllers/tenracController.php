@@ -13,7 +13,7 @@ class tenracController
      *
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         require_once 'views/login.php';
     }
@@ -23,7 +23,7 @@ class tenracController
      *
      * @return void
      */
-    public function connecter()
+    public function connecter(): void
     {
        // session_start(); // Démarre la session une fois
 
@@ -53,7 +53,7 @@ class tenracController
      *
      * @return void
      */
-    public function acceuil()
+    public function acceuil(): void
     {
         // Vérifier si l'utilisateur est connecté
         if (isset($_SESSION['tenrac'])) {
@@ -87,7 +87,7 @@ class tenracController
      *
      * @return void
      */
-    public function deconnecter()
+    public function deconnecter(): void
     {
         session_start();
         $_SESSION = []; // Réinitialiser toutes les variables de session
