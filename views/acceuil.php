@@ -13,9 +13,6 @@ if (isset($_SESSION['tenrac'])) {
 <html>
     <header>
         <img url="./favicon.ico">
-        <meta-description>Site de gestion de tenders de poulet à la raclett (plus communément appelés "tenrac").
-        Vous pouvez bien sûr commander, choisir votre menu, renseigner votre club si vous êtes dans un club etc... Bonne
-        chance.</meta-description>
     </header>
 
 <head>
