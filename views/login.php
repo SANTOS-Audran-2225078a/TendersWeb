@@ -23,6 +23,7 @@ if (isset($_SESSION['tenrac'])) {
 
 <head>
     <title>Connexion</title>
+    <link rel="stylesheet" href="../_assets/styles/stylesheet_login.css">
 </head>
 
 <body>
