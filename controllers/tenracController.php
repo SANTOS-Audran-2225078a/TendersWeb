@@ -15,7 +15,7 @@ class tenracController
      */
     public function index(): void
     {
-        require_once 'views/login.php';
+        require_once 'views/tenrac/gestion_tenrac.php';
     }
     
     /**

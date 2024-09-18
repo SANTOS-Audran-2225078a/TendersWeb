@@ -77,17 +77,11 @@ h1 {
 }
 
 div {
-    /*border-radius: 10px;*/
-    background-color: #0073e6;
-    padding: 20px;
-    margin: 2em;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: white;
-    flex: 1 1 300px;
-    text-align: center;
-    /*clip-path: polygon(50% 0%, 65% 15%, 85% 0%, 100% 15%, 85% 30%, 100% 50%, 85% 70%, 100% 85%, 85% 100%, 50% 85%, 15% 100%, 0% 85%, 15% 70%, 0% 50%, 15% 30%);*/ /*tentative de forme d'explosion*/
-    /*background: url('../_assets/images/explosion.png');*/
-    /*background-size: cover;*/
-    /*border-radius: 10px; /* Ajustez le rayon pour correspondre à l'image */
+    border-radius: 30px;
+    background-color: #010110;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5em; 
+    border: solid;
+    border-color: orangered;
 }
