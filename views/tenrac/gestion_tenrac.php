@@ -7,6 +7,7 @@
     <title>Gestion des Tenracs</title>
     <meta name="description" content="Vous êtes ici sur LE site des tenrac. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. VOus pourrez aussi en rajouter.">
+    <link rel="stylesheet" href="../_assets/styles/stylesheet_login.css">
 </head>
 <body>
     <h1>Gestion des Tenracs</h1>

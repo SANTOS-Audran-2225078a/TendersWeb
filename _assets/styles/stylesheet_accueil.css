@@ -5,7 +5,6 @@ body {
     line-height: 1.6; /* Espacement entre les lignes pour une meilleure lisibilité */
     padding-top: 50px; /* Ajouter un espace pour compenser la barre fixe */
 }
-
 header {
     display: flex;
     justify-content: center; /* Centrer les boutons dans la barre */
