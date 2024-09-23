@@ -29,10 +29,11 @@ class ClubModel
      * @return void
      */
     public function getAllClubs(): array
-    {
-        $query = $this->db->query('SELECT * FROM club');
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
+{
+    $query = $this->db->query('SELECT * FROM club');
+    return $query->fetchAll(PDO::FETCH_ASSOC); // Retourne un tableau associatif
+}
+
 
     // Ajouter un nouveau club    
     /**

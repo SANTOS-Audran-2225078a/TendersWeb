@@ -1,140 +1,122 @@
 <!DOCTYPE html>
 <html>
-<header>
-<img url="./favicon.ico">
-</header>
 <head>
     <title>Gestion des Repas</title>
     <style>
-        .plat {
+        /* Améliorer la lisibilité et la mise en page */
+        .repas-container {
             margin-bottom: 20px;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 5px;
+            background-color: #f9f9f9;
         }
-        .plat h4 {
+
+        .repas-container h3 {
             margin: 0;
-            font-size: 1.5em;
+            padding: 0;
+            font-size: 18px;
         }
-        .plat p {
-            margin: 5px 0;
+
+        .repas-details {
+            font-size: 14px;
+            margin-top: 5px;
         }
-        .club {
-            margin-bottom: 30px;
+
+        .repas-details strong {
+            display: inline-block;
+            width: 100px;
         }
-        .button-container {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+
+        .repas-actions {
+            margin-top: 10px;
         }
+
+        .repas-actions a {
+            margin-right: 10px;
+        }
+
     </style>
     <script>
-        let participants = <?= isset($repas['participants']) ? $repas['participants'] : 0 ?>;
-        let selectedPlats = {};
+        // Fonction pour charger les plats en fonction du club sélectionné
+        function chargerPlatsParClub(clubId) {
+            fetch('/repas/getPlatsByClub/' + clubId)
+                .then(response => response.json())
+                .then(data => {
+                    let platsContainer = document.getElementById('cartePlats');
+                    platsContainer.innerHTML = ''; // Vider les plats affichés précédemment
 
-        function ajouterPlat(platId) {
-            if (!selectedPlats[platId]) {
-                selectedPlats[platId] = 0;
-            }
-
-            let totalPlats = Object.values(selectedPlats).reduce((acc, val) => acc + val, 0);
-
-            if (totalPlats < participants) {
-                selectedPlats[platId]++;
-                document.getElementById('quantity-' + platId).innerText = selectedPlats[platId];
-            } else {
-                alert("Le nombre total de plats ne peut pas dépasser le nombre de participants.");
-            }
-        }
-
-        function enleverPlat(platId) {
-            if (selectedPlats[platId] && selectedPlats[platId] > 0) {
-                selectedPlats[platId]--;
-                document.getElementById('quantity-' + platId).innerText = selectedPlats[platId];
-            }
-        }
-
-        function verifierParticipants() {
-            let totalPlats = Object.values(selectedPlats).reduce((acc, val) => acc + val, 0);
-            if (totalPlats !== participants) {
-                alert("Le nombre total de plats doit être égal au nombre de participants.");
-                return false;
-            }
-            return true;
+                    data.forEach(function(plat) {
+                        let platDiv = document.createElement('div');
+                        platDiv.textContent = plat.nom;
+                        platsContainer.appendChild(platDiv);
+                    });
+                });
         }
     </script>
 </head>
-
 <body>
     <h1>Gestion des Repas</h1>
 
-    <!-- Formulaire pour ajouter ou modifier un repas -->
-    <form action="/repas/sauvegarder" method="POST" onsubmit="return verifierParticipants();">
-        <input type="hidden" name="id" value="<?= isset($repas['id']) ? $repas['id'] : '' ?>">
+    <!-- Formulaire pour ajouter un nouveau repas -->
+    <form action="/repas/sauvegarder" method="POST">
+        <?php if (isset($repas['id'])): ?>
+            <input type="hidden" name="id" value="<?= htmlspecialchars($repas['id']) ?>">
+        <?php endif; ?>
 
-        <label>Club :</label>
-        <select name="club_id" id="club-select" required>
+        <label>Adresse (Club) :</label>
+        <select name="club_id" onchange="chargerPlatsParClub(this.value)" required>
             <option value="">Sélectionnez un club</option>
-            <?php foreach ($clubs as $club): ?>
-                <option value="<?= $club['id'] ?>" <?= isset($repas['club_id']) && $repas['club_id'] == $club['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($club['nom']) ?>
-                </option>
-            <?php endforeach; ?>
+            <?php if (!empty($clubs)): ?>
+                <?php foreach ($clubs as $club): ?>
+                    <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($repas['club_id']) && $repas['club_id'] == $club['id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <option value="">Aucun club disponible</option>
+            <?php endif; ?>
         </select><br>
 
         <label>Date :</label>
         <input type="date" name="date" value="<?= isset($repas['date']) ? htmlspecialchars($repas['date']) : '' ?>" required><br>
 
         <label>Participants :</label>
-        <input type="number" id="participants" name="participants" value="<?= isset($repas['participants']) ? htmlspecialchars($repas['participants']) : '' ?>" required><br>
+        <input type="number" name="participants" value="<?= isset($repas['participants']) ? htmlspecialchars($repas['participants']) : '' ?>" required><br>
 
-        <h2>Sélectionnez les plats (en fonction des participants)</h2>
-        <div id="plats-container">
-            <!-- Vérifier si des plats sont disponibles -->
-            <?php if (!empty($plats) && is_array($plats)): ?>
-                <?php foreach ($plats as $plat): ?>
-                    <div class="plat">
-                        <h4><?= htmlspecialchars($plat['nom']) ?></h4>
-                        <p><strong>Ingrédients :</strong> <?= htmlspecialchars($plat['ingredients']) ?></p>
-                        <div class="button-container">
-                            <button type="button" class="sub-plat" onclick="enleverPlat(<?= $plat['id'] ?>)">-</button>
-                            <span id="quantity-<?= $plat['id'] ?>">0</span>
-                            <button type="button" class="add-plat" onclick="ajouterPlat(<?= $plat['id'] ?>)">+</button>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Aucun plat disponible pour ce club.</p>
-            <?php endif; ?>
-        </div>
+        <label>Chef de rencontre :</label>
+        <input type="text" name="chef_de_rencontre" value="<?= isset($repas['chef_de_rencontre']) ? htmlspecialchars($repas['chef_de_rencontre']) : '' ?>" required><br>
 
-        <button type="submit">Sauvegarder</button>
+        <label>Carte des plats :</label>
+        <div id="cartePlats">
+            <p>Sélectionnez un club pour voir les plats disponibles.</p>
+        </div><br>
+
+        <button type="submit">Ajouter</button>
     </form>
 
     <!-- Liste des repas existants -->
     <h2>Repas existants</h2>
-    <ul>
-        <?php if (isset($repasList) && is_array($repasList)): ?>
-            <?php foreach ($repasList as $repasItem): ?>
-                <li>
-                    <p>Club : <?= htmlspecialchars($repasItem['club_nom'] ?? 'N/A') ?></p>
-                    <p>Date : <?= isset($repasItem['date']) ? date('d/m/Y', strtotime($repasItem['date'])) : 'N/A' ?></p>
-                    <p>Participants : <?= htmlspecialchars($repasItem['participants'] ?? 'N/A') ?></p>
-                    <p>Plats : <?= htmlspecialchars($repasItem['plats'] ?? 'N/A') ?></p>
-                    <a href="/repas/editer/<?= $repasItem['id'] ?>">Modifier</a> | 
-                    <a href="/repas/supprimer/<?= $repasItem['id'] ?>">Supprimer</a>
-                </li>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Aucun repas trouvé.</p>
-        <?php endif; ?>
-    </ul>
+    <div>
+        <?php foreach ($repas as $r): ?>
+            <div class="repas-container">
+                <h3>Repas #<?= htmlspecialchars($r['id']) ?></h3>
+                <div class="repas-details">
+                    <p><strong>Date :</strong> <?= htmlspecialchars($r['date']) ?></p>
+                    <p><strong>Participants :</strong> <?= htmlspecialchars($r['participants']) ?></p>
+                    <p><strong>Chef de rencontre :</strong> <?= htmlspecialchars($r['chef_de_rencontre']) ?></p>
+                    <p><strong>Adresse (Club) :</strong> <?= htmlspecialchars($r['club_nom']) ?></p>
+                </div>
+                <div class="repas-actions">
+                    <a href="/repas/editer/<?= $r['id'] ?>">Modifier</a>
+                    <a href="/repas/supprimer/<?= $r['id'] ?>">Supprimer</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
-    <!-- Bouton Retour à l'accueil -->
     <a href="/tenrac/acceuil">
-        <button>Retour à l'Accueil</button>
+        <button>Retour à l'accueil</button>
     </a>
-
 </body>
-
 </html>

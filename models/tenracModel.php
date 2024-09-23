@@ -1,17 +1,9 @@
 <?php
 
-/**
- * tenracModel
- */
-class tenracModel
+class TenracModel
 {
     private $db;
-    
-    /**
-     * __construct
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         try {
@@ -20,35 +12,29 @@ class tenracModel
         } catch (PDOException $e) {
             echo 'Erreur de connexion : ' . $e->getMessage();
         }
-
     }
-    
-    /**
-     * verifierTenrac
-     *
-     * @param  mixed $nom
-     * @param  mixed $motDePasse
-     * @return mixed
-     */
-    public function verifierTenrac($nom, $motDePasse): mixed
-    {
-        if ($this->db === null) {
-            throw new Exception('La connexion à la base de données a échoué.');
-        }
 
-        $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom');
+    // Méthode pour vérifier les identifiants du tenrac
+    public function verifierTenrac($nom, $motDePasse): ?array
+    {
+        $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom AND password = :password');
         $query->bindParam(':nom', $nom);
+        $query->bindParam(':password', $motDePasse); // Assure-toi d'utiliser une méthode de hachage pour le mot de passe
         $query->execute();
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $tenrac = $query->fetch(PDO::FETCH_ASSOC);
 
-        if (!$result) {
-            return false;
-        }
-        if ($result['password'] == $motDePasse) {
-            return $result;
+        if ($tenrac) {
+            return $tenrac;
         } else {
-            return false;
+            return null; // Retourne null si aucune correspondance n'est trouvée
         }
+    }
+
+    // Récupérer tous les tenracs (utilisé pour l'affichage des adresses dans la gestion des repas)
+    public function getAllTenracs(): array
+    {
+        $query = $this->db->query('SELECT * FROM tenrac');
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }

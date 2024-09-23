@@ -1,17 +1,9 @@
 <?php
 
-/**
- * PlatModel
- */
 class PlatModel
 {
     private $db;
-    
-    /**
-     * __construct
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         try {
@@ -22,64 +14,36 @@ class PlatModel
         }
     }
 
-    // Récupérer tous les plats    
-    /**
-     * getAllPlats
-     *
-     * @return void
-     */    
+    // Récupérer tous les plats
     public function getAllPlats(): array
     {
         $query = $this->db->query('SELECT * FROM plat');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    /**
-     * getAllIngredients
-     *
-     * @return void
-     */
-    public function getAllIngredients(): array
+
+    // Récupérer un plat par ID
+    public function getPlatById($id): ?array
     {
-        $query = $this->db->query('SELECT * FROM ingredient');
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        $query = $this->db->prepare('SELECT * FROM plat WHERE id = :id');
+        $query->bindParam(':id', $id);
+        $query->execute();
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un nouveau plat    
-    /**
-     * ajouterPlat
-     *
-     * @param  mixed $nom
-     * @param  mixed $ingredients
-     * @param  mixed $club_id
-     * @return void
-     */
-    public function ajouterPlat($nom, $ingredients, $club_id): void
+    // Ajouter un nouveau plat
+    public function ajouterPlat($nom, $club_id, $ingredients): void
     {
-        try {
-            $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
-            $query->bindParam(':nom', $nom);
-            $query->bindParam(':club_id', $club_id);
-            $query->execute();
+        $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
+        $query->bindParam(':nom', $nom);
+        $query->bindParam(':club_id', $club_id);
+        $query->execute();
 
-            $plat_id = $this->db->lastInsertId();
-            $this->ajouterIngredientsAuPlat($plat_id, $ingredients);
-        } catch (PDOException $e) {
-            echo 'Erreur d\'ajout du plat : ' . $e->getMessage();
-        }
+        $plat_id = $this->db->lastInsertId();
+        $this->ajouterIngredientsAuPlat($plat_id, $ingredients);
     }
 
-    
-    /**
-     * modifierPlat
-     *
-     * @param  mixed $id
-     * @param  mixed $nom
-     * @param  mixed $ingredients
-     * @param  mixed $club_id
-     * @return void
-     */
-    public function modifierPlat($id, $nom, $ingredients, $club_id): void
+    // Modifier un plat existant
+    public function modifierPlat($id, $nom, $club_id, $ingredients): void
     {
         $query = $this->db->prepare('UPDATE plat SET nom = :nom, club_id = :club_id WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -91,58 +55,17 @@ class PlatModel
         $this->ajouterIngredientsAuPlat($id, $ingredients);
     }
 
-    // Supprimer un plat    
-    /**
-     * supprimerPlat
-     *
-     * @param  mixed $id
-     * @return void
-     */
+    // Supprimer un plat
     public function supprimerPlat($id): void
     {
+        $this->supprimerIngredientsDuPlat($id);
         $query = $this->db->prepare('DELETE FROM plat WHERE id = :id');
         $query->bindParam(':id', $id);
         $query->execute();
     }
 
-    // Récupérer un plat par son ID    
-    /**
-     * getPlatById
-     *
-     * @param  mixed $id
-     * @return void
-     */
-    public function getPlatById($id): mixed
-    {
-        $query = $this->db->prepare('SELECT * FROM plat WHERE id = :id');
-        $query->bindParam(':id', $id);
-        $query->execute();
-        return $query->fetch(PDO::FETCH_ASSOC);
-    }
-
-    // Récupérer les plats par club    
-    /**
-     * getPlatsByClub
-     *
-     * @param  mixed $club_id
-     * @return void
-     */
-    public function getPlatsByClub($club_id): array
-    {
-        $query = $this->db->prepare('SELECT * FROM plat WHERE club_id = :club_id');
-        $query->bindParam(':club_id', $club_id);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
-    /**
-     * ajouterIngredientsAuPlat
-     *
-     * @param  mixed $plat_id
-     * @param  mixed $ingredients
-     * @return void
-     */
-    public function ajouterIngredientsAuPlat($plat_id, $ingredients)
+    // Ajouter des ingrédients à un plat
+    private function ajouterIngredientsAuPlat($plat_id, $ingredients): void
     {
         foreach ($ingredients as $ingredient_id) {
             $query = $this->db->prepare('INSERT INTO plat_ingredient (plat_id, ingredient_id) VALUES (:plat_id, :ingredient_id)');
@@ -151,39 +74,42 @@ class PlatModel
             $query->execute();
         }
     }
-    // Récupérer les ingrédients d'un plat à partir de la table associative
-    // Récupérer les ingrédients d'un plat à partir de la table associative    
-    /**
-     * getIngredientsByPlat
-     *
-     * @param  mixed $plat_id
-     * @return void
-     */
-    public function getIngredientsByPlat($plat_id): array
-    {
-        $query = $this->db->prepare('
-        SELECT ingredient.nom, ingredient.risque 
-        FROM plat_ingredient 
-        JOIN ingredient ON plat_ingredient.ingredient_id = ingredient.id 
-        WHERE plat_ingredient.plat_id = :plat_id
-    ');
-        $query->bindParam(':plat_id', $plat_id);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);  // Renvoie les noms et l'info "aliment_a_risque"
-    }
 
-    
-    /**
-     * supprimerIngredientsDuPlat
-     *
-     * @param  mixed $plat_id
-     * @return void
-     */
-    public function supprimerIngredientsDuPlat($plat_id): void
+    // Supprimer les ingrédients d'un plat
+    private function supprimerIngredientsDuPlat($plat_id): void
     {
         $query = $this->db->prepare('DELETE FROM plat_ingredient WHERE plat_id = :plat_id');
         $query->bindParam(':plat_id', $plat_id);
         $query->execute();
     }
 
+    // Récupérer les ingrédients d'un plat
+    public function getIngredientsByPlat($plat_id): array
+    {
+        $query = $this->db->prepare('
+            SELECT ingredient.nom, ingredient.id, ingredient.risque 
+            FROM plat_ingredient 
+            JOIN ingredient ON plat_ingredient.ingredient_id = ingredient.id 
+            WHERE plat_ingredient.plat_id = :plat_id
+        ');
+        $query->bindParam(':plat_id', $plat_id);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // **Nouvelle méthode : Récupérer les plats par club**
+    public function getPlatsByClub($club_id): array
+    {
+        $query = $this->db->prepare('SELECT * FROM plat WHERE club_id = :club_id');
+        $query->bindParam(':club_id', $club_id);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Récupérer tous les ingrédients disponibles
+    public function getAllIngredients(): array
+    {
+        $query = $this->db->query('SELECT * FROM ingredient');
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

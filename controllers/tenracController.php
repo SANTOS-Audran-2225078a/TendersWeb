@@ -1,32 +1,16 @@
 <?php
 
 require_once 'models/tenracModel.php';
-require_once 'models/repasModel.php';
 
-/**
- * tenracController
- */
 class tenracController
-{    
-    /**
-     * index
-     *
-     * @return void
-     */
+{
     public function index(): void
     {
-        require_once 'views/tenrac/gestion_tenrac.php';
+        require_once 'views/login.php';
     }
-    
-    /**
-     * connecter
-     *
-     * @return void
-     */
+
     public function connecter(): void
     {
-       // session_start(); // Démarre la session une fois
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nom = $_POST['nom'];
             $motDePasse = $_POST['password'];
@@ -35,65 +19,43 @@ class tenracController
             $tenrac = $tenracModel->verifierTenrac($nom, $motDePasse);
 
             if ($tenrac) {
-                // Connexion réussie, stockage de l'utilisateur en session
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start(); // Démarre la session uniquement si elle n'est pas déjà démarrée
+                }
+
                 $_SESSION['tenrac'] = $tenrac;
-                header('Location: /tenrac/acceuil'); // Redirige vers la page d'accueil relative
+                header('Location: /tenrac/acceuil');
                 exit();
             } else {
-                // Échec de la connexion, définir le message d'erreur
                 $messageErreur = "Identifiant ou mot de passe incorrect.";
-                require_once 'views/login.php'; // Réafficher la vue de connexion
+                require_once 'views/login.php';
             }
         }
     }
 
-    
-    /**
-     * acceuil
-     *
-     * @return void
-     */
     public function acceuil(): void
     {
-        // Vérifier si l'utilisateur est connecté
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); // Démarre la session uniquement si elle n'est pas déjà démarrée
+        }
+
         if (isset($_SESSION['tenrac'])) {
             $tenrac = $_SESSION['tenrac'];
-
-            // Récupérer les repas importants
-            $repasModel = new RepasModel();
-            $repasImportant = $repasModel->getRepasImportant(); // Méthode à ajouter dans le modèle
-
-            $data = [
-                'nom' => $tenrac['nom'],
-                'email' => $tenrac['email'],
-                'tel' => $tenrac['tel'],
-                'adresse' => $tenrac['adresse'],
-                'grade' => $tenrac['grade'],
-                'repasImportant' => $repasImportant // Ajouter les repas dans la vue
-            ];
-
-            // Charger la vue avec les données
             require_once 'views/acceuil.php';
         } else {
-            // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
             header('Location: /login');
             exit();
         }
     }
 
-    
-    /**
-     * deconnecter
-     *
-     * @return void
-     */
     public function deconnecter(): void
     {
-        session_start();
-        $_SESSION = []; // Réinitialiser toutes les variables de session
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); // Démarre la session uniquement si elle n'est pas déjà démarrée
+        }
+
         session_destroy();
         header('Location: /');
         exit();
     }
-
 }
