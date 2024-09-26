@@ -159,4 +159,23 @@ class PlatModel
         $query = $this->db->query('SELECT * FROM ingredient');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function rechercherPlatsParIngredients($query): array
+{
+    // Requête SQL pour rechercher les plats contenant un ou plusieurs ingrédients partiels
+    $searchQuery = "%" . $query . "%";
+
+    $query = $this->db->prepare("
+        SELECT DISTINCT p.* 
+        FROM plat p
+        JOIN plat_ingredient pi ON p.id = pi.plat_id
+        JOIN ingredient i ON pi.ingredient_id = i.id
+        WHERE i.nom LIKE :query
+    ");
+    $query->bindParam(':query', $searchQuery);
+    $query->execute();
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

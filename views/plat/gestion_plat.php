@@ -28,6 +28,11 @@
 
 <h1><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></h1>
 
+<!-- Champ de recherche dynamique -->
+<h2>Recherche de plats par ingrédients ou nom</h2>
+<input type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
+
+<!-- Formulaire pour ajouter ou modifier un plat -->
 <form action="<?= isset($plat) ? '/plat/modifierPlat' : '/plat/ajouterPlat' ?>" method="POST" class="boxForm">
     <?php if (isset($plat)): ?>
         <input type="hidden" name="id" value="<?= $plat['id'] ?>">
@@ -91,22 +96,21 @@
     <?php foreach ($clubs as $club): ?>
         <div class="box">
         <h3><?= htmlspecialchars($club['nom']) ?></h3>
-        <ul>
+        <ul class="plat-list">
             <?php foreach ($plats as $plat): ?>
                 <?php if ($plat['club_id'] == $club['id']): ?>
-                    <li class="plat">
+                    <li class="plat" data-ingredients="<?= strtolower(implode(' ', array_column($platModel->getIngredientsByPlat($plat['id']), 'nom'))) ?>" data-plat-name="<?= strtolower(htmlspecialchars($plat['nom'])) ?>">
                         <?= htmlspecialchars($plat['nom']) ?>
                         <a href="/plat/editer/<?= $plat['id'] ?>">Modifier</a> | 
                         <a href="/plat/supprimer/<?= $plat['id'] ?>">Supprimer</a>
                         <div class="ingredients-text">
                             Ingrédients : 
-                            <?php $platIngredients = $platModel->getIngredientsByPlat($plat['id']); ?>
-                            <?= !empty($platIngredients) ? implode(', ', array_map(fn($ing) => htmlspecialchars($ing['nom']), $platIngredients)) : 'Aucun ingrédient' ?>
+                            <?= !empty($platModel->getIngredientsByPlat($plat['id'])) ? implode(', ', array_map(fn($ing) => htmlspecialchars($ing['nom']), $platModel->getIngredientsByPlat($plat['id']))) : 'Aucun ingrédient' ?>
                         </div>
                     </li>
                 <?php endif; ?>
             <?php endforeach; ?>
-        </ul> 
+        </ul>
         <?php if (empty(array_filter($plats, fn($p) => $p['club_id'] == $club['id']))): ?>
             <p>Aucun plat pour ce club.</p>
         <?php endif; ?>
@@ -118,6 +122,22 @@
 </div>
 
 <script>
+    document.getElementById('search-input').addEventListener('input', function() {
+        var searchQuery = this.value.toLowerCase();
+        var plats = document.querySelectorAll('.plat');
+
+        plats.forEach(function(plat) {
+            var platName = plat.getAttribute('data-plat-name');
+            var ingredients = plat.getAttribute('data-ingredients');
+
+            if (platName.includes(searchQuery) || ingredients.includes(searchQuery)) {
+                plat.style.display = 'list-item';
+            } else {
+                plat.style.display = 'none';
+            }
+        });
+    });
+
     function ajouterIngredient() {
         var container = document.getElementById('ingredients-container');
         var newRow = document.createElement('div');

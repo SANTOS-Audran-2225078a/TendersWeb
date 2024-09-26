@@ -74,4 +74,26 @@ class PlatController
         $platModel->supprimerPlat($id);
         header('Location: /plat');
     }
+
+    public function rechercher(): void
+{
+    if (isset($_GET['query'])) {
+        $platModel = new PlatModel();
+        $clubModel = new ClubModel();
+
+        $query = $_GET['query'];
+
+        // Récupérer les plats en fonction des ingrédients (partiels ou complets)
+        $plats = $platModel->rechercherPlatsParIngredients($query);
+        $clubs = $clubModel->getAllClubs();
+        $ingredients = $platModel->getAllIngredients(); 
+        $sauces = $platModel->getAllSauces();
+
+        // Afficher les résultats de recherche dans la même vue
+        require_once 'views/plat/gestion_plat.php';
+    } else {
+        header('Location: /plat');
+    }
+}
+
 }
