@@ -30,7 +30,7 @@ class TenracModel
             return null; // Retourne null si aucune correspondance n'est trouvée
         }
     } 
-
+ 
     // Récupérer tous les tenracs (utilisé pour l'affichage des adresses dans la gestion des repas)
     public function getAllTenracs(): array
     {

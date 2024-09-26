@@ -34,21 +34,25 @@ class PlatController
     }
 
     public function editer($id): void
-    {
-        $platModel = new PlatModel();
-        $clubModel = new ClubModel();
-        
-        // Récupérer le plat par ID
-        $plat = $platModel->getPlatById($id);
-        
-        // Récupérer les ingrédients du plat et tous les clubs
-        $ingredients = $platModel->getAllIngredients();
-        $platIngredients = $platModel->getIngredientsByPlat($id);
-        $clubs = $clubModel->getAllClubs();
+{
+    $platModel = new PlatModel();
+    $clubModel = new ClubModel();
+    
+    // Récupérer le plat par ID
+    $plat = $platModel->getPlatById($id);
+    
+    // Récupérer les ingrédients du plat et tous les clubs 
+    $ingredients = $platModel->getAllIngredients();
+    $platIngredients = $platModel->getIngredientsByPlat($id);
+    $clubs = $clubModel->getAllClubs();
 
-        // Passer les variables à la vue
-        require_once 'views/plat/gestion_plat.php';
-    }
+    // **Récupérer tous les plats** (Ajout)
+    $plats = $platModel->getAllPlats();  // Cette ligne permet de passer les plats à la vue
+
+    // Passer les variables à la vue
+    require_once 'views/plat/gestion_plat.php';
+}
+
 
     public function modifierPlat(): void
     {

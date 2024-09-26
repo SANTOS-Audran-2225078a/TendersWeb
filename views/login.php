@@ -13,7 +13,7 @@ if (isset($_SESSION['tenrac'])) {
     echo "<p>Vous êtes déjà connecté en tant que " . $_SESSION['tenrac']['nom'] . ".</p>";
 }
 
-?>
+?> 
 
 <!DOCTYPE html>
 <html> 

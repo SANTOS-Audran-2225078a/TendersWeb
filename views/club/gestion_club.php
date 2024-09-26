@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
-<header>
+<header> 
         <!-- Bouton pour accéder à l'accueil' -->
         <a href="../views/accueil.php">
             <button>Accueil</button>

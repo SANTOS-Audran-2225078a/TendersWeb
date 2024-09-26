@@ -72,7 +72,31 @@ class RepasController
             echo 'Formulaire incomplet';
         }
     }
+    public function supprimer($id): void
+{
+    if ($id) {
+        var_dump($id); // Ajout temporaire pour voir si l'ID est bien récupéré
+        $repasModel = new RepasModel();
+        
+        // Vérifier si le repas existe avant de tenter de le supprimer
+        $repas = $repasModel->getRepasById($id);
+        
+        if ($repas) {
+            $repasModel->supprimerRepas($id);
+            header('Location: /repas');
+            exit(); 
+        } else {
+            echo "Repas introuvable avec l'ID : $id";
+        }
+    } else {
+        echo "Aucun ID de repas fourni pour la suppression.";
+    }
+}
 
+
+
+
+    
     // Charger les plats pour un club donné (appelé via JavaScript)
     public function getPlatsByClub($club_id): void
     {

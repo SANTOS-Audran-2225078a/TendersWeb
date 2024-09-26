@@ -6,7 +6,7 @@ class tenracController
 {
     public function index(): void
 {
-    if (session_status() === PHP_SESSION_NONE) {
+    if (session_status() === PHP_SESSION_NONE) { 
         session_start(); // Vérifie si une session est active
     }
 

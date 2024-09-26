@@ -14,7 +14,7 @@ class PlatModel
         }
     }
 
-    // Récupérer tous les plats
+    // Récupérer tous les plats 
     public function getAllPlats(): array
     {
         $query = $this->db->query('SELECT * FROM plat');

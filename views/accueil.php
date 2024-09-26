@@ -11,7 +11,7 @@ if (isset($_SESSION['tenrac'])) {
 ?>
 <!DOCTYPE html>
 <html>
-
+ 
 <head> 
     <title>Accueil</title>
     <link rel="icon" href="../favicon.ico">
