@@ -13,7 +13,7 @@ class RepasModel
             echo 'Erreur de connexion : ' . $e->getMessage();
         }
         
-    }
+    } 
     // Récupérer tous les repas
     // Récupérer tous les repas avec le nom du club
 public function getAllRepas(): array

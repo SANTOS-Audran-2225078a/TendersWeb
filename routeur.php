@@ -33,7 +33,7 @@ class Routeur
         } elseif ($urlParts[0] === 'club') {
             $controleurNom = 'ClubController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
-        } elseif ($urlParts[0] === 'plat') {
+        } elseif ($urlParts[0] === 'plat') { 
             $controleurNom = 'PlatController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
         } elseif ($urlParts[0] === 'repas') {

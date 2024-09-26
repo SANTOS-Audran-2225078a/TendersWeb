@@ -27,7 +27,7 @@
 <header>
         <!-- Bouton pour accéder à l'accueil' -->
         <a href="../views/accueil.php">
-            <button>Accueil</button>
+            <button>Accueil</button> 
         </a>
 
         <!-- Bouton pour accéder à la gestion des plats -->
