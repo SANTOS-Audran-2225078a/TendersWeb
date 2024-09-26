@@ -84,8 +84,12 @@
             <?php endif; ?>
         </select><br>
         <label>Ordre ID :</label>
-        <input type="number" name="ordre_id" value="<?= isset($tenrac['ordre_id']) ? htmlspecialchars($tenrac['ordre_id']) : '' ?>" required><br>
-        <label style="vertical-align: top;">Dignité :</label>
+        <!-- <input type="number" name="ordre_id" value="<?= isset($tenrac['ordre_id']) ? htmlspecialchars($tenrac['ordre_id']) : '' ?>" required><br>
+        <label style="vertical-align: top;">Dignité :</label> -->
+        <select name="ordre">
+            <option value="true">Oui</option>
+            <option value="false">Non</option>
+        </select><br>
         <select name="dignite" required>
             <option value="Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Maitre' ? 'selected' : '' ?>>Maitre</option>
             <option value="Grand Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Maitre' ? 'selected' : '' ?>>Grand Maitre</option>
