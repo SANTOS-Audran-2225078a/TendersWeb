@@ -37,29 +37,33 @@ public function getAllRepas(): array
     }
 
     // Ajouter un nouveau repas
-    public function ajouterRepas($adresse, $date, $participants, $plats, $chefDeRencontre): void
-    {
-        $query = $this->db->prepare('INSERT INTO repas (adresse, date, participants, plats, chef_de_rencontre) VALUES (:adresse, :date, :participants, :plats, :chef_de_rencontre)');
-        $query->bindParam(':adresse', $adresse);
-        $query->bindParam(':date', $date);
-        $query->bindParam(':participants', $participants);
-        $query->bindParam(':plats', $plats);
-        $query->bindParam(':chef_de_rencontre', $chefDeRencontre);
-        $query->execute();
-    }
+    public function ajouterRepas($nom, $adresse, $date, $participants, $plats, $chefDeRencontre): void
+{
+    $query = $this->db->prepare('INSERT INTO repas (nom, adresse, date, participants, plats, chef_de_rencontre) 
+                                 VALUES (:nom, :adresse, :date, :participants, :plats, :chef_de_rencontre)');
+    $query->bindParam(':nom', $nom);
+    $query->bindParam(':adresse', $adresse);
+    $query->bindParam(':date', $date);
+    $query->bindParam(':participants', $participants);
+    $query->bindParam(':plats', $plats);
+    $query->bindParam(':chef_de_rencontre', $chefDeRencontre);
+    $query->execute();
+}
 
-    // Modifier un repas existant
-    public function modifierRepas($id, $adresse, $date, $participants, $plats, $chefDeRencontre): void
-    {
-        $query = $this->db->prepare('UPDATE repas SET adresse = :adresse, date = :date, participants = :participants, plats = :plats, chef_de_rencontre = :chef_de_rencontre WHERE id = :id');
-        $query->bindParam(':id', $id);
-        $query->bindParam(':adresse', $adresse);
-        $query->bindParam(':date', $date);
-        $query->bindParam(':participants', $participants);
-        $query->bindParam(':plats', $plats);
-        $query->bindParam(':chef_de_rencontre', $chefDeRencontre);
-        $query->execute();
-    }
+public function modifierRepas($id, $nom, $adresse, $date, $participants, $plats, $chefDeRencontre): void
+{
+    $query = $this->db->prepare('UPDATE repas SET nom = :nom, adresse = :adresse, date = :date, participants = :participants, plats = :plats, chef_de_rencontre = :chef_de_rencontre WHERE id = :id');
+    $query->bindParam(':id', $id);
+    $query->bindParam(':nom', $nom);
+    $query->bindParam(':adresse', $adresse);
+    $query->bindParam(':date', $date);
+    $query->bindParam(':participants', $participants);
+    $query->bindParam(':plats', $plats);
+    $query->bindParam(':chef_de_rencontre', $chefDeRencontre);
+    $query->execute();
+}
+
+
 
     // Supprimer un repas 
     public function supprimerRepas($id): void

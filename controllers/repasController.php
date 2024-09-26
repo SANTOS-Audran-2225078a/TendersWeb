@@ -28,21 +28,21 @@ class RepasController
     }
 
     // Enregistrer un nouveau repas
-    public function sauvegarder(): void
+    // Enregistrer un nouveau repas
+public function sauvegarder(): void
 {
-    if (isset($_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
+    if (isset($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
         $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
 
-        // Afficher les données pour déboguer
-        var_dump($_POST); // Supprime ceci après avoir confirmé que tout est correct
-
+        // Appel à la méthode ajouterRepas avec tous les arguments requis
         $repasModel = new RepasModel();
-        $repasModel->ajouterRepas($_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
+        $repasModel->ajouterRepas($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
         header('Location: /repas');
     } else {
         echo 'Formulaire incomplet';
     }
-} 
+}
+
 
  
     // Modifier un repas existant
@@ -62,16 +62,19 @@ class RepasController
 
     // Enregistrer les modifications d'un repas
     public function modifier(): void
-    {
-        if (isset($_POST['id'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
-            $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
-            $repasModel = new RepasModel();
-            $repasModel->modifierRepas($_POST['id'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
-            header('Location: /repas');
-        } else {
-            echo 'Formulaire incomplet';
-        }
+{
+    if (isset($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
+        $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
+        $repasModel = new RepasModel();
+
+        // Appel à la méthode modifierRepas avec tous les arguments requis
+        $repasModel->modifierRepas($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
+        header('Location: /repas');
+    } else {
+        echo 'Formulaire incomplet';
     }
+}
+
     public function supprimer($id): void
 {
     if ($id) {
