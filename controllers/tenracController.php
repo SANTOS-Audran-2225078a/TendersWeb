@@ -1,46 +1,47 @@
 <?php
 
 require_once 'models/tenracModel.php';
+require_once 'models/clubModel.php';
 
 class tenracController
 {
     public function index(): void
-{
-    if (session_status() === PHP_SESSION_NONE) { 
-        session_start(); // Vérifie si une session est active
+    {
+        if (session_status() === PHP_SESSION_NONE) { 
+            session_start(); // Vérifie si une session est active
+        }
+
+        // Si l'utilisateur est connecté, rediriger vers la page de gestion des tenracs
+        if (isset($_SESSION['tenrac'])) {
+            require_once 'views/accueil.php'; // Affiche la page de gestion des tenracs
+        } else {
+            // Si l'utilisateur n'est pas connecté, afficher la page de connexion
+            require_once 'views/login.php';
+        } 
     }
 
-    // Si l'utilisateur est connecté, rediriger vers la page de gestion des tenracs
-    if (isset($_SESSION['tenrac'])) {
-        /*$tenracModel = new TenracModel();
-        $tenracs = $tenracModel->getAllTenracs(); // Récupère tous les tenracs*/
-        require_once 'views/accueil.php'; // Affiche la page de gestion des tenracs
-    } else {
-        // Si l'utilisateur n'est pas connecté, afficher la page de connexion
-        require_once 'views/login.php';
-    } 
-}
+    public function index2(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); // Vérifie si une session est active
+        }
 
-public function index2(): void
-{
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start(); // Vérifie si une session est active
+        if (isset($_SESSION['tenrac'])) {
+            $tenracModel = new TenracModel();
+            $tenracs = $tenracModel->getAllTenracs(); // Récupère tous les tenracs
+
+            $clubModel = new ClubModel();
+            $clubs = $clubModel->getAllClubs(); // Récupère tous les clubs
+
+            require_once 'views/tenrac/gestion_tenrac.php'; // Affiche la page de gestion des tenracs
+        } else {
+            require_once 'views/login.php';
+        } 
     }
-
-    // Si l'utilisateur est connecté, rediriger vers la page de gestion des tenracs
-    if (isset($_SESSION['tenrac'])) {
-        $tenracModel = new TenracModel();
-        $tenracs = $tenracModel->getAllTenracs(); // Récupère tous les tenracs*/
-        require_once 'views/tenrac/gestion_tenrac.php'; // Affiche la page de gestion des tenracs
-    } else {
-        // Si l'utilisateur n'est pas connecté, afficher la page de connexion
-        require_once 'views/login.php';
-    } 
-}
 
     public function connecter(): void
     {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nom = $_POST['nom'];
             $motDePasse = $_POST['password'];
 
@@ -55,7 +56,7 @@ public function index2(): void
                 // Stocker l'utilisateur dans la session
                 $_SESSION['tenrac'] = $tenrac;
 
-                 header('Location: /tenrac/accueil');
+                header('Location: /tenrac/accueil');
                 exit();
             } else {
                 $messageErreur = "Identifiant ou mot de passe incorrect.";
@@ -90,4 +91,32 @@ public function index2(): void
         exit();
     }
 
+    public function sauvegarder(): void
+    {
+        if (isset($_POST['nom'], $_POST['adresse'], $_POST['email'], $_POST['password'], $_POST['tel'])) {
+            $tenracModel = new TenracModel();
+            $tenracData = [
+                'nom' => $_POST['nom'],
+                'adresse' => $_POST['adresse'],
+                'email' => $_POST['email'],
+                'password' => $_POST['password'],
+                'tel' => $_POST['tel'],
+                'club_id' => !empty($_POST['club_id']) ? $_POST['club_id'] : null,
+                'ordre_id' => !empty($_POST['ordre_id']) ? $_POST['ordre_id'] : null,
+            ];
+
+            // Si on est en mode édition (id existant), on met à jour
+            if (isset($_POST['id']) && $_POST['id'] !== '') {
+                $tenracModel->modifierTenrac($_POST['id'], $tenracData);
+            } else {
+                // Sinon on ajoute un nouveau Tenrac
+                $tenracModel->ajouterTenrac($tenracData);
+            }
+
+            header('Location: /tenrac');
+            exit();
+        } else {
+            echo 'Formulaire incomplet';
+        } 
+    }
 }
