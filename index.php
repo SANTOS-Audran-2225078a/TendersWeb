@@ -1,7 +1,11 @@
 <?php
+
+/*phpinfo();
+exit();*/
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 // Autoload les classes (Modèle, Vue, Contrôleur)
 require_once 'routeur.php';
 ini_set('display_errors', 1);

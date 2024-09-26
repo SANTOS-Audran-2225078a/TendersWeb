@@ -26,7 +26,7 @@ class Routeur
             $controleurNom = 'RepasController';
             $action = 'getPlatsByClub';
             $param = $urlParts[2];
-        } elseif ($urlParts[0] === 'tenrac' && isset($urlParts[1]) && $urlParts[1] === 'index') {
+        } elseif ($urlParts[0] === 'tenrac' && isset($urlParts[1]) && $urlParts[1] === 'index2') {
             // Route pour accéder à la page d'accueil des tenracs
             $controleurNom = 'tenracController';
             $action = 'index'; 
@@ -41,7 +41,7 @@ class Routeur
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
         } elseif ($urlParts[0] === 'tenrac') {
             $controleurNom = 'tenracController';
-            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index2';
         } else {
             // Si aucune route ne correspond, retourne une erreur 404
             $this->pageNotFound();

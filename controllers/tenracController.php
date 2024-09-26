@@ -12,15 +12,31 @@ class tenracController
 
     // Si l'utilisateur est connecté, rediriger vers la page de gestion des tenracs
     if (isset($_SESSION['tenrac'])) {
-        $tenracModel = new TenracModel();
-        $tenracs = $tenracModel->getAllTenracs(); // Récupère tous les tenracs
-        require_once 'views/tenrac/gestion_tenrac.php'; // Affiche la page de gestion des tenracs
+        /*$tenracModel = new TenracModel();
+        $tenracs = $tenracModel->getAllTenracs(); // Récupère tous les tenracs*/
+        require_once 'views/accueil.php'; // Affiche la page de gestion des tenracs
     } else {
         // Si l'utilisateur n'est pas connecté, afficher la page de connexion
         require_once 'views/login.php';
     } 
 }
 
+public function index2(): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start(); // Vérifie si une session est active
+    }
+
+    // Si l'utilisateur est connecté, rediriger vers la page de gestion des tenracs
+    if (isset($_SESSION['tenrac'])) {
+        $tenracModel = new TenracModel();
+        $tenracs = $tenracModel->getAllTenracs(); // Récupère tous les tenracs*/
+        require_once 'views/tenrac/gestion_tenrac.php'; // Affiche la page de gestion des tenracs
+    } else {
+        // Si l'utilisateur n'est pas connecté, afficher la page de connexion
+        require_once 'views/login.php';
+    } 
+}
 
     public function connecter(): void
     {
