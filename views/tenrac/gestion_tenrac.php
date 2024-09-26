@@ -44,8 +44,19 @@
             <option value="Protecteur" <?= isset($tenrac['titre']) && $tenrac['titre'] == 'Protecteur' ? 'selected' : '' ?>>Protecteur</option>
             <option value="Honorable" <?= isset($tenrac['titre']) && $tenrac['titre'] == 'Honorable' ? 'selected' : '' ?>>Honorable</option>
         </select><br>
-        <label>Club ID :</label>
-        <input type="number" name="club_id" value="<?= isset($tenrac['club_id']) ? htmlspecialchars($tenrac['club_id']) : '' ?>" required><br>
+        <label>Club :</label>
+        <select name="club" onchange="chargerClub(this.value)" required>
+        <option value="">Sélectionnez un club</option>
+            <?php if (!empty($clubs)): ?>
+                <?php foreach ($clubs as $club): ?>
+                    <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($repas['club_id']) && $repas['club_id'] == $club['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
+        </option>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <option value="">Aucun club disponible</option>
+            <?php endif; ?>
+        </select><br>
         <label>Ordre ID :</label>
         <input type="number" name="ordre_id" value="<?= isset($tenrac['ordre_id']) ? htmlspecialchars($tenrac['ordre_id']) : '' ?>" required><br>
         <label style="vertical-align: top;">Dignité :</label>
