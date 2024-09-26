@@ -94,18 +94,49 @@ class tenracController
 
     // Méthode pour sauvegarder un Tenrac (ajout ou modification)
     // Enregistrer un nouveau repas
-public function sauvegarder(): void
+    public function sauvegarder(): void
 {
-    if (isset($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
-        $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
+    if (isset($_POST['nom'], $_POST['adresse'], $_POST['email'], $_POST['password'], $_POST['tel'], $_POST['grade'], $_POST['rang'], $_POST['titre'], $_POST['dignite'])) {
+        
+        // Vérifier que l'utilisateur ne peut pas sélectionner un club et un ordre en même temps
+        if (!empty($_POST['club_id']) && !empty($_POST['ordre_id'])) {
+            echo 'Erreur : Vous ne pouvez pas sélectionner à la fois un club et un ordre.';
+            return;
+        }
 
-        $repasModel = new RepasModel();
-        $repasModel->ajouterRepas($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
-        header('Location: /repas');
+        $tenracModel = new TenracModel();
+        $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hachage du mot de passe
+
+        $tenracData = [
+            'nom' => $_POST['nom'],
+            'adresse' => $_POST['adresse'],
+            'email' => $_POST['email'],
+            'password' => $passwordHash,
+            'tel' => $_POST['tel'],
+            'club_id' => !empty($_POST['club_id']) ? $_POST['club_id'] : null,
+            'ordre_id' => !empty($_POST['ordre_id']) ? $_POST['ordre_id'] : null,
+            'grade' => $_POST['grade'],
+            'rang' => $_POST['rang'],
+            'titre' => $_POST['titre'],
+            'dignite' => $_POST['dignite']
+        ];
+
+        // Si on est en mode édition (id existant), on met à jour
+        if (isset($_POST['id']) && $_POST['id'] !== '') {
+            $tenracModel->modifierTenrac($_POST['id'], $tenracData);
+        } else {
+            // Sinon on ajoute un nouveau Tenrac
+            $tenracModel->ajouterTenrac($tenracData);
+        }
+
+        header('Location: /tenrac');
+        exit();
     } else {
         echo 'Formulaire incomplet';
     }
 }
+
+    
 
 // Enregistrer les modifications d'un repas
 public function modifier(): void

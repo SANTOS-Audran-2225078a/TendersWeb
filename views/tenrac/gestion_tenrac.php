@@ -5,6 +5,35 @@
     <meta name="description" content="Vous êtes ici sur LE site des tenracs. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. Vous pourrez aussi en rajouter.">
     <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
+    <script>
+        // Désactive la sélection de club si "Oui" est sélectionné pour l'ordre et inversement
+        function checkSelection() {
+            const clubSelect = document.querySelector('select[name="club_id"]');
+            const ordreSelect = document.querySelector('select[name="ordre_id"]');
+
+            // Si un club est sélectionné, désactive l'option "Oui" dans l'ordre
+            clubSelect.addEventListener('change', function() {
+                if (clubSelect.value !== '') {
+                    ordreSelect.value = ""; // Réinitialiser l'ordre si un club est sélectionné
+                    ordreSelect.disabled = true; // Désactiver l'ordre
+                } else {
+                    ordreSelect.disabled = false; // Réactiver l'ordre si aucun club sélectionné
+                }
+            });
+
+            // Si "Oui" est sélectionné dans l'ordre, désactiver la sélection de club
+            ordreSelect.addEventListener('change', function() {
+                if (ordreSelect.value === '1') { // "Oui" sélectionné
+                    clubSelect.value = ""; // Réinitialiser le club si l'ordre est sélectionné
+                    clubSelect.disabled = true; // Désactiver la sélection de club
+                } else {
+                    clubSelect.disabled = false; // Si "Non" est sélectionné, réactiver la sélection de club
+                }
+            });
+        }
+
+        window.onload = checkSelection;
+    </script>
 </head>
 <body>
 
@@ -48,26 +77,25 @@
     <label>Email :</label>
     <input type="email" name="email" value="<?= isset($tenrac['email']) ? htmlspecialchars($tenrac['email']) : '' ?>" required><br>
 
-    <label style="vertical-align: top;">Grade :</label>
+    <label>Grade :</label>
     <select name="grade" required>
+        <!-- Options de grade -->
         <option value="Affilié" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Affilié' ? 'selected' : '' ?>>Affilié</option>
         <option value="Sympathisant" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Sympathisant' ? 'selected' : '' ?>>Sympathisant</option>
         <option value="Adhérent" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Adhérent' ? 'selected' : '' ?>>Adhérent</option>
         <option value="Chevalier" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Chevalier' ? 'selected' : '' ?>>Chevalier</option>
         <option value="Dame" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Dame' ? 'selected' : '' ?>>Dame</option>
         <option value="Grand Chevalier" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Grand Chevalier' ? 'selected' : '' ?>>Grand Chevalier</option>
-        <option value="Haute Dame" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Haute Dame' ? 'selected' : '' ?>>Haute Dame</option>
         <option value="Commandeur" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Commandeur' ? 'selected' : '' ?>>Commandeur</option>
-        <option value="Grand'Croix" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Grand\'Croix' ? 'selected' : '' ?>>Grand'Croix</option>
     </select><br>
 
-    <label style="vertical-align: top;">Rang :</label>
+    <label>Rang :</label>
     <select name="rang" required>
         <option value="Novice" <?= isset($tenrac['rang']) && $tenrac['rang'] == 'Novice' ? 'selected' : '' ?>>Novice</option>
         <option value="Compagnon" <?= isset($tenrac['rang']) && $tenrac['rang'] == 'Compagnon' ? 'selected' : '' ?>>Compagnon</option>
     </select><br>
 
-    <label style="vertical-align: top;">Titre :</label>
+    <label>Titre :</label>
     <select name="titre" required>
         <option value="Philanthrope" <?= isset($tenrac['titre']) && $tenrac['titre'] == 'Philanthrope' ? 'selected' : '' ?>>Philanthrope</option>
         <option value="Protecteur" <?= isset($tenrac['titre']) && $tenrac['titre'] == 'Protecteur' ? 'selected' : '' ?>>Protecteur</option>
@@ -75,26 +103,22 @@
     </select><br>
 
     <label>Club :</label>
-    <select name="club_id" required>
+    <select name="club_id">
         <option value="">Sélectionnez un club</option>
-        <?php if (!empty($clubs)): ?>
-            <?php foreach ($clubs as $club): ?>
-                <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($tenrac['club_id']) && $tenrac['club_id'] == $club['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
-                </option>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <option value="">Aucun club disponible</option>
-        <?php endif; ?>
+        <?php foreach ($clubs as $club): ?>
+            <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($tenrac['club_id']) && $tenrac['club_id'] == $club['id'] ? 'selected' : '' ?>>
+                <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
+            </option>
+        <?php endforeach; ?>
     </select><br>
 
     <label>Ordre :</label>
-    <select name="ordre_id" required>
+    <select name="ordre_id">
+        <option value="">Non</option>
         <option value="1" <?= isset($tenrac['ordre_id']) && $tenrac['ordre_id'] == 1 ? 'selected' : '' ?>>Oui</option>
-        <option value="0" <?= isset($tenrac['ordre_id']) && $tenrac['ordre_id'] == 0 ? 'selected' : '' ?>>Non</option>
     </select><br>
 
-    <label style="vertical-align: top;">Dignité :</label>
+    <label>Dignité :</label>
     <select name="dignite" required>
         <option value="Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Maitre' ? 'selected' : '' ?>>Maitre</option>
         <option value="Grand Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Maitre' ? 'selected' : '' ?>>Grand Maitre</option>
@@ -106,7 +130,7 @@
 
     <label>Téléphone :</label>
     <input type="text" name="tel" value="<?= isset($tenrac['tel']) ? htmlspecialchars($tenrac['tel']) : '' ?>" required><br>
-    
+
     <button type="submit">Sauvegarder</button>
 </form>
 
