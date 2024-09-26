@@ -57,7 +57,8 @@
         <?php endif; ?>
     <div class="box">
         <label>Adresse (Club) :</label>
-        <select name="club_id" onchange="chargerPlatsParClub(this.value)" required>
+        <select name="adresse" onchange="chargerPlatsParClub(this.value)" required>
+
             <option value="">Sélectionnez un club</option>
             <?php if (!empty($clubs)): ?>
                 <?php foreach ($clubs as $club): ?>
