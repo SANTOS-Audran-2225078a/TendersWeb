@@ -70,5 +70,26 @@ class TenracModel
             ':ordre_id' => $data['ordre_id']
         ]);
     }
+
+    public function supprimerTenrac($id): void
+{
+    $query = $this->db->prepare('DELETE FROM tenrac WHERE id = :id');
+    $query->bindParam(':id', $id);
+    $query->execute();
+}
+
+public function getTenracById(int $id): ?array
+{
+    $query = $this->db->prepare('SELECT * FROM tenrac WHERE id = :id');
+    $query->bindParam(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+
+    $tenrac = $query->fetch(PDO::FETCH_ASSOC);
+
+    return $tenrac ?: null;
+}
+
+
+
 }
  

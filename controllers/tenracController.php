@@ -11,12 +11,10 @@ class tenracController
             session_start(); // Vérifie si une session est active
         }
 
-        // Si l'utilisateur est connecté, rediriger vers la page de gestion des tenracs
         if (isset($_SESSION['tenrac'])) {
             require_once 'views/accueil.php'; // Affiche la page de gestion des tenracs
         } else {
-            // Si l'utilisateur n'est pas connecté, afficher la page de connexion
-            require_once 'views/login.php';
+            require_once 'views/login.php'; // Si non connecté, redirige vers la page de connexion
         } 
     }
 
@@ -91,6 +89,7 @@ class tenracController
         exit();
     }
 
+    // Méthode pour sauvegarder un Tenrac (ajout ou modification)
     public function sauvegarder(): void
     {
         if (isset($_POST['nom'], $_POST['adresse'], $_POST['email'], $_POST['password'], $_POST['tel'])) {
@@ -117,6 +116,46 @@ class tenracController
             exit();
         } else {
             echo 'Formulaire incomplet';
-        } 
+        }
     }
+
+    // Méthode pour supprimer un Tenrac
+    public function supprimer($id): void
+    {
+        if ($id) {
+            $tenracModel = new TenracModel();
+            $tenracModel->supprimerTenrac($id); // Appelle la méthode pour supprimer le Tenrac dans le modèle
+
+            header('Location: /tenrac'); // Redirige vers la gestion des tenracs après suppression
+            exit();
+        } else {
+            echo "ID non fourni pour la suppression.";
+        }
+    }
+
+    public function editer(int $id): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start(); // Démarre la session si elle n'est pas déjà démarrée
+    }
+
+    if (isset($_SESSION['tenrac'])) {
+        $tenracModel = new TenracModel();
+        $tenrac = $tenracModel->getTenracById($id); // Récupère le tenrac par son ID
+
+        if ($tenrac) {
+            $clubModel = new ClubModel();
+            $clubs = $clubModel->getAllClubs(); // Récupère tous les clubs pour afficher dans la liste déroulante
+
+            // Affiche la page de gestion du tenrac avec les données à modifier
+            require_once 'views/tenrac/gestion_tenrac.php';
+        } else {
+            echo "Aucun tenrac trouvé avec l'ID : " . $id;
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+}
+
 }
