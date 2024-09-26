@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Routeur
@@ -23,13 +22,30 @@ class Routeur
             $controleurNom = 'tenracController';
             $action = 'connecter';
         } elseif ($urlParts[0] === 'repas' && isset($urlParts[1]) && $urlParts[1] === 'getPlatsByClub' && isset($urlParts[2])) {
-            // Nouvelle route pour récupérer les plats d'un club en particulier
+            // Route pour récupérer les plats d'un club en particulier
             $controleurNom = 'RepasController';
             $action = 'getPlatsByClub';
             $param = $urlParts[2];
-        } else {
-            $controleurNom = !empty($urlParts[0]) ? $urlParts[0] . 'Controller' : 'ClubController'; // Pas de ucfirst()
+        } elseif ($urlParts[0] === 'tenrac' && isset($urlParts[1]) && $urlParts[1] === 'accueil') {
+            // Route pour accéder à la page d'accueil des tenracs
+            $controleurNom = 'tenracController';
+            $action = 'accueil';
+        } elseif ($urlParts[0] === 'club') {
+            $controleurNom = 'ClubController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+        } elseif ($urlParts[0] === 'plat') {
+            $controleurNom = 'PlatController';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+        } elseif ($urlParts[0] === 'repas') {
+            $controleurNom = 'RepasController';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+        } elseif ($urlParts[0] === 'tenrac') {
+            $controleurNom = 'tenracController';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+        } else {
+            // Si aucune route ne correspond, retourne une erreur 404
+            $this->pageNotFound();
+            return;
         }
 
         // Vérifier l'existence du fichier du contrôleur
@@ -37,9 +53,10 @@ class Routeur
             require_once "controllers/$controleurNom.php";
             $controleur = new $controleurNom();
 
+            // Vérifier si l'action existe dans le contrôleur
             if (method_exists($controleur, $action)) {
-                if (isset($urlParts[2])) {
-                    $controleur->$action($urlParts[2]); // Passe le paramètre si disponible
+                if (isset($param)) {
+                    $controleur->$action($param); // Passe le paramètre si disponible
                 } else {
                     $controleur->$action(); // Sans paramètre
                 }
@@ -50,5 +67,16 @@ class Routeur
             echo "Contrôleur $controleurNom non trouvé";
         }
     }
-}
 
+    /**
+     * pageNotFound
+     * Affiche une page d'erreur 404 si aucune route ne correspond
+     *
+     * @return void
+     */
+    private function pageNotFound(): void
+    {
+        http_response_code(404);
+        echo 'Erreur 404 : Page non trouvée';
+    }
+}

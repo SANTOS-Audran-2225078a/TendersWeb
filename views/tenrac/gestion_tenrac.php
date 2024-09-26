@@ -51,7 +51,7 @@
     </ul>
 
     <!-- Bouton Retour à l'accueil -->
-    <a href="/tenrac/acceuil">
+    <a href="/tenrac/accueil">
         <button>Retour à l'Accueil</button>
     </a>
 </body>

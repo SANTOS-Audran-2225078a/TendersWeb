@@ -26,7 +26,7 @@
 <body>
 <header>
         <!-- Bouton pour accéder à l'accueil' -->
-        <a href="../views/acceuil.php">
+        <a href="../views/accueil.php">
             <button>Accueil</button>
         </a>
 
