@@ -52,6 +52,11 @@ class Routeur
         } elseif ($urlParts[0] === 'tenrac') {
             $controleurNom = 'tenracController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index2';
+
+            // Vérifier si c'est une route pour l'édition ou suppression avec un ID
+            if (($action === 'editer' || $action === 'supprimer') && isset($urlParts[2])) {
+                $param = (int) $urlParts[2]; // Récupérer l'ID du tenrac
+            }
         } else {
             // Si aucune route ne correspond, retourne une erreur 404
             $this->pageNotFound();
@@ -68,7 +73,7 @@ class Routeur
                 if (isset($param)) {
                     // Ajouter un debug pour voir si le paramètre est bien passé
                     // var_dump($param); // Utiliser pour déboguer si nécessaire
-                    $controleur->$action($param); // Passe le paramètre (ex: ID du repas, club, plat)
+                    $controleur->$action($param); // Passe le paramètre (ex: ID du repas, club, plat, tenrac)
                 } else {
                     $controleur->$action(); // Appeler l'action sans paramètre
                 }
