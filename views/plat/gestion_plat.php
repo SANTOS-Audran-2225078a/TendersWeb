@@ -2,12 +2,40 @@
 <html>
 <head>
     <title><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></title>
+    <meta name="description" content="Vous êtes ici sur la page qui vous permez de consulter les différents plats,
+     vous pourrez aussi en rajouter, les modifier ou en supprimer.">
+    <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
+<header>
+        <!-- Bouton pour accéder à l'accueil' -->
+        <a href="../views/acceuil.php">
+            <button>Accueil</button>
+        </a>
+
+        <!-- Bouton pour accéder à la gestion des plats -->
+        <a href="/club">
+            <button>Gérer les Clubs</button>
+        </a>
+
+        <!-- Bouton pour accéder à la gestion des repas -->
+        <a href="/repas">
+            <button>Gérer les Repas</button>
+        </a>
+
+        <!-- Bouton pour accéder à ses infos personnelles-->
+        <a href="/tenrac">
+            <button>Les tenrac</button>
+        </a>
+
+        <!-- Bouton de déconnexion -->
+        <a href='/tenrac/deconnecter'>Se déconnecter</a>
+</header>
+
     <h1><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></h1>
 
     <!-- Formulaire pour ajouter ou modifier un plat -->
-    <form action="<?= isset($plat) ? '/plat/modifierPlat' : '/plat/ajouterPlat' ?>" method="POST">
+    <form action="<?= isset($plat) ? '/plat/modifierPlat' : '/plat/ajouterPlat' ?>" method="POST" class="box">
         <?php if (isset($plat)): ?>
             <input type="hidden" name="id" value="<?= $plat['id'] ?>">
         <?php endif; ?>
@@ -61,7 +89,9 @@
 
     <!-- Liste des plats existants par club -->
     <h2>Plats par Club</h2>
+    <div class="Liste">
     <?php foreach ($clubs as $club): ?>
+        <div class="box">
         <h3><?= htmlspecialchars($club['nom']) ?></h3>
         <ul>
             <?php foreach ($plats as $plat): ?>
@@ -77,12 +107,9 @@
         <?php if (empty(array_filter($plats, fn($p) => $p['club_id'] == $club['id']))): ?>
             <p>Aucun plat pour ce club.</p>
         <?php endif; ?>
+        </div>
     <?php endforeach; ?>
-
-    <!-- Bouton pour retourner à l'accueil -->
-    <a href="/tenrac/acceuil">
-        <button>Retour à l'accueil</button>
-    </a>
+    </div>
 
     <script>
         function ajouterIngredient() {

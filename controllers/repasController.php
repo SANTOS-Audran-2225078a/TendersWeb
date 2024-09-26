@@ -36,6 +36,7 @@ class RepasController
             $repasModel->ajouterRepas($_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
             header('Location: /repas');
         } else {
+            var_dump($_POST);
             echo 'Formulaire incomplet';
         }
     }

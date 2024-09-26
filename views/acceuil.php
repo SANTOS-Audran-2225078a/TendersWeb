@@ -51,12 +51,12 @@ if (isset($_SESSION['tenrac'])) {
     <img class="image" src="../_assets/images/tenders_raclette.webp" alt="Image de tenders à la raclette">
 </section>
 <section class="Liste">
-    <div>
+    <div class="box">
         <p>Bienvenue sur LE site Tenrac. Ici vous pourrez retrouver toutes les informations que vous voudrez sur notre communauté !
         Que ce soit nos clubs, nos repas, nos plats ou encore les différents tenracs qui composent notre communauté</p>
     </div>
 
-    <div>
+    <div class="box">
         <p> Ici vous pouvez observer un exemple de plat que vous pourrez trouver sur notre site.</p>
         <img class="image" src="../_assets/images/tacos_tender_mangue.webp">
     </div>

@@ -36,6 +36,7 @@ class ClubController
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté avant d'afficher
         $clubModel = new ClubModel();
         $clubs = $clubModel->getAllClubs();
+        $isEditing = false;
         require_once 'views/club/gestion_club.php';
     }
 
@@ -73,6 +74,7 @@ class ClubController
         $clubModel = new ClubModel();
         $club = $clubModel->getClubById($id);
         $clubs = $clubModel->getAllClubs();
+        $isEditing = true;
         require_once 'views/club/gestion_club.php';
     }
 

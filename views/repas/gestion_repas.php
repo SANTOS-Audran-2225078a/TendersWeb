@@ -2,41 +2,6 @@
 <html>
 <head>
     <title>Gestion des Repas</title>
-    <style>
-        /* Améliorer la lisibilité et la mise en page */
-        .repas-container {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        .repas-container h3 {
-            margin: 0;
-            padding: 0;
-            font-size: 18px;
-        }
-
-        .repas-details {
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .repas-details strong {
-            display: inline-block;
-            width: 100px;
-        }
-
-        .repas-actions {
-            margin-top: 10px;
-        }
-
-        .repas-actions a {
-            margin-right: 10px;
-        }
-
-    </style>
     <script>
         // Fonction pour charger les plats en fonction du club sélectionné
         function chargerPlatsParClub(clubId) {
@@ -54,8 +19,35 @@
                 });
         }
     </script>
+    <meta name="description" content="Vous êtes ici sur la page qui vous permez de consulter les différents repas,
+    vous pourrez aussi en rajouter, les modifier ou en supprimer.">
+    <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
+<header>
+        <!-- Bouton pour accéder à l'accueil' -->
+        <a href="../views/acceuil.php">
+            <button>Accueil</button>
+        </a>
+
+        <!-- Bouton pour accéder à la gestion des plats -->
+        <a href="/club">
+            <button>Gérer les Clubs</button>
+        </a>
+
+        <!-- Bouton pour accéder à la gestion des repas -->
+        <a href="/repas">
+            <button>Gérer les Repas</button>
+        </a>
+
+        <!-- Bouton pour accéder à ses infos personnelles-->
+        <a href="/tenrac">
+            <button>Les tenrac</button>
+        </a>
+
+        <!-- Bouton de déconnexion -->
+        <a href='/tenrac/deconnecter'>Se déconnecter</a>
+</header>
     <h1>Gestion des Repas</h1>
 
     <!-- Formulaire pour ajouter un nouveau repas -->
@@ -63,7 +55,7 @@
         <?php if (isset($repas['id'])): ?>
             <input type="hidden" name="id" value="<?= htmlspecialchars($repas['id']) ?>">
         <?php endif; ?>
-
+    <div class="box">
         <label>Adresse (Club) :</label>
         <select name="club_id" onchange="chargerPlatsParClub(this.value)" required>
             <option value="">Sélectionnez un club</option>
@@ -93,11 +85,11 @@
         </div><br>
 
         <button type="submit">Ajouter</button>
+    </div>
     </form>
 
     <!-- Liste des repas existants -->
     <h2>Repas existants</h2>
-    <div>
         <?php foreach ($repas as $r): ?>
             <div class="repas-container">
                 <h3>Repas #<?= htmlspecialchars($r['id']) ?></h3>
@@ -113,10 +105,5 @@
                 </div>
             </div>
         <?php endforeach; ?>
-    </div>
-
-    <a href="/tenrac/acceuil">
-        <button>Retour à l'accueil</button>
-    </a>
 </body>
 </html>
