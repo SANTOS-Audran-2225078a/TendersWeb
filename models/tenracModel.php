@@ -30,11 +30,45 @@ class TenracModel
             return null; // Retourne null si aucune correspondance n'est trouvée
         }
     } 
- 
+
     // Récupérer tous les tenracs (utilisé pour l'affichage des adresses dans la gestion des repas)
     public function getAllTenracs(): array
     {
         $query = $this->db->query('SELECT * FROM tenrac');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Ajouter un nouveau tenrac
+    public function ajouterTenrac($data): void
+    {
+        $query = $this->db->prepare('INSERT INTO tenrac (nom, adresse, email, password, tel, club_id, ordre_id) 
+                                     VALUES (:nom, :adresse, :email, :password, :tel, :club_id, :ordre_id)');
+        $query->execute([
+            ':nom' => $data['nom'],
+            ':adresse' => $data['adresse'],
+            ':email' => $data['email'],
+            ':password' => $data['password'],
+            ':tel' => $data['tel'],
+            ':club_id' => $data['club_id'],
+            ':ordre_id' => $data['ordre_id']
+        ]);
+    }
+
+    // Modifier un tenrac existant
+    public function modifierTenrac($id, $data): void
+    {
+        $query = $this->db->prepare('UPDATE tenrac SET nom = :nom, adresse = :adresse, email = :email, password = :password, 
+                                      tel = :tel, club_id = :club_id, ordre_id = :ordre_id WHERE id = :id');
+        $query->execute([
+            ':id' => $id,
+            ':nom' => $data['nom'],
+            ':adresse' => $data['adresse'],
+            ':email' => $data['email'],
+            ':password' => $data['password'],
+            ':tel' => $data['tel'],
+            ':club_id' => $data['club_id'],
+            ':ordre_id' => $data['ordre_id']
+        ]);
+    }
 }
+ 
