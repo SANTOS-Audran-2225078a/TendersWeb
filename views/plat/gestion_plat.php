@@ -16,7 +16,7 @@
         <!-- Bouton pour accéder à la gestion des plats -->
         <a href="/club">
             <button>Gérer les Clubs</button>
-        </a>
+        </a> 
 
         <!-- Bouton pour accéder à la gestion des repas -->
         <a href="/repas">

@@ -4,7 +4,7 @@ class PlatModel
 {
     private $db;
 
-    public function __construct()
+    public function __construct() 
     {
         try {
             $this->db = new PDO('mysql:host=mysql-iut.alwaysdata.net;dbname=iut_tendersweb', 'iut_tendrac', 'tendrac123.');

@@ -2,7 +2,7 @@
 
 require_once 'models/PlatModel.php';
 require_once 'models/ClubModel.php';
-
+ 
 class PlatController
 {
     // Afficher la liste des plats

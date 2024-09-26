@@ -18,7 +18,7 @@ class tenracController
     } else {
         // Si l'utilisateur n'est pas connecté, afficher la page de connexion
         require_once 'views/login.php';
-    }
+    } 
 }
 
 

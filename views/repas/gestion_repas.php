@@ -29,7 +29,7 @@
         <a href="../views/accueil.php">
             <button>Accueil</button> 
         </a>
-
+ 
         <!-- Bouton pour accéder à la gestion des plats -->
         <a href="/club">
             <button>Gérer les Clubs</button>

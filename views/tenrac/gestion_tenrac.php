@@ -54,5 +54,5 @@
     <a href="/tenrac/accueil">
         <button>Retour à l'Accueil</button>
     </a>
-</body>
+</body> 
 </html>

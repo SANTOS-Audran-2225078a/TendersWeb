@@ -19,7 +19,7 @@ if (isset($_SESSION['tenrac'])) {
     les plats et les repas. Vous pourrez aussi en rajouter.">
     <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
 </head> 
-
+ 
 <body>
     <header>
 

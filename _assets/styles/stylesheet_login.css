@@ -1,38 +1,35 @@
 body {
-    color: white;;
-    text-align: center;
-    border-radius: 30px;
-    background-color: #004080;
+    color: white; /* couleur texte */
+    text-align: center; /*alignement du texte*/
+    border-radius: 30px; /* épaisseur bordure*/
+    background-color: #004080; /*couleur de fond*/
     padding-top: 5px;
     padding-bottom: 5px;
-    margin-left: 20em;
-    margin-right: 20em;
-    border: solid;
-    border-color: #0073e6;
-    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 20em; /* largeur marge à gauche */
+    margin-right: 20em; /* largeur marge à droite*/
+    border: solid; /*définition de la bordure (sans dégradé, solide)*/
+    border-color: #0073e6;/*couleur bordure*/
+    font-family: Arial, Helvetica, sans-serif;/*police de caractères*/
 }button{
-    vertical-align: 25px;
-    border-color: #004080;
-    text-align: center;
+    vertical-align: 25px;/* alignement vertical*/
+    text-align: center;/*alignement texte*/
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+    border: none; /*pas de bordure*/
     background-color: #0073e6; /* Couleur des boutons */
-    color: white;
-    cursor: pointer;
+    color: white;/*couleur du texte*/
+    cursor: pointer; /*quel curseur souris quand passage dessus*/
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;/*transition quand appui*/
 }input{
     vertical-align: 25px;
-    background-color: white;
+    background-color: white;/*couleur de fond de l'entrée/espace de saisie clavier*/
 }label{
     vertical-align: 25px;
     color: white;
     justify-self: start;
 }form{
-/*     background-color: #004080; */
     text-align: center;
 }
 html{
-    background-color: #f4f4f4;
+    background-color: #f4f4f4;/* couleur de fond générale hors body, head etc...*/
 }

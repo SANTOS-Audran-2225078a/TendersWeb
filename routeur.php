@@ -29,7 +29,7 @@ class Routeur
         } elseif ($urlParts[0] === 'tenrac' && isset($urlParts[1]) && $urlParts[1] === 'index') {
             // Route pour accéder à la page d'accueil des tenracs
             $controleurNom = 'tenracController';
-            $action = 'index';
+            $action = 'index'; 
         } elseif ($urlParts[0] === 'club') {
             $controleurNom = 'ClubController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';

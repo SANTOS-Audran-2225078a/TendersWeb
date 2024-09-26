@@ -9,7 +9,7 @@ class ClubModel
     
     /**
      * __construct
-     *
+     * 
      * @return void
      */
     public function __construct()
