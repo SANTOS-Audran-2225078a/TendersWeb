@@ -92,5 +92,5 @@ class ClubController
         $clubModel->supprimerClubEtRelierTenracs($id);
         header('Location: /club');
         exit();
-    }
+    } 
 }

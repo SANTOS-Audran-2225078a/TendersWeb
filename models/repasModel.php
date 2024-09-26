@@ -56,7 +56,7 @@ public function modifierRepas($id, $nom, $adresse, $date, $participants, $plats,
     $query->bindParam(':id', $id);
     $query->bindParam(':nom', $nom);
     $query->bindParam(':adresse', $adresse);
-    $query->bindParam(':date', $date);
+    $query->bindParam(':date', $date); 
     $query->bindParam(':participants', $participants);
     $query->bindParam(':plats', $plats);
     $query->bindParam(':chef_de_rencontre', $chefDeRencontre);

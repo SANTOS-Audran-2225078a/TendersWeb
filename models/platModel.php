@@ -157,7 +157,7 @@ class PlatModel
     public function getAllIngredients(): array
     {
         $query = $this->db->query('SELECT * FROM ingredient');
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        return $query->fetchAll(PDO::FETCH_ASSOC); 
     }
 
     public function rechercherPlatsParIngredients($query): array

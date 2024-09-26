@@ -115,7 +115,7 @@ class ClubModel
      * @param  mixed $id
      * @return void
      */
-    public function getClubById($id): mixed
+    public function getClubById($id): mixed 
     {
         $query = $this->db->prepare('SELECT * FROM club WHERE id = :id');
         $query->bindParam(':id', $id);

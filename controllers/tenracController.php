@@ -132,7 +132,7 @@ class tenracController
         header('Location: /tenrac');
         exit();
     } else {
-        echo 'Formulaire incomplet';
+        echo 'Formulaire incomplet'; 
     }
 }
 

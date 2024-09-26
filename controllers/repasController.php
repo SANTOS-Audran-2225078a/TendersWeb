@@ -75,7 +75,7 @@ public function sauvegarder(): void
     }
 }
 
-    public function supprimer($id): void
+     public function supprimer($id): void
 {
     if ($id) {
         var_dump($id); // Ajout temporaire pour voir si l'ID est bien récupéré

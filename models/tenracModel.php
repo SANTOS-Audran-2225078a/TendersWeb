@@ -24,7 +24,7 @@ class TenracModel
     $tenrac = $query->fetch(PDO::FETCH_ASSOC);
 
     return $tenrac ?: null; // Retourne l'utilisateur ou null si non trouvé
-}
+} 
 
 
 
