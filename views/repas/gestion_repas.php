@@ -26,8 +26,8 @@
 <body>
 <header>
         <!-- Bouton pour accéder à l'accueil' -->
-        <a href="../views/acceuil.php">
-            <button>Accueil</button>
+        <a href="../views/accueil.php">
+            <button>Accueil</button> 
         </a>
 
         <!-- Bouton pour accéder à la gestion des plats -->
@@ -57,7 +57,8 @@
         <?php endif; ?>
     <div class="box">
         <label>Adresse (Club) :</label>
-        <select name="club_id" onchange="chargerPlatsParClub(this.value)" required>
+        <select name="adresse" onchange="chargerPlatsParClub(this.value)" required>
+
             <option value="">Sélectionnez un club</option>
             <?php if (!empty($clubs)): ?>
                 <?php foreach ($clubs as $club): ?>

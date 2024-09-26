@@ -12,13 +12,13 @@ if (isset($_SESSION['tenrac'])) {
 <!DOCTYPE html>
 <html>
 
-<head>
+<head> 
     <title>Accueil</title>
     <link rel="icon" href="../favicon.ico">
     <meta name="description" content="Vous êtes ici sur LE site des tenrac. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. Vous pourrez aussi en rajouter.">
     <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
-</head>
+</head> 
 
 <body>
     <header>

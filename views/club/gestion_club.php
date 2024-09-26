@@ -11,7 +11,7 @@
 <body>
 <header>
         <!-- Bouton pour accéder à l'accueil' -->
-        <a href="../views/acceuil.php">
+        <a href="../views/accueil.php">
             <button>Accueil</button>
         </a>
 
@@ -63,7 +63,7 @@
     </ul>
     </div>
     <!-- Bouton Retour à l'accueil -->
-    <!--<a href="/tenrac/acceuil">
+    <!--<a href="/tenrac/accueil">
         <button>Retour à l'Accueil</button>
     </a>-->
 

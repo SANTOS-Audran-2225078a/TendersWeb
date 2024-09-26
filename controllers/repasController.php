@@ -29,18 +29,22 @@ class RepasController
 
     // Enregistrer un nouveau repas
     public function sauvegarder(): void
-    {
-        if (isset($_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
-            $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
-            $repasModel = new RepasModel();
-            $repasModel->ajouterRepas($_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
-            header('Location: /repas');
-        } else {
-            var_dump($_POST);
-            echo 'Formulaire incomplet';
-        }
-    }
+{
+    if (isset($_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
+        $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
 
+        // Afficher les données pour déboguer
+        var_dump($_POST); // Supprime ceci après avoir confirmé que tout est correct
+
+        $repasModel = new RepasModel();
+        $repasModel->ajouterRepas($_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
+        header('Location: /repas');
+    } else {
+        echo 'Formulaire incomplet';
+    }
+}
+
+ 
     // Modifier un repas existant
     public function editer($id): void
     {
