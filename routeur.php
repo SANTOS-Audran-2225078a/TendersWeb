@@ -26,14 +26,14 @@ class Routeur
             $controleurNom = 'RepasController';
             $action = 'getPlatsByClub';
             $param = $urlParts[2];
-        } elseif ($urlParts[0] === 'tenrac' && isset($urlParts[1]) && $urlParts[1] === 'accueil') {
+        } elseif ($urlParts[0] === 'tenrac' && isset($urlParts[1]) && $urlParts[1] === 'index') {
             // Route pour accéder à la page d'accueil des tenracs
             $controleurNom = 'tenracController';
-            $action = 'accueil';
+            $action = 'index';
         } elseif ($urlParts[0] === 'club') {
             $controleurNom = 'ClubController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
-        } elseif ($urlParts[0] === 'plat') { 
+        } elseif ($urlParts[0] === 'plat') {
             $controleurNom = 'PlatController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
         } elseif ($urlParts[0] === 'repas') {
