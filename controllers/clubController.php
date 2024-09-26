@@ -89,7 +89,7 @@ class ClubController
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
         $clubModel = new ClubModel();
-        $clubModel->supprimerClub($id);
+        $clubModel->supprimerClubEtRelierTenracs($id);
         header('Location: /club');
         exit();
     }

@@ -69,6 +69,31 @@ class ClubModel
         $query->execute();
     }
 
+
+    public function supprimerClubEtRelierTenracs($clubId): void
+    {
+        try {
+            // Commence une transaction pour assurer la cohérence des données
+            $this->db->beginTransaction();
+
+            // Mettre à jour les tenracs pour les lier à l'ordre si le club est supprimé
+            $updateQuery = $this->db->prepare('UPDATE tenrac SET club_id = NULL, ordre_id = 1 WHERE club_id = :club_id');
+            $updateQuery->bindParam(':club_id', $clubId, PDO::PARAM_INT);
+            $updateQuery->execute();
+
+            // Supprimer le club
+            $deleteQuery = $this->db->prepare('DELETE FROM club WHERE id = :id');
+            $deleteQuery->bindParam(':id', $clubId, PDO::PARAM_INT);
+            $deleteQuery->execute();
+
+            // Commit la transaction
+            $this->db->commit();
+        } catch (PDOException $e) {
+            // Annuler la transaction en cas d'erreur
+            $this->db->rollBack();
+            echo 'Erreur lors de la suppression du club : ' . $e->getMessage();
+        }
+    }
     // Supprimer un club    
     /**
      * supprimerClub
