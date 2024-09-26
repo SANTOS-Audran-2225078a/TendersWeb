@@ -88,8 +88,10 @@
     </form>
 
     <!-- Liste des plats existants par club -->
-    <h2>Plats par Club</h2>
-    <div class="Liste">
+    <!-- Liste des plats existants par club -->
+<h2>Plats par Club</h2>
+<div class="Liste">
+<?php if (isset($plats) && is_array($plats)): ?>
     <?php foreach ($clubs as $club): ?>
         <div class="box">
         <h3><?= htmlspecialchars($club['nom']) ?></h3>
@@ -109,7 +111,11 @@
         <?php endif; ?>
         </div>
     <?php endforeach; ?>
-    </div>
+<?php else: ?>
+    <p>Aucun plat trouvé.</p>
+<?php endif; ?>
+</div>
+
 
     <script>
         function ajouterIngredient() {

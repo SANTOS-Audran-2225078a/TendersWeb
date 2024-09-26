@@ -14,6 +14,11 @@ class Routeur
         $url = $_SERVER['REQUEST_URI'];
         $urlParts = explode('/', trim($url, '/'));
 
+        // Initialisation par défaut des variables
+        $controleurNom = '';
+        $action = '';
+        $param = null;
+
         // Si l'utilisateur accède à '/', on redirige vers la page de connexion
         if ($url === '/') {
             $controleurNom = 'tenracController';
@@ -21,24 +26,30 @@ class Routeur
         } elseif ($urlParts[0] === 'login') {
             $controleurNom = 'tenracController';
             $action = 'connecter';
-        } elseif ($urlParts[0] === 'repas' && isset($urlParts[1]) && $urlParts[1] === 'getPlatsByClub' && isset($urlParts[2])) {
-            // Route pour récupérer les plats d'un club en particulier
-            $controleurNom = 'RepasController';
-            $action = 'getPlatsByClub';
-            $param = $urlParts[2];
-        } elseif ($urlParts[0] === 'tenrac' && isset($urlParts[1]) && $urlParts[1] === 'index2') {
-            // Route pour accéder à la page d'accueil des tenracs
-            $controleurNom = 'tenracController';
-            $action = 'index'; 
-        } elseif ($urlParts[0] === 'club') {
-            $controleurNom = 'ClubController';
-            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
-        } elseif ($urlParts[0] === 'plat') {
-            $controleurNom = 'PlatController';
-            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
         } elseif ($urlParts[0] === 'repas') {
             $controleurNom = 'RepasController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+
+            // Vérification de routes pour édition ou suppression avec un ID
+            if (($action === 'editer' || $action === 'supprimer' || $action === 'getPlatsByClub' || $action === 'modifier') && isset($urlParts[2])) {
+                $param = (int) $urlParts[2]; // Récupérer l'ID du repas
+            }
+        } elseif ($urlParts[0] === 'club') {
+            $controleurNom = 'ClubController';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+
+            // Vérifier si c'est une route pour l'édition ou suppression avec un ID
+            if (($action === 'editer' || $action === 'supprimer') && isset($urlParts[2])) {
+                $param = (int) $urlParts[2]; // Récupérer l'ID du club
+            }
+        } elseif ($urlParts[0] === 'plat') {
+            $controleurNom = 'PlatController';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+
+            // Vérifier si c'est une route pour l'édition ou suppression avec un ID
+            if (($action === 'editer' || $action === 'supprimer') && isset($urlParts[2])) {
+                $param = (int) $urlParts[2]; // Récupérer l'ID du plat
+            }
         } elseif ($urlParts[0] === 'tenrac') {
             $controleurNom = 'tenracController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index2';
@@ -56,9 +67,11 @@ class Routeur
             // Vérifier si l'action existe dans le contrôleur
             if (method_exists($controleur, $action)) {
                 if (isset($param)) {
-                    $controleur->$action($param); // Passe le paramètre si disponible
+                    // Ajouter un debug pour voir si le paramètre est bien passé
+                    // var_dump($param); // Utiliser pour déboguer si nécessaire
+                    $controleur->$action($param); // Passe le paramètre (ex: ID du repas, club, plat)
                 } else {
-                    $controleur->$action(); // Sans paramètre
+                    $controleur->$action(); // Appeler l'action sans paramètre
                 }
             } else {
                 echo "Action $action non trouvée dans le contrôleur $controleurNom";

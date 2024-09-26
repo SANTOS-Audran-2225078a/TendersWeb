@@ -63,9 +63,11 @@ public function getAllRepas(): array
 
     // Supprimer un repas
     public function supprimerRepas($id): void
-    {
-        $query = $this->db->prepare('DELETE FROM repas WHERE id = :id');
-        $query->bindParam(':id', $id);
-        $query->execute();
-    }
+{
+    $query = $this->db->prepare('DELETE FROM repas WHERE id = :id');
+    $query->bindParam(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+}
+
+
 }
