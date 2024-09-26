@@ -11,12 +11,9 @@ body {
     border-color: #0073e6;
     font-family: Arial, Helvetica, sans-serif;
 }button{
-    /*vertical-align: 25px;
-    color:white;
-    background-color: #0073e6;
+    vertical-align: 25px;
     border-color: #004080;
-    border-radius: 15px;
-    text-align: center;*/
+    text-align: center;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -30,16 +27,12 @@ body {
     background-color: white;
 }label{
     vertical-align: 25px;
-    color: black;
+    color: white;
     justify-self: start;
 }form{
 /*     background-color: #004080; */
     text-align: center;
-}/* h1{
-    background-color: #004080;
-}h2{
-    background-color: #004080;
-} */
+}
 html{
     background-color: #f4f4f4;
 }
