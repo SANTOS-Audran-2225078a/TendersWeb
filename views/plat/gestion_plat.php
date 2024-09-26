@@ -4,12 +4,12 @@
     <title><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></title>
     <meta name="description" content="Vous êtes ici sur la page qui vous permez de consulter les différents plats,
      vous pourrez aussi en rajouter, les modifier ou en supprimer.">
-    <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
+    <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
 <header>
         <!-- Bouton pour accéder à l'accueil' -->
-        <a href="../views/acceuil.php">
+        <a href="../views/accueil.php">
             <button>Accueil</button>
         </a>
 
@@ -35,7 +35,7 @@
     <h1><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></h1>
 
     <!-- Formulaire pour ajouter ou modifier un plat -->
-    <form action="<?= isset($plat) ? '/plat/modifierPlat' : '/plat/ajouterPlat' ?>" method="POST" class="box">
+    <form action="<?= isset($plat) ? '/plat/modifierPlat' : '/plat/ajouterPlat' ?>" method="POST" class="boxForm">
         <?php if (isset($plat)): ?>
             <input type="hidden" name="id" value="<?= $plat['id'] ?>">
         <?php endif; ?>

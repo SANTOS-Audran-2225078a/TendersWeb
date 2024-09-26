@@ -40,7 +40,7 @@ public function index2(): void
 
     public function connecter(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nom = $_POST['nom'];
             $motDePasse = $_POST['password'];
 
@@ -55,7 +55,7 @@ public function index2(): void
                 // Stocker l'utilisateur dans la session
                 $_SESSION['tenrac'] = $tenrac;
 
-                header('Location: /tenrac/accueil');
+                 header('Location: /tenrac/accueil');
                 exit();
             } else {
                 $messageErreur = "Identifiant ou mot de passe incorrect.";
@@ -89,4 +89,5 @@ public function index2(): void
         header('Location: /');
         exit();
     }
+
 }

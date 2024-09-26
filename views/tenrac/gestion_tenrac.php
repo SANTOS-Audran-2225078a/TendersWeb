@@ -7,13 +7,39 @@
     <title>Gestion des Tenracs</title>
     <meta name="description" content="Vous êtes ici sur LE site des tenrac. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. VOus pourrez aussi en rajouter.">
-    <link rel="stylesheet" href="../_assets/styles/stylesheet_login.css">
+    <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
+
+<header>
+        <!-- Bouton pour accéder à l'accueil' -->
+        <a href="../views/accueil.php">
+            <button>Accueil</button>
+        </a>
+
+        <!-- Bouton pour accéder à la gestion des plats -->
+        <a href="/club">
+            <button>Gérer les Clubs</button>
+        </a> 
+
+        <!-- Bouton pour accéder à la gestion des repas -->
+        <a href="/repas">
+            <button>Gérer les Repas</button>
+        </a>
+
+        <!-- Bouton pour accéder à ses infos personnelles-->
+        <a href="/plat">
+            <button>Gérer les plats</button>
+        </a>
+
+        <!-- Bouton de déconnexion -->
+        <a href='/tenrac/deconnecter'>Se déconnecter</a>
+</header>
+
     <h1>Gestion des Tenracs</h1>
 
     <!-- Formulaire pour ajouter ou modifier un tenrac --> 
-    <form action="/tenrac/sauvegarder" method="POST">
+    <form action="/tenrac/sauvegarder" method="POST" class="boxForm">
         <input type="hidden" name="id" value="<?= isset($tenrac['id']) ? $tenrac['id'] : '' ?>">
         <label>Nom :</label>
         <input type="text" name="nom" value="<?= isset($tenrac['nom']) ? htmlspecialchars($tenrac['nom']) : '' ?>" required><br>
@@ -85,10 +111,5 @@
             <?php endforeach;
         } ?>
     </ul>
- 
-    <!-- Bouton Retour à l'accueil -->
-    <a href="/tenrac/accueil">
-        <button>Retour à l'Accueil</button>
-    </a>
 </body> 
 </html>

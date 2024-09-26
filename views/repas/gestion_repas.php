@@ -21,7 +21,7 @@
     </script>
     <meta name="description" content="Vous êtes ici sur la page qui vous permet de consulter les différents repas, 
     vous pourrez aussi en rajouter, les modifier ou en supprimer.">
-    <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
+    <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
 <header>
@@ -36,8 +36,8 @@
         </a>
 
         <!-- Bouton pour accéder à la gestion des repas -->
-        <a href="/repas">
-            <button>Gérer les Repas</button>
+        <a href="/plat">
+            <button>Gérer les Plats</button>
         </a>
 
         <!-- Bouton pour accéder à ses infos personnelles-->
@@ -52,11 +52,10 @@
     <h1><?= isset($repas['id']) ? 'Modifier un Repas' : 'Ajouter un Repas' ?></h1>
 
     <!-- Formulaire pour ajouter ou modifier un repas -->
-    <form action="<?= isset($repas['id']) ? '/repas/modifier' : '/repas/sauvegarder' ?>" method="POST">
+    <form action="<?= isset($repas['id']) ? '/repas/modifier' : '/repas/sauvegarder' ?>" method="POST" class="boxForm">
         <?php if (isset($repas['id'])): ?>
             <input type="hidden" name="id" value="<?= htmlspecialchars($repas['id']) ?>">
         <?php endif; ?>
-    <div class="box">
         <label>Adresse (Club) :</label>
         <select name="adresse" onchange="chargerPlatsParClub(this.value)" required>
             <option value="">Sélectionnez un club</option>
@@ -86,7 +85,6 @@
         </div><br>
 
         <button type="submit"><?= isset($repas['id']) ? 'Modifier' : 'Ajouter' ?></button>
-    </div>
     </form>
 
     <!-- Liste des repas existants -->

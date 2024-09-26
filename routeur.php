@@ -27,7 +27,7 @@ class Routeur
             $controleurNom = 'tenracController';
             $action = 'connecter';
         } elseif ($urlParts[0] === 'repas') {
-            $controleurNom = 'RepasController';
+            $controleurNom = 'repasController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
 
             // Vérification de routes pour édition ou suppression avec un ID
@@ -35,15 +35,14 @@ class Routeur
                 $param = (int) $urlParts[2]; // Récupérer l'ID du repas
             }
         } elseif ($urlParts[0] === 'club') {
-            $controleurNom = 'ClubController';
-            $action = isset($urlParts[1]) ? $urlParts[1] : 'index'; 
-
+            $controleurNom = 'clubController';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
             // Vérifier si c'est une route pour l'édition ou suppression avec un ID
             if (($action === 'editer' || $action === 'supprimer') && isset($urlParts[2])) {
                 $param = (int) $urlParts[2]; // Récupérer l'ID du club
             }
         } elseif ($urlParts[0] === 'plat') {
-            $controleurNom = 'PlatController';
+            $controleurNom = 'platController';
             $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
 
             // Vérifier si c'est une route pour l'édition ou suppression avec un ID
@@ -61,7 +60,7 @@ class Routeur
 
         // Vérifier l'existence du fichier du contrôleur
         if (file_exists("controllers/$controleurNom.php")) {
-            require_once "controllers/$controleurNom.php";
+            require_once __DIR__ . "/controllers/$controleurNom.php";
             $controleur = new $controleurNom();
 
             // Vérifier si l'action existe dans le contrôleur

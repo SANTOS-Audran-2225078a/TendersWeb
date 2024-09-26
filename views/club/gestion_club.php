@@ -6,7 +6,7 @@
     <title>Gestion des Clubs</title>
     <meta name="description" content="Vous êtes ici sur la page qui vous permez de consulter les différents clubs,
      vous pourrez aussi en rajouter, les modifier ou en supprimer.">
-    <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
+    <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
 <header> 
@@ -35,7 +35,7 @@
 </header>
 
     <h1>Gestion des Clubs</h1>
-<div class="box">
+<div class="boxForm">
     <!-- Formulaire pour ajouter ou modifier un club -->
     <?= isset($isEditing) && $isEditing ? 'Modifier le Club' : 'Ajouter un Club' ?>
     <form action="/club/sauvegarder" method="POST">
