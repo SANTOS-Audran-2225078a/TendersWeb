@@ -81,29 +81,34 @@
             <?php foreach ($clubs as $club): ?>
                 <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($tenrac['club_id']) && $tenrac['club_id'] == $club['id'] ? 'selected' : '' ?>>
                     <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
-        </option>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <option value="">Aucun club disponible</option>
-            <?php endif; ?>
-        </select><br>
-        <label>Ordre ID :</label>
-        <select name="ordre">
-            <option value="true">Oui</option>
-            <option value="false">Non</option>
-        </select><br>
-        <label style="vertical-align: top;">Dignité :</label>
-        <select name="dignite" required>
-            <option value="Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Maitre' ? 'selected' : '' ?>>Maitre</option>
-            <option value="Grand Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Maitre' ? 'selected' : '' ?>>Grand Maitre</option>
-            <option value="Grand Chancelier" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Chancelier' ? 'selected' : '' ?>>Grand Chancelier</option>
-        </select><br>
-        <label>Mot de passe :</label>
-        <input type="password" name="password" value="<?= isset($tenrac['password']) ? htmlspecialchars($tenrac['password']) : '' ?>" required><br>
-        <label>Téléphone :</label>
-        <input type="text" name="tel" value="<?= isset($tenrac['tel']) ? htmlspecialchars($tenrac['tel']) : '' ?>" required><br>
-        <button type="submit">Sauvegarder</button>
-    </form>
+                </option>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <option value="">Aucun club disponible</option>
+        <?php endif; ?>
+    </select><br>
+
+    <label>Ordre :</label>
+    <select name="ordre_id" required>
+        <option value="1" <?= isset($tenrac['ordre_id']) && $tenrac['ordre_id'] == 1 ? 'selected' : '' ?>>Oui</option>
+        <option value="0" <?= isset($tenrac['ordre_id']) && $tenrac['ordre_id'] == 0 ? 'selected' : '' ?>>Non</option>
+    </select><br>
+
+    <label style="vertical-align: top;">Dignité :</label>
+    <select name="dignite" required>
+        <option value="Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Maitre' ? 'selected' : '' ?>>Maitre</option>
+        <option value="Grand Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Maitre' ? 'selected' : '' ?>>Grand Maitre</option>
+        <option value="Grand Chancelier" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Chancelier' ? 'selected' : '' ?>>Grand Chancelier</option>
+    </select><br>
+
+    <label>Mot de passe :</label>
+    <input type="password" name="password" value="<?= isset($tenrac['password']) ? htmlspecialchars($tenrac['password']) : '' ?>" required><br>
+
+    <label>Téléphone :</label>
+    <input type="text" name="tel" value="<?= isset($tenrac['tel']) ? htmlspecialchars($tenrac['tel']) : '' ?>" required><br>
+    
+    <button type="submit">Sauvegarder</button>
+</form>
 
 <!-- Liste des tenracs existants -->
 <h2>Tenracs existants</h2>
@@ -121,4 +126,3 @@
 
 </body>
 </html>
- 

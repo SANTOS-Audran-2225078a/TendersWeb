@@ -91,33 +91,38 @@ class tenracController
 
     // Méthode pour sauvegarder un Tenrac (ajout ou modification)
     public function sauvegarder(): void
-    {
-        if (isset($_POST['nom'], $_POST['adresse'], $_POST['email'], $_POST['password'], $_POST['tel'])) {
-            $tenracModel = new TenracModel();
-            $tenracData = [
-                'nom' => $_POST['nom'],
-                'adresse' => $_POST['adresse'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password'],
-                'tel' => $_POST['tel'],
-                'club_id' => !empty($_POST['club_id']) ? $_POST['club_id'] : null,
-                'ordre_id' => !empty($_POST['ordre_id']) ? $_POST['ordre_id'] : null,
-            ];
+{
+    if (isset($_POST['nom'], $_POST['adresse'], $_POST['email'], $_POST['password'], $_POST['tel'], $_POST['grade'], $_POST['rang'], $_POST['titre'], $_POST['dignite'])) {
+        $tenracModel = new TenracModel();
+        $tenracData = [
+            'nom' => $_POST['nom'],
+            'adresse' => $_POST['adresse'],
+            'email' => $_POST['email'],
+            'password' => $_POST['password'],
+            'tel' => $_POST['tel'],
+            'club_id' => !empty($_POST['club_id']) ? $_POST['club_id'] : null,
+            'ordre_id' => !empty($_POST['ordre_id']) ? $_POST['ordre_id'] : null,
+            'grade' => $_POST['grade'],
+            'rang' => $_POST['rang'],
+            'titre' => $_POST['titre'],
+            'dignite' => $_POST['dignite']
+        ];
 
-            // Si on est en mode édition (id existant), on met à jour
-            if (isset($_POST['id']) && $_POST['id'] !== '') {
-                $tenracModel->modifierTenrac($_POST['id'], $tenracData);
-            } else {
-                // Sinon on ajoute un nouveau Tenrac
-                $tenracModel->ajouterTenrac($tenracData);
-            }
-
-            header('Location: /tenrac');
-            exit();
+        // Si on est en mode édition (id existant), on met à jour
+        if (isset($_POST['id']) && $_POST['id'] !== '') {
+            $tenracModel->modifierTenrac($_POST['id'], $tenracData);
         } else {
-            echo 'Formulaire incomplet';
+            // Sinon on ajoute un nouveau Tenrac
+            $tenracModel->ajouterTenrac($tenracData);
         }
+
+        header('Location: /tenrac');
+        exit();
+    } else {
+        echo 'Formulaire incomplet';
     }
+}
+
 
     // Méthode pour supprimer un Tenrac
     public function supprimer($id): void

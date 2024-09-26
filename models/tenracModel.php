@@ -40,36 +40,44 @@ class TenracModel
 
     // Ajouter un nouveau tenrac
     public function ajouterTenrac($data): void
-    {
-        $query = $this->db->prepare('INSERT INTO tenrac (nom, adresse, email, password, tel, club_id, ordre_id) 
-                                     VALUES (:nom, :adresse, :email, :password, :tel, :club_id, :ordre_id)');
-        $query->execute([
-            ':nom' => $data['nom'],
-            ':adresse' => $data['adresse'],
-            ':email' => $data['email'],
-            ':password' => $data['password'],
-            ':tel' => $data['tel'],
-            ':club_id' => $data['club_id'],
-            ':ordre_id' => $data['ordre_id']
-        ]);
-    }
+{
+    $query = $this->db->prepare('INSERT INTO tenrac (nom, adresse, email, password, tel, club_id, ordre_id, grade, rang, titre, dignite) 
+                                 VALUES (:nom, :adresse, :email, :password, :tel, :club_id, :ordre_id, :grade, :rang, :titre, :dignite)');
+    $query->execute([
+        ':nom' => $data['nom'],
+        ':adresse' => $data['adresse'],
+        ':email' => $data['email'],
+        ':password' => $data['password'],
+        ':tel' => $data['tel'],
+        ':club_id' => $data['club_id'],
+        ':ordre_id' => $data['ordre_id'],
+        ':grade' => $data['grade'],
+        ':rang' => $data['rang'],
+        ':titre' => $data['titre'],
+        ':dignite' => $data['dignite']
+    ]);
+}
 
-    // Modifier un tenrac existant
-    public function modifierTenrac($id, $data): void
-    {
-        $query = $this->db->prepare('UPDATE tenrac SET nom = :nom, adresse = :adresse, email = :email, password = :password, 
-                                      tel = :tel, club_id = :club_id, ordre_id = :ordre_id WHERE id = :id');
-        $query->execute([
-            ':id' => $id,
-            ':nom' => $data['nom'],
-            ':adresse' => $data['adresse'],
-            ':email' => $data['email'],
-            ':password' => $data['password'],
-            ':tel' => $data['tel'],
-            ':club_id' => $data['club_id'],
-            ':ordre_id' => $data['ordre_id']
-        ]);
-    }
+public function modifierTenrac($id, $data): void
+{
+    $query = $this->db->prepare('UPDATE tenrac SET nom = :nom, adresse = :adresse, email = :email, password = :password, 
+                                  tel = :tel, club_id = :club_id, ordre_id = :ordre_id, grade = :grade, rang = :rang, titre = :titre, dignite = :dignite WHERE id = :id');
+    $query->execute([
+        ':id' => $id,
+        ':nom' => $data['nom'],
+        ':adresse' => $data['adresse'],
+        ':email' => $data['email'],
+        ':password' => $data['password'],
+        ':tel' => $data['tel'],
+        ':club_id' => $data['club_id'],
+        ':ordre_id' => $data['ordre_id'],
+        ':grade' => $data['grade'],
+        ':rang' => $data['rang'],
+        ':titre' => $data['titre'],
+        ':dignite' => $data['dignite']
+    ]);
+}
+
 
     public function supprimerTenrac($id): void
 {
