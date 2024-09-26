@@ -41,7 +41,7 @@ class PlatController
     // Récupérer le plat par ID
     $plat = $platModel->getPlatById($id);
     
-    // Récupérer les ingrédients du plat et tous les clubs
+    // Récupérer les ingrédients du plat et tous les clubs 
     $ingredients = $platModel->getAllIngredients();
     $platIngredients = $platModel->getIngredientsByPlat($id);
     $clubs = $clubModel->getAllClubs();

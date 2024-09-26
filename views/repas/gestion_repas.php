@@ -15,7 +15,7 @@
                         let platDiv = document.createElement('div');
                         platDiv.textContent = plat.nom;
                         platsContainer.appendChild(platDiv);
-                    });
+                    }); 
                 });
         }
     </script>

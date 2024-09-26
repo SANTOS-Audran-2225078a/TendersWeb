@@ -105,7 +105,7 @@
                     </li>
                 <?php endif; ?>
             <?php endforeach; ?>
-        </ul>
+        </ul> 
         <?php if (empty(array_filter($plats, fn($p) => $p['club_id'] == $club['id']))): ?>
             <p>Aucun plat pour ce club.</p>
         <?php endif; ?>

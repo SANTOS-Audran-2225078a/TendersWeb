@@ -8,7 +8,7 @@ class ClubModel
     private $db;
     
     /**
-     * __construct
+     * __construct 
      * 
      * @return void
      */

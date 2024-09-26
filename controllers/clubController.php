@@ -3,7 +3,7 @@
 require_once 'models/clubModel.php';
 
 /**
- * ClubController
+ * ClubController 
  */
 class ClubController
 {

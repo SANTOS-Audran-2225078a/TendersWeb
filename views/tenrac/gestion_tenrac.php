@@ -12,7 +12,7 @@
 <body>
     <h1>Gestion des Tenracs</h1>
 
-    <!-- Formulaire pour ajouter ou modifier un tenrac -->
+    <!-- Formulaire pour ajouter ou modifier un tenrac --> 
     <form action="/tenrac/sauvegarder" method="POST">
         <input type="hidden" name="id" value="<?= isset($tenrac['id']) ? $tenrac['id'] : '' ?>">
         <label>Nom :</label>

@@ -36,7 +36,7 @@ class Routeur
             }
         } elseif ($urlParts[0] === 'club') {
             $controleurNom = 'ClubController';
-            $action = isset($urlParts[1]) ? $urlParts[1] : 'index';
+            $action = isset($urlParts[1]) ? $urlParts[1] : 'index'; 
 
             // Vérifier si c'est une route pour l'édition ou suppression avec un ID
             if (($action === 'editer' || $action === 'supprimer') && isset($urlParts[2])) {

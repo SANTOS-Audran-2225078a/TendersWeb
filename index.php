@@ -14,4 +14,4 @@ error_reporting(E_ALL);
 
 // Initialiser le routeur
 $routeur = new Routeur();
-$routeur->gererRequete(); 
+$routeur->gererRequete();  

@@ -84,7 +84,7 @@ class RepasController
         if ($repas) {
             $repasModel->supprimerRepas($id);
             header('Location: /repas');
-            exit();
+            exit(); 
         } else {
             echo "Repas introuvable avec l'ID : $id";
         }

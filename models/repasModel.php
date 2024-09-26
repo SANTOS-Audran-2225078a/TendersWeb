@@ -61,7 +61,7 @@ public function getAllRepas(): array
         $query->execute();
     }
 
-    // Supprimer un repas
+    // Supprimer un repas 
     public function supprimerRepas($id): void
 {
     $query = $this->db->prepare('DELETE FROM repas WHERE id = :id');
