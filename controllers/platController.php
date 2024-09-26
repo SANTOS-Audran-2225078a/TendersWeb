@@ -17,6 +17,7 @@ class PlatController
 
         // Récupérer tous les ingrédients disponibles
         $ingredients = $platModel->getAllIngredients(); 
+        $sauces = $platModel->getAllSauces();
 
         // Passer les variables à la vue
         require_once 'views/plat/gestion_plat.php';
@@ -24,9 +25,9 @@ class PlatController
 
     public function ajouterPlat(): void
     {
-        if (isset($_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'])) {
+        if (isset($_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'], $_POST['sauce_ids'])) {
             $platModel = new PlatModel();
-            $platModel->ajouterPlat($_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids']);
+            $platModel->ajouterPlat($_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'], $_POST['sauce_ids']);
             header('Location: /plat');
         } else {
             echo 'Formulaire incomplet';
@@ -45,6 +46,8 @@ class PlatController
     $ingredients = $platModel->getAllIngredients();
     $platIngredients = $platModel->getIngredientsByPlat($id);
     $clubs = $clubModel->getAllClubs();
+    $sauces = $platModel->getAllSauces();
+    $platSauces = $platModel->getSaucesByPlat($id);
 
     // **Récupérer tous les plats** (Ajout)
     $plats = $platModel->getAllPlats();  // Cette ligne permet de passer les plats à la vue
@@ -56,9 +59,9 @@ class PlatController
 
     public function modifierPlat(): void
     {
-        if (isset($_POST['id'], $_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'])) {
+        if (isset($_POST['id'], $_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'], $_POST['sauce_ids'])) {
             $platModel = new PlatModel();
-            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids']);
+            $platModel->modifierPlat($_POST['id'], $_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'], $_POST['sauce_ids']);
             header('Location: /plat');
         } else {
             echo 'Formulaire incomplet';

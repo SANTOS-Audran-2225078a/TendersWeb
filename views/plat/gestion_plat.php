@@ -2,7 +2,7 @@
 <html>
 <head>
     <title><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></title>
-    <meta name="description" content="Vous êtes ici sur la page qui vous permez de consulter les différents plats,
+    <meta name="description" content="Vous êtes ici sur la page qui vous permet de consulter les différents plats,
      vous pourrez aussi en rajouter, les modifier ou en supprimer.">
     <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
 </head>
@@ -13,7 +13,7 @@
             <button>Accueil</button>
         </a>
 
-        <!-- Bouton pour accéder à la gestion des plats -->
+        <!-- Bouton pour accéder à la gestion des clubs -->
         <a href="/club">
             <button>Gérer les Clubs</button>
         </a> 
@@ -84,38 +84,46 @@
         </div>
         <button type="button" onclick="ajouterIngredient()">Ajouter un ingrédient</button><br>
 
+        <!-- Section pour les sauces -->
+        <label>Sauces :</label>
+        <div id="sauces-container">
+            <?php foreach ($sauces as $sauce): ?>
+                <input type="checkbox" name="sauce_ids[]" value="<?= $sauce['id'] ?>" 
+                    <?= isset($platSauces) && in_array($sauce['id'], array_column($platSauces, 'id')) ? 'checked' : '' ?>>
+                <?= htmlspecialchars($sauce['nom']) ?><br>
+            <?php endforeach; ?>
+        </div><br>
+
         <button type="submit"><?= isset($plat) ? 'Modifier' : 'Ajouter' ?></button>
     </form>
 
     <!-- Liste des plats existants par club -->
-    <!-- Liste des plats existants par club -->
-<h2>Plats par Club</h2>
-<div class="Liste">
-<?php if (isset($plats) && is_array($plats)): ?>
-    <?php foreach ($clubs as $club): ?>
-        <div class="box">
-        <h3><?= htmlspecialchars($club['nom']) ?></h3>
-        <ul>
-            <?php foreach ($plats as $plat): ?>
-                <?php if ($plat['club_id'] == $club['id']): ?>
-                    <li>
-                        <?= htmlspecialchars($plat['nom']) ?>
-                        <a href="/plat/editer/<?= $plat['id'] ?>">Modifier</a> | 
-                        <a href="/plat/supprimer/<?= $plat['id'] ?>">Supprimer</a>
-                    </li>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </ul> 
-        <?php if (empty(array_filter($plats, fn($p) => $p['club_id'] == $club['id']))): ?>
-            <p>Aucun plat pour ce club.</p>
-        <?php endif; ?>
-        </div>
-    <?php endforeach; ?>
-<?php else: ?>
-    <p>Aucun plat trouvé.</p>
-<?php endif; ?>
-</div>
-
+    <h2>Plats par Club</h2>
+    <div class="Liste">
+    <?php if (isset($plats) && is_array($plats)): ?>
+        <?php foreach ($clubs as $club): ?>
+            <div class="box">
+            <h3><?= htmlspecialchars($club['nom']) ?></h3>
+            <ul>
+                <?php foreach ($plats as $plat): ?>
+                    <?php if ($plat['club_id'] == $club['id']): ?>
+                        <li>
+                            <?= htmlspecialchars($plat['nom']) ?>
+                            <a href="/plat/editer/<?= $plat['id'] ?>">Modifier</a> | 
+                            <a href="/plat/supprimer/<?= $plat['id'] ?>">Supprimer</a>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </ul> 
+            <?php if (empty(array_filter($plats, fn($p) => $p['club_id'] == $club['id']))): ?>
+                <p>Aucun plat pour ce club.</p>
+            <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Aucun plat trouvé.</p>
+    <?php endif; ?>
+    </div>
 
     <script>
         function ajouterIngredient() {

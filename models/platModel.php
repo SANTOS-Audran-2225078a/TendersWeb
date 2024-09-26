@@ -14,6 +14,13 @@ class PlatModel
         }
     }
 
+    // Récupérer toutes les sauces disponibles
+    public function getAllSauces(): array
+    {
+        $query = $this->db->query('SELECT * FROM sauce');
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Récupérer tous les plats 
     public function getAllPlats(): array
     {
@@ -31,19 +38,21 @@ class PlatModel
     }
 
     // Ajouter un nouveau plat
-    public function ajouterPlat($nom, $club_id, $ingredients): void
-    {
-        $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
-        $query->bindParam(':nom', $nom);
-        $query->bindParam(':club_id', $club_id);
-        $query->execute();
+    public function ajouterPlat($nom, $club_id, $ingredients, $sauces): void  // Ajout de $sauces ici
+{
+    $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
+    $query->bindParam(':nom', $nom);
+    $query->bindParam(':club_id', $club_id);
+    $query->execute();
 
-        $plat_id = $this->db->lastInsertId();
-        $this->ajouterIngredientsAuPlat($plat_id, $ingredients);
-    }
+    $plat_id = $this->db->lastInsertId();
+    $this->ajouterIngredientsAuPlat($plat_id, $ingredients);
+    $this->ajouterSaucesAuPlat($plat_id, $sauces);  // Ajout de sauces au plat
+}
+
 
     // Modifier un plat existant
-    public function modifierPlat($id, $nom, $club_id, $ingredients): void
+    public function modifierPlat($id, $nom, $club_id, $ingredients, $sauces): void
     {
         $query = $this->db->prepare('UPDATE plat SET nom = :nom, club_id = :club_id WHERE id = :id');
         $query->bindParam(':id', $id);
@@ -53,16 +62,54 @@ class PlatModel
 
         $this->supprimerIngredientsDuPlat($id);
         $this->ajouterIngredientsAuPlat($id, $ingredients);
+        $this->supprimerSaucesDuPlat($id);
+        $this->ajouterSaucesAuPlat($id, $sauces);
     }
 
-    // Supprimer un plat
-    public function supprimerPlat($id): void
+    private function ajouterSaucesAuPlat($plat_id, $sauces): void
     {
-        $this->supprimerIngredientsDuPlat($id);
-        $query = $this->db->prepare('DELETE FROM plat WHERE id = :id');
-        $query->bindParam(':id', $id);
+        foreach ($sauces as $sauce_id) {
+            $query = $this->db->prepare('INSERT INTO plat_sauce (plat_id, sauce_id) VALUES (:plat_id, :sauce_id)');
+            $query->bindParam(':plat_id', $plat_id);
+            $query->bindParam(':sauce_id', $sauce_id);
+            $query->execute();
+        }
+    }
+
+    private function supprimerSaucesDuPlat($plat_id): void
+    {
+        $query = $this->db->prepare('DELETE FROM plat_sauce WHERE plat_id = :plat_id');
+        $query->bindParam(':plat_id', $plat_id);
         $query->execute();
     }
+
+    public function getSaucesByPlat($plat_id): array
+    {
+        $query = $this->db->prepare('
+            SELECT sauce.* 
+            FROM sauce
+            JOIN plat_sauce ON sauce.id = plat_sauce.sauce_id
+            WHERE plat_sauce.plat_id = :plat_id
+        ');
+        $query->bindParam(':plat_id', $plat_id);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    // Supprimer un plat
+    public function supprimerPlat($id): void
+{
+    // Supprimer les sauces associées au plat avant de supprimer le plat
+    $this->supprimerSaucesDuPlat($id);
+
+    // Supprimer les ingrédients associés au plat avant de supprimer le plat
+    $this->supprimerIngredientsDuPlat($id);
+
+    // Supprimer le plat après avoir supprimé ses dépendances
+    $query = $this->db->prepare('DELETE FROM plat WHERE id = :id');
+    $query->bindParam(':id', $id);
+    $query->execute();
+}
+
 
     // Ajouter des ingrédients à un plat
     private function ajouterIngredientsAuPlat($plat_id, $ingredients): void
