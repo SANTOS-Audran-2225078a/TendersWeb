@@ -47,7 +47,7 @@
         <label>Club :</label>
         <select name="club" onchange="chargerClub(this.value)" required>
         <option value="">Sélectionnez un club</option>
-            <?php if (!empty($clubs)): ?>
+            <?php if (!empty($clubs)): ?> 
                 <?php foreach ($clubs as $club): ?>
                     <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($repas['club_id']) && $repas['club_id'] == $club['id'] ? 'selected' : '' ?>>
                     <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
