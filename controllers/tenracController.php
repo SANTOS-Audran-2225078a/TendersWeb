@@ -38,30 +38,33 @@ class tenracController
     }
 
     public function connecter(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nom = $_POST['nom'];
-            $motDePasse = $_POST['password'];
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nom = $_POST['nom'];
+        $motDePasse = $_POST['password'];
 
-            $tenracModel = new TenracModel();
-            $tenrac = $tenracModel->verifierTenrac($nom, $motDePasse);
+        // Récupère le tenrac par le nom, sans inclure le mot de passe dans la requête
+        $tenracModel = new TenracModel();
+        $tenrac = $tenracModel->verifierTenrac($nom);
 
-            if ($tenrac) {
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start(); // Démarre la session uniquement si elle n'est pas déjà démarrée
-                }
-
-                // Stocker l'utilisateur dans la session
-                $_SESSION['tenrac'] = $tenrac;
-
-                header('Location: /tenrac/accueil');
-                exit();
-            } else {
-                $messageErreur = "Identifiant ou mot de passe incorrect.";
-                require_once 'views/login.php';
+        // Vérification avec password_verify
+        if ($tenrac && password_verify($motDePasse, $tenrac['password'])) {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start(); // Démarre la session si elle n'est pas déjà démarrée
             }
+
+            // Stocke l'utilisateur dans la session
+            $_SESSION['tenrac'] = $tenrac;
+
+            header('Location: /tenrac/accueil');
+            exit();
+        } else {
+            $messageErreur = "Identifiant ou mot de passe incorrect.";
+            require_once 'views/login.php';
         }
     }
+}
+
 
     public function accueil(): void
     {
@@ -94,11 +97,15 @@ class tenracController
 {
     if (isset($_POST['nom'], $_POST['adresse'], $_POST['email'], $_POST['password'], $_POST['tel'], $_POST['grade'], $_POST['rang'], $_POST['titre'], $_POST['dignite'])) {
         $tenracModel = new TenracModel();
+
+        // Hachage du mot de passe
+        $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
         $tenracData = [
             'nom' => $_POST['nom'],
             'adresse' => $_POST['adresse'],
             'email' => $_POST['email'],
-            'password' => $_POST['password'],
+            'password' => $passwordHash,  // Stocke le mot de passe haché
             'tel' => $_POST['tel'],
             'club_id' => !empty($_POST['club_id']) ? $_POST['club_id'] : null,
             'ordre_id' => !empty($_POST['ordre_id']) ? $_POST['ordre_id'] : null,
@@ -121,6 +128,7 @@ class tenracController
     } else {
         echo 'Formulaire incomplet';
     }
+
 }
 
 

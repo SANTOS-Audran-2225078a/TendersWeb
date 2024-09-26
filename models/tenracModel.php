@@ -15,21 +15,18 @@ class TenracModel
     }
 
     // Méthode pour vérifier les identifiants du tenrac
-    public function verifierTenrac($nom, $motDePasse): ?array
-    {
-        $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom AND password = :password');
-        $query->bindParam(':nom', $nom);
-        $query->bindParam(':password', $motDePasse); // Assure-toi d'utiliser une méthode de hachage pour le mot de passe
-        $query->execute();
+    public function verifierTenrac($nom): ?array
+{
+    $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom');
+    $query->bindParam(':nom', $nom);
+    $query->execute();
 
-        $tenrac = $query->fetch(PDO::FETCH_ASSOC);
+    $tenrac = $query->fetch(PDO::FETCH_ASSOC);
 
-        if ($tenrac) {
-            return $tenrac;
-        } else {
-            return null; // Retourne null si aucune correspondance n'est trouvée
-        }
-    } 
+    return $tenrac ?: null; // Retourne l'utilisateur ou null si non trouvé
+}
+
+
 
     // Récupérer tous les tenracs (utilisé pour l'affichage des adresses dans la gestion des repas)
     public function getAllTenracs(): array
