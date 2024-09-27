@@ -54,7 +54,7 @@ public function modifierRepas($id, $nom, $adresse, $date, $participants, $plats,
 {
     $query = $this->db->prepare('UPDATE repas SET nom = :nom, adresse = :adresse, date = :date, participants = :participants, plats = :plats, chef_de_rencontre = :chef_de_rencontre WHERE id = :id');
     $query->bindParam(':id', $id);
-    $query->bindParam(':nom', $nom);
+    $query->bindParam(':nom', $nom); 
     $query->bindParam(':adresse', $adresse);
     $query->bindParam(':date', $date); 
     $query->bindParam(':participants', $participants);

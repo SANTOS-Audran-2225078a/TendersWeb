@@ -104,6 +104,6 @@ class Routeur
     private function pageNotFound(): void
     {
         http_response_code(404);
-        echo 'Erreur 404 : Page non trouvée';
+        echo 'Erreur 404 : Page non trouvée'; 
     }
 }

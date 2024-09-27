@@ -66,7 +66,7 @@ class ClubController
      * editer
      *
      * @param  mixed $id
-     * @return void
+     * @return void 
      */
     public function editer($id): void
     {

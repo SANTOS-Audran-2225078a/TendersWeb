@@ -47,7 +47,7 @@
         <button type="submit">Sauvegarder</button>
     </form>
 </div>
-<div class="box">
+<div class="box"> 
     <!-- Liste des clubs existants -->
     <h2>Clubs existants</h2>
     <ul>

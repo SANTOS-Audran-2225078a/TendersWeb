@@ -303,7 +303,7 @@ private function envoyerMail($email, $codeSecurite): void
 }
 
 
-public function valider(string $code): void
+public function valider(string $code): void 
 {
     $tenracModel = new TenracModel();
     $tenrac = $tenracModel->verifierCodeSecurite($code);

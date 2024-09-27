@@ -111,7 +111,7 @@ class ClubModel
     // Récupérer un club par son ID    
     /**
      * getClubById
-     *
+     * 
      * @param  mixed $id
      * @return void
      */

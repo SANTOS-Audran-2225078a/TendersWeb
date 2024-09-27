@@ -6,7 +6,7 @@ require_once 'models/clubModel.php';
 
 class RepasController
 {
-    // Afficher la liste des repas
+    // Afficher la liste des repas 
     public function index(): void
     {
         $repasModel = new RepasModel();

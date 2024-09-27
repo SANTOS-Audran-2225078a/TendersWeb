@@ -133,7 +133,7 @@ public function definirMotDePasse($id, $passwordHash): void
 {
     $query = $this->db->prepare('UPDATE tenrac SET password = :password, code_securite = NULL, expiration = NULL WHERE id = :id');
     $query->bindParam(':password', $passwordHash);
-    $query->bindParam(':id', $id);
+    $query->bindParam(':id', $id); 
     $query->execute();
 }
 

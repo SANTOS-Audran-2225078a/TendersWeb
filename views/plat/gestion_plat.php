@@ -158,6 +158,6 @@
         var row = button.parentElement;
         row.remove();
     }
-</script>
+</script> 
 </body>
 </html> 
