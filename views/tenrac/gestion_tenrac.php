@@ -65,7 +65,7 @@
 <h1>Gestion des Tenracs</h1>
 
 <!-- Formulaire pour ajouter ou modifier un tenrac --> 
-<form action="/tenrac/sauvegarder" method="POST" class="boxForm">
+<form action="/tenrac/inscrire" method="POST" class="boxForm">
     <input type="hidden" name="id" value="<?= isset($tenrac['id']) ? $tenrac['id'] : '' ?>">
 
     <label>Nom :</label>
@@ -125,13 +125,12 @@
         <option value="Grand Chancelier" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Chancelier' ? 'selected' : '' ?>>Grand Chancelier</option>
     </select><br>
 
-    <label>Mot de passe :</label>
-    <input type="password" name="password" value="<?= isset($tenrac['password']) ? htmlspecialchars($tenrac['password']) : '' ?>" required><br>
-
+    <!-- Suppression du champ de mot de passe ici, remplacé par l'envoi d'un email -->
+    
     <label>Téléphone :</label>
     <input type="text" name="tel" value="<?= isset($tenrac['tel']) ? htmlspecialchars($tenrac['tel']) : '' ?>" required><br>
 
-    <button type="submit">Sauvegarder</button>
+    <button type="submit">S'inscrire</button>
 </form>
 
 <!-- Liste des tenracs existants -->
@@ -146,7 +145,8 @@
             </li>
         <?php endforeach;
     } ?>
-</ul>
-
+</ul> 
+ 
 </body> 
 </html>
+  

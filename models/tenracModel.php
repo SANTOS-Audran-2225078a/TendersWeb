@@ -94,6 +94,55 @@ public function getTenracById(int $id): ?array
     return $tenrac ?: null;
 }
 
+public function ajouterTenracTemporaire($data): void
+{
+    $query = $this->db->prepare('INSERT INTO tenrac (nom, adresse, email, tel, club_id, ordre_id, grade, rang, titre, dignite, code_securite, expiration)
+                                 VALUES (:nom, :adresse, :email, :tel, :club_id, :ordre_id, :grade, :rang, :titre, :dignite, :code_securite, :expiration)');
+    $query->execute([
+        ':nom' => $data['nom'],
+        ':adresse' => $data['adresse'],
+        ':email' => $data['email'],
+        ':tel' => $data['tel'],
+        ':club_id' => $data['club_id'],
+        ':ordre_id' => $data['ordre_id'],
+        ':grade' => $data['grade'],
+        ':rang' => $data['rang'],
+        ':titre' => $data['titre'],
+        ':dignite' => $data['dignite'],
+        ':code_securite' => $data['code_securite'],
+        ':expiration' => $data['expiration']
+    ]);
+}
+
+public function verifierCodeSecurite($code): ?array
+{
+    $query = $this->db->prepare('SELECT * FROM tenrac WHERE code_securite = :code AND expiration > NOW()');
+    $query->bindParam(':code', $code);
+    $query->execute();
+
+    return $query->fetch(PDO::FETCH_ASSOC) ?: null;
+}
+
+public function definirMotDePasse($id, $passwordHash): void
+{
+    $query = $this->db->prepare('UPDATE tenrac SET password = :password, code_securite = NULL, expiration = NULL WHERE id = :id');
+    $query->bindParam(':password', $passwordHash);
+    $query->bindParam(':id', $id);
+    $query->execute();
+}
+
+ 
+public function verifierEmail($email): bool
+{
+    $query = $this->db->prepare('SELECT id FROM tenrac WHERE email = :email');
+    $query->bindParam(':email', $email);
+    $query->execute();
+
+    return (bool) $query->fetch(PDO::FETCH_ASSOC);
+}
+
+
+
 
 
 }

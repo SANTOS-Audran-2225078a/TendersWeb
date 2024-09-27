@@ -2,6 +2,10 @@
 
 require_once 'models/tenracModel.php';
 require_once 'models/clubModel.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require_once __DIR__ . '/../vendor/autoload.php';
+
 
 class tenracController
 {
@@ -191,5 +195,122 @@ public function modifier(): void
         exit();
     }
 }
+
+public function inscrire(): void
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $tenracModel = new TenracModel();
+        $email = $_POST['email'];
+
+        // Vérifier si l'email est déjà utilisé
+        if ($tenracModel->verifierEmail($email)) {
+            echo 'Email déjà utilisé';
+            return;
+        }
+
+        // Générer un code de sécurité aléatoire
+        $codeSecurite = bin2hex(random_bytes(8));  // Code de 16 caractères
+        $expiration = date('Y-m-d H:i:s', strtotime('+15 minutes'));
+
+        $tenracData = [
+            'nom' => $_POST['nom'],
+            'adresse' => $_POST['adresse'],
+            'email' => $email,
+            'tel' => $_POST['tel'],
+            'club_id' => $_POST['club_id'] ?? null,
+            'ordre_id' => $_POST['ordre_id'] ?? null,
+            'grade' => $_POST['grade'],
+            'rang' => $_POST['rang'],
+            'titre' => $_POST['titre'],
+            'dignite' => $_POST['dignite'],
+            'code_securite' => $codeSecurite,
+            'expiration' => $expiration,
+        ];
+
+        // Sauvegarder le tenrac avec le code de sécurité
+        $tenracModel->ajouterTenracTemporaire($tenracData);
+
+        // Envoyer un email avec le code de sécurité
+        $this->envoyerMail($email, $codeSecurite);
+
+        echo 'Un email avec un lien de validation vous a été envoyé.';
+    }
+}
+
+private function envoyerMail($email, $codeSecurite): void
+{
+    $mail = new PHPMailer(true);
+
+    try {
+        // Configuration SMTP
+        $mail->isSMTP();
+        $mail->Host = 'smtp-iut.alwaysdata.net';  // Serveur SMTP Alwaysdata
+        $mail->SMTPAuth = true;
+        $mail->Username = 'iut@alwaysdata.net';  // Adresse email Alwaysdata
+        $mail->Password = 'tendrac123.';          // Mot de passe de ton adresse email
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Type de chiffrement (STARTTLS recommandé)
+        $mail->Port = 587;  // Port SMTP pour le chiffrement STARTTLS
+
+        // Expéditeur
+        $mail->setFrom('iut@alwaysdata.net', 'Tendrac Web');
+        
+        // Destinataire
+        $mail->addAddress($email);  // L'adresse email du destinataire
+        
+        // Contenu de l'email
+        $mail->isHTML(true);  // Format HTML 
+        $mail->Subject = 'Votre code de validation';
+        $mail->Body    = "Cliquez sur ce lien pour valider votre inscription : 
+            <a href='http://https://thelu.alwaysdata.net/tenrac/valider?code=$codeSecurite'>Valider mon inscription</a>";
+        $mail->AltBody = "Cliquez sur ce lien pour valider votre inscription : 
+            http://votre-site.com/tenrac/valider?code=$codeSecurite";  // Version texte (au cas où HTML est désactivé)
+
+        // Envoyer l'email
+        $mail->send();
+        echo 'Un email avec un lien de validation vous a été envoyé.';
+    } catch (Exception $e) {
+        echo "Erreur lors de l'envoi de l'email : {$mail->ErrorInfo}";
+    }
+}
+
+
+public function valider(): void
+{
+    if (isset($_GET['code'])) {
+        $code = $_GET['code'];
+        $tenracModel = new TenracModel();
+
+        // Vérifier le code de sécurité et l'expiration
+        $tenrac = $tenracModel->verifierCodeSecurite($code);
+
+        if ($tenrac && strtotime($tenrac['expiration']) > time()) {
+            // Redirige vers la page de création de mot de passe
+            header('Location: /tenrac/creerMotDePasse?id=' . $tenrac['id']);
+        } else {
+            echo 'Code de validation incorrect ou expiré.';
+        }
+    }
+}
+
+
+public function creerMotDePasse(): void
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'], $_POST['confirm_password'], $_POST['id'])) {
+        if ($_POST['password'] === $_POST['confirm_password']) {
+            $tenracModel = new TenracModel();
+            $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+            // Mettre à jour le mot de passe dans la BD et valider l'inscription
+            $tenracModel->definirMotDePasse($_POST['id'], $passwordHash);
+
+            echo 'Mot de passe créé avec succès. Vous pouvez maintenant vous connecter.';
+        } else {
+            echo 'Les mots de passe ne correspondent pas.';
+        }
+    } else {
+        require_once 'views/tenrac/creerMotDePasse.php';
+    }
+}
+
 
 }
