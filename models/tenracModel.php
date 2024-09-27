@@ -17,14 +17,20 @@ class TenracModel
     // Méthode pour vérifier les identifiants du tenrac
     public function verifierTenrac($nom): ?array
 {
-    $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom');
+    $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom AND code_securite IS NULL AND expiration IS NULL');
     $query->bindParam(':nom', $nom);
     $query->execute();
 
     $tenrac = $query->fetch(PDO::FETCH_ASSOC);
 
-    return $tenrac ?: null; // Retourne l'utilisateur ou null si non trouvé
-} 
+    // Ajout d'un log pour voir ce que la base de données renvoie
+    var_dump($tenrac);
+
+    return $tenrac ?: null; // Retourne l'utilisateur ou null si non trouvé ou si validation incomplète
+}
+
+
+
 
 
 
@@ -130,6 +136,7 @@ public function definirMotDePasse($id, $passwordHash): void
     $query->bindParam(':id', $id);
     $query->execute();
 }
+
 
  
 public function verifierEmail($email): bool

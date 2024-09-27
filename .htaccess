@@ -7,3 +7,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Ne pas réécrire si l'URL cible le dossier des contrôleurs
 RewriteCond %{REQUEST_URI} !^/controllers/(.*)$
 RewriteRule ^(.*)$ index.php [QSA,L]
+RewriteCond %{QUERY_STRING} .
