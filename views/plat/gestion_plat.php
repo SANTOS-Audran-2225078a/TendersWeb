@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <title><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></title>
     <meta name="description" content="Vous êtes ici sur la page qui vous permet de consulter les différents plats, vous pourrez aussi en rajouter, les modifier ou en supprimer.">
@@ -19,11 +19,18 @@
 </head>
 <body>
 <header>
+<div class="burger-menu" id="burgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="menu" id="menu">
     <a href="../views/accueil.php"><button>Accueil</button></a>
     <a href="/club"><button>Gérer les Clubs</button></a>
     <a href="/repas"><button>Gérer les Repas</button></a>
     <a href="/tenrac"><button>Les tenrac</button></a>
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
+    </nav>  
 </header>
 
 <h1><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></h1>
@@ -60,7 +67,7 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <button type="button" onclick="supprimerIngredient(this)">Supprimer</button>
+                    <button type="button" onclick="supprimerIngredient(this)" class="butTel">Supprimer</button>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
@@ -71,11 +78,11 @@
                         <option value="<?= $ingredient['id'] ?>"><?= htmlspecialchars($ingredient['nom']) ?></option>
                     <?php endforeach; ?>
                 </select>
-                <button type="button" onclick="supprimerIngredient(this)">Supprimer</button>
+                <button type="button" onclick="supprimerIngredient(this)" class="butTel">Supprimer</button>
             </div>
         <?php endif; ?>
     </div>
-    <button type="button" onclick="ajouterIngredient()">Ajouter un ingrédient</button><br>
+    <button type="button" onclick="ajouterIngredient()" class="butTel">Ajouter un ingrédient</button><br>
 
     <label>Sauces :</label>
     <div id="sauces-container">
@@ -86,7 +93,7 @@
         <?php endforeach; ?>
     </div><br>
 
-    <button type="submit"><?= isset($plat) ? 'Modifier' : 'Ajouter' ?></button>
+    <button type="submit" class="butTel"><?= isset($plat) ? 'Modifier' : 'Ajouter' ?></button>
 </form>
 
 <!-- Liste des plats existants par club -->
@@ -169,5 +176,11 @@
         row.remove();
     }
 </script> 
+<script>
+    document.getElementById('burgerMenu').addEventListener('click', function () {
+        var menu = document.getElementById('menu');
+        menu.classList.toggle('active');
+    });
+</script>
 </body>
 </html> 
