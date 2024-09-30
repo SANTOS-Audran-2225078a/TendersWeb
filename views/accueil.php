@@ -10,19 +10,26 @@ if (isset($_SESSION['tenrac'])) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
  
 <head> 
     <title>Accueil</title> 
     <link rel="icon" href="../favicon.ico"> 
     <meta name="description" content="Vous êtes ici sur LE site des tenrac. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. Vous pourrez aussi en rajouter.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
+    <meta charset="utf-8">
 </head> 
  
 <body>
     <header>
-
+    <div class="burger-menu" id="burgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="menu" id="menu">
         <!-- Bouton pour accéder à la gestion des clubs -->
         <a href="/club">
             <button>Gérer les Clubs</button>
@@ -45,6 +52,7 @@ if (isset($_SESSION['tenrac'])) {
 
         <!-- Bouton de déconnexion -->
         <a href='/tenrac/deconnecter'>Se déconnecter</a>
+    </nav>
     </header>
 <section class="Textimg">
     <h1>Bienvenue, <?= htmlspecialchars($tenrac['nom']) ?> !</h1>
@@ -58,9 +66,17 @@ if (isset($_SESSION['tenrac'])) {
 
     <div class="box">
         <p> Ici vous pouvez observer un exemple de plat que vous pourrez trouver sur notre site.</p>
-        <img class="image" src="../_assets/images/tacos_tender_mangue.webp">
+        <img class="image" src="../_assets/images/tacos_tender_mangue.webp" alt="Image de tacos tenders mangue">
     </div>
 <section>
+
+<script>
+    document.getElementById('burgerMenu').addEventListener('click', function () {
+        var menu = document.getElementById('menu');
+        menu.classList.toggle('active');
+    });
+</script>
+
 </body>
 
 </html>

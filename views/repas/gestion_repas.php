@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <title>Gestion des Repas</title>
     <script>
@@ -21,10 +21,17 @@
     </script>
     <meta name="description" content="Vous êtes ici sur la page qui vous permet de consulter les différents repas, 
     vous pourrez aussi en rajouter, les modifier ou en supprimer.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
 </head>
 <body>
 <header>
+    <div class="burger-menu" id="burgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="menu" id="menu">
     <!-- Bouton pour accéder à l'accueil' -->
     <a href="../views/accueil.php">
         <button>Accueil</button> 
@@ -47,6 +54,7 @@
 
     <!-- Bouton de déconnexion -->
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
+    </nav>
 </header>
 
 <h1><?= isset($repas['id']) ? 'Modifier un Repas' : 'Ajouter un Repas' ?></h1>
@@ -112,6 +120,14 @@
 <?php else: ?>
     <p>Aucun repas disponible.</p>
 <?php endif; ?>
+
+<script>
+    document.getElementById('burgerMenu').addEventListener('click', function () {
+        var menu = document.getElementById('menu');
+        menu.classList.toggle('active');
+    });
+</script>
+
 </body>
 </html> 
  

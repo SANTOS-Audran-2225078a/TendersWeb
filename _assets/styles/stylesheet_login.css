@@ -3,10 +3,12 @@ body {
     text-align: center; /*alignement du texte*/
     border-radius: 30px; /* épaisseur bordure*/
     background-color: #004080; /*couleur de fond*/
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-left: 20em; /* largeur marge à gauche */
-    margin-right: 20em; /* largeur marge à droite*/
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 10em; /* largeur marge à gauche */
+    margin-right: 10em; /* largeur marge à droite*/
+    margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+    transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
     border: solid; /*définition de la bordure (sans dégradé, solide)*/
     border-color: #0073e6;/*couleur bordure*/
     font-family: Arial, Helvetica, sans-serif;/*police de caractères*/
@@ -32,4 +34,18 @@ body {
 }
 html{
     background-color: #f4f4f4;/* couleur de fond générale hors body, head etc...*/
+}
+
+@media screen and (min-width: 780px) {
+    h1 {
+        font-size: 37px; /* Taille de la police pour les titres */
+    }
+
+    label {
+        font-size: 25px; /* Taille des labels */
+    }
+
+    input, button {
+        font-size: 25px; /* Taille des champs de texte et du bouton */
+    }
 }

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+    <header>
+<img url="./favicon.ico">
+</header>
 <head>
     <title>Gestion des Tenracs</title>
     <meta name="description" content="Vous êtes ici sur LE site des tenracs. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. Vous pourrez aussi en rajouter.">
-    <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
+    <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <script>
         // Désactive la sélection de club si "Oui" est sélectionné pour l'ordre et inversement        
         /**
@@ -43,6 +47,12 @@
 <body>
 
 <header>
+    <div class="burger-menu" id="burgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="menu" id="menu">
     <!-- Bouton pour accéder à l'accueil -->
     <a href="../views/accueil.php">
         <button>Accueil</button>
@@ -65,6 +75,7 @@
 
     <!-- Bouton de déconnexion -->
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
+    </nav>
 </header>
 
 <h1>Gestion des Tenracs</h1>
@@ -152,6 +163,13 @@
     } ?>
 </ul> 
  
+<script>
+    document.getElementById('burgerMenu').addEventListener('click', function () {
+        var menu = document.getElementById('menu');
+        menu.classList.toggle('active');
+    });
+</script>
+
 </body>  
 </html>
   
