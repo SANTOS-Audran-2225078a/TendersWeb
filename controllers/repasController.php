@@ -64,6 +64,7 @@ public function sauvegarder(): void
     } else {
         echo 'Formulaire incomplet';
     }
+}
 
     // Editer un repas existant    
     /**

@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <meta name="description" content="Vous êtes ici sur la page qui permet de créer votre mot de passe">
+    <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
     <title>Créer un mot de passe</title>
     <script>                
         /**

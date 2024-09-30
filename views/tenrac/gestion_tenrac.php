@@ -5,8 +5,7 @@
 </header>
 <head>
     <title>Gestion des Tenracs</title>
-    <meta name="description" content="Vous êtes ici sur LE site des tenracs. Vous y trouverez des informations sur les différents clubs, 
-    les plats et les repas. Vous pourrez aussi en rajouter.">
+    <meta name="description" content="Vous êtes ici sur la page qui permet d'inscrire d'autres tenracs, n'hésitez pas à inscrire vos amis afin qu'il rejoigne la meilleure communauté ">
     <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <script>
