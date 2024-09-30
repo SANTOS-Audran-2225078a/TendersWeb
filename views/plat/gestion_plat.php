@@ -38,29 +38,30 @@
 
 <!-- Champ de recherche dynamique -->
 <h2>Recherche de plats par ingrédients ou nom</h2>
-<input type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
+<label for="chercheIng">Rechercher un ingrédient ou un plat</label><br>
+<input id="chercheIng" type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
 
 <!-- Formulaire pour ajouter ou modifier un plat -->
 <form action="<?= isset($plat) ? '/plat/modifierPlat' : '/plat/ajouterPlat' ?>" method="POST" class="boxForm">
     <?php if (isset($plat)): ?>
         <input type="hidden" name="id" value="<?= $plat['id'] ?>">
     <?php endif; ?>
-    <label>Nom du plat :</label>
-    <input type="text" name="nom" value="<?= isset($plat['nom']) ? htmlspecialchars($plat['nom']) : '' ?>" required><br>
-    <label>Club :</label>
-    <select name="club_id" required>
+    <label for="nomPlat">Nom du plat :</label>
+    <input id="nomPlat" type="text" name="nom" value="<?= isset($plat['nom']) ? htmlspecialchars($plat['nom']) : '' ?>" required><br>
+    <label for="club">Club :</label>
+    <select id="club" name="club_id" required>
         <?php foreach ($clubs as $club): ?>
             <option value="<?= $club['id'] ?>" <?= isset($plat) && $club['id'] == $plat['club_id'] ? 'selected' : '' ?>>
                 <?= htmlspecialchars($club['nom']) ?>
             </option>
         <?php endforeach; ?>
     </select><br>
-    <label>Ingrédients :</label>
+    <label for="ingredients">Ingrédients :</label>
     <div id="ingredients-container">
         <?php if (isset($plat['ingredients'])): ?>
             <?php foreach ($plat['ingredients'] as $ingredient): ?>
                 <div class="ingredient-row">
-                    <select name="ingredient_ids[]">
+                    <select id="ingredients" name="ingredient_ids[]">
                         <option value="">Sélectionnez un ingrédient</option>
                         <?php foreach ($ingredients as $ing): ?>
                             <option value="<?= $ing['id'] ?>" <?= $ing['id'] == $ingredient['id'] ? 'selected' : '' ?>>
@@ -84,15 +85,18 @@
         <?php endif; ?>
     </div>
     <button type="button" onclick="ajouterIngredient()" class="butTel">Ajouter un ingrédient</button><br>
-
-    <label>Sauces :</label>
+    
+    <fieldset>
+    <legend>Sauce</legend> <!-- Légende -->
+    <label for="sauc">Choisissez :</label>
     <div id="sauces-container">
         <?php foreach ($sauces as $sauce): ?>
-            <input type="checkbox" name="sauce_ids[]" value="<?= $sauce['id'] ?>"
+            <input id="sauc" type="checkbox" name="sauce_ids[]" value="<?= $sauce['id'] ?>"
                 <?= isset($platSauces) && in_array($sauce['id'], array_column($platSauces, 'id')) ? 'checked' : '' ?>>
             <?= htmlspecialchars($sauce['nom']) ?><br>
         <?php endforeach; ?>
     </div><br>
+    </fieldset>
 
     <button type="submit" class="butTel"><?= isset($plat) ? 'Modifier' : 'Ajouter' ?></button>
 </form>

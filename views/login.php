@@ -17,11 +17,7 @@ if (isset($_SESSION['tenrac'])) {
 ?> 
  
 <!DOCTYPE html> 
-<html> 
-    <header>
-        <img url="./favicon.ico">
-    </header>
-
+<html lang="fr">
 <head>
     <title>Connexion</title>
     <link rel="stylesheet" href="../_assets/styles/stylesheet_login.css">
@@ -33,11 +29,11 @@ if (isset($_SESSION['tenrac'])) {
 
     <!-- Formulaire de connexion -->
     <form action="/tenrac/connecter" method="POST">
-        <label>Nom :</label>
-        <input type="text" name="nom" required><br>
+        <label for="nom">Nom :</label>
+        <input id="nom" type="text" name="nom" required><br>
 
-        <label>Mot de passe :</label>
-        <input type="password" name="password" required><br>
+        <label for="password">Mot de passe :</label>
+        <input id="password" type="password" name="password" required><br>
 
         <button type="submit">Se connecter</button>
     </form>

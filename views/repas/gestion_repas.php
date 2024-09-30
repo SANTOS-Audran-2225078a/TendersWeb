@@ -65,11 +65,11 @@
         <input type="hidden" name="id" value="<?= htmlspecialchars($repas['id']) ?>">
     <?php endif; ?>
 
-    <label>Nom du repas :</label>
-    <input type="text" name="nom" value="<?= htmlspecialchars($repas['nom'] ?? '') ?>" required><br>
+    <label for="nomR">Nom du repas :</label>
+    <input id="nomR" type="text" name="nom" value="<?= htmlspecialchars($repas['nom'] ?? '') ?>" required><br>
 
-    <label>Adresse (Club) :</label>
-    <select name="adresse" onchange="chargerPlatsParClub(this.value)" required>
+    <label for="adresseR">Adresse (Club) :</label>
+    <select id="adresseR" name="adresse" onchange="chargerPlatsParClub(this.value)" required>
          <option value="">Sélectionnez un club</option>
             <?php if (!empty($clubs)): ?>
                 <?php foreach ($clubs as $club): ?>
@@ -82,14 +82,14 @@
             <?php endif; ?>
     </select><br>
 
-    <label>Date :</label>
-    <input type="date" name="date" value="<?= htmlspecialchars($repas['date'] ?? '') ?>" required><br>
+    <label for="dateR">Date :</label>
+    <input id="dateR" type="date" name="date" value="<?= htmlspecialchars($repas['date'] ?? '') ?>" required><br>
 
-    <label>Participants :</label>
-    <input type="number" name="participants" value="<?= htmlspecialchars($repas['participants'] ?? '') ?>" required><br>
+    <label for="partiR">Participants :</label>
+    <input id="partiR" type="number" name="participants" value="<?= htmlspecialchars($repas['participants'] ?? '') ?>" required><br>
 
-    <label>Chef de rencontre :</label>
-    <select name="chef_de_rencontre" onchange="chargerTenrac(this.value)" required>
+    <label for="chefR">Chef de rencontre :</label>
+    <select id="chefR" name="chef_de_rencontre" onchange="chargerTenrac(this.value)" required>
         <option value="">Sélectionnez un chef de rencontre</option>
         <?php if (!empty($tenrac)): ?>
             <?php foreach ($tenrac as $tenrac): ?>

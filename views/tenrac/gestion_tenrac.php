@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
     <header>
-<img url="./favicon.ico">
+<img url="./favicon.ico" alt="favicon">
 </header>
 <head>
     <title>Gestion des Tenracs</title>
@@ -84,17 +84,17 @@
 <form action="/tenrac/inscrire" method="POST" class="boxForm">
     <input type="hidden" name="id" value="<?= isset($tenrac['id']) ? $tenrac['id'] : '' ?>">
 
-    <label>Nom :</label>
-    <input type="text" name="nom" value="<?= isset($tenrac['nom']) ? htmlspecialchars($tenrac['nom']) : '' ?>" required><br>
+    <label for="nomT">Nom :</label>
+    <input id="nomT" type="text" name="nom" value="<?= isset($tenrac['nom']) ? htmlspecialchars($tenrac['nom']) : '' ?>" required><br>
 
-    <label>Adresse :</label>
-    <input type="text" name="adresse" value="<?= isset($tenrac['adresse']) ? htmlspecialchars($tenrac['adresse']) : '' ?>" required><br>
+    <label for="adresseT">Adresse :</label>
+    <input id="adresseT" type="text" name="adresse" value="<?= isset($tenrac['adresse']) ? htmlspecialchars($tenrac['adresse']) : '' ?>" required><br>
 
-    <label>Email :</label>
-    <input type="email" name="email" value="<?= isset($tenrac['email']) ? htmlspecialchars($tenrac['email']) : '' ?>" required><br>
+    <label for="emailT">Email :</label>
+    <input id="emailT" type="email" name="email" value="<?= isset($tenrac['email']) ? htmlspecialchars($tenrac['email']) : '' ?>" required><br>
 
-    <label>Grade :</label>
-    <select name="grade" required>
+    <label for="gradeT">Grade :</label>
+    <select id="gradeT" name="grade" required>
         <!-- Options de grade -->
         <option value="Affilié" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Affilié' ? 'selected' : '' ?>>Affilié</option>
         <option value="Sympathisant" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Sympathisant' ? 'selected' : '' ?>>Sympathisant</option>
@@ -105,21 +105,21 @@
         <option value="Commandeur" <?= isset($tenrac['grade']) && $tenrac['grade'] == 'Commandeur' ? 'selected' : '' ?>>Commandeur</option>
     </select><br>
 
-    <label>Rang :</label>
-    <select name="rang" required>
+    <label for="rangT">Rang :</label>
+    <select id="rangT" name="rang" required>
         <option value="Novice" <?= isset($tenrac['rang']) && $tenrac['rang'] == 'Novice' ? 'selected' : '' ?>>Novice</option>
         <option value="Compagnon" <?= isset($tenrac['rang']) && $tenrac['rang'] == 'Compagnon' ? 'selected' : '' ?>>Compagnon</option>
     </select><br>
 
-    <label>Titre :</label>
-    <select name="titre" required>
+    <label for="titreT">Titre :</label>
+    <select id="titreT" name="titre" required>
         <option value="Philanthrope" <?= isset($tenrac['titre']) && $tenrac['titre'] == 'Philanthrope' ? 'selected' : '' ?>>Philanthrope</option>
         <option value="Protecteur" <?= isset($tenrac['titre']) && $tenrac['titre'] == 'Protecteur' ? 'selected' : '' ?>>Protecteur</option>
         <option value="Honorable" <?= isset($tenrac['titre']) && $tenrac['titre'] == 'Honorable' ? 'selected' : '' ?>>Honorable</option>
     </select><br>
 
-    <label>Club :</label>
-    <select name="club_id">
+    <label for="clubT">Club :</label>
+    <select id="clubT" name="club_id">
         <option value="">Sélectionnez un club</option>
         <?php foreach ($clubs as $club): ?>
             <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($tenrac['club_id']) && $tenrac['club_id'] == $club['id'] ? 'selected' : '' ?>>
@@ -128,14 +128,14 @@
         <?php endforeach; ?>
     </select><br>
 
-    <label>Ordre :</label>
-    <select name="ordre_id">
+    <label for="ordreT">Ordre :</label>
+    <select id="ordreT" name="ordre_id">
         <option value="">Non</option>
         <option value="1" <?= isset($tenrac['ordre_id']) && $tenrac['ordre_id'] == 1 ? 'selected' : '' ?>>Oui</option>
     </select><br>
 
-    <label>Dignité :</label>
-    <select name="dignite" required>
+    <label for="digniteT">Dignité :</label>
+    <select id="digniteT" name="dignite" required>
         <option value="Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Maitre' ? 'selected' : '' ?>>Maitre</option>
         <option value="Grand Maitre" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Maitre' ? 'selected' : '' ?>>Grand Maitre</option>
         <option value="Grand Chancelier" <?= isset($tenrac['dignite']) && $tenrac['dignite'] == 'Grand Chancelier' ? 'selected' : '' ?>>Grand Chancelier</option>
@@ -143,8 +143,8 @@
 
     <!-- Suppression du champ de mot de passe ici, remplacé par l'envoi d'un email -->
     
-    <label>Téléphone :</label>
-    <input type="text" name="tel" value="<?= isset($tenrac['tel']) ? htmlspecialchars($tenrac['tel']) : '' ?>" required><br>
+    <label for="telT">Téléphone :</label>
+    <input id="telT" type="text" name="tel" value="<?= isset($tenrac['tel']) ? htmlspecialchars($tenrac['tel']) : '' ?>" required><br>
 
     <button type="submit">S'inscrire</button>
 </form>

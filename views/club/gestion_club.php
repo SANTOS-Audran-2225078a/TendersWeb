@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"><header>
-<img url="./favicon.ico" alt="logo">
+<img url="./favicon.ico" alt="favicon">
 </header>
 <head>
     <title>Gestion des Clubs</title>
