@@ -17,6 +17,7 @@ if (isset($_SESSION['tenrac'])) {
     <link rel="icon" href="../favicon.ico"> 
     <meta name="description" content="Vous êtes ici sur LE site des tenrac. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. Vous pourrez aussi en rajouter.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
     <meta charset="utf-8">
 </head> 

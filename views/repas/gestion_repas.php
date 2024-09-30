@@ -21,6 +21,7 @@
     </script>
     <meta name="description" content="Vous êtes ici sur la page qui vous permet de consulter les différents repas, 
     vous pourrez aussi en rajouter, les modifier ou en supprimer.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
 </head>
 <body>

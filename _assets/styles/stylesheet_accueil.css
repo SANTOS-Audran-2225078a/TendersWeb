@@ -196,7 +196,7 @@ h2 {
     margin-right: 10px;
 }
 
-@media screen and (min-width: 780px){
+@media only screen and (max-width: 700px){
     .burger-menu {
         display: flex;
     }

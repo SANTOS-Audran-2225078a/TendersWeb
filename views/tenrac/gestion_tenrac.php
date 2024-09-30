@@ -8,6 +8,7 @@
     <meta name="description" content="Vous êtes ici sur LE site des tenracs. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. Vous pourrez aussi en rajouter.">
     <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <script>
         // Désactive la sélection de club si "Oui" est sélectionné pour l'ordre et inversement        
         /**

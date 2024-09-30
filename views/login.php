@@ -25,6 +25,7 @@ if (isset($_SESSION['tenrac'])) {
 <head>
     <title>Connexion</title>
     <link rel="stylesheet" href="../_assets/styles/stylesheet_login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 </head>
 
 <body>

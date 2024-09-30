@@ -7,6 +7,7 @@
     <meta name="description" content="Vous êtes ici sur la page qui vous permez de consulter les différents clubs,
      vous pourrez aussi en rajouter, les modifier ou en supprimer.">
     <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 </head>
 <body>
 <header> 

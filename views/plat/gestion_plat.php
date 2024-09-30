@@ -4,6 +4,7 @@
     <title><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></title>
     <meta name="description" content="Vous êtes ici sur la page qui vous permet de consulter les différents plats, vous pourrez aussi en rajouter, les modifier ou en supprimer.">
     <link rel="stylesheet" href="/_assets/styles/stylesheet_accueil.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <style>
         /* Ingrédients affichés en petit */
         .ingredients-text {
