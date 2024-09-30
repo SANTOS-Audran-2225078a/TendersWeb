@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * PlatModel
+ */
 class PlatModel
 {
     private $db;
-
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct() 
     {
         try {
@@ -14,21 +22,37 @@ class PlatModel
         }
     }
 
-    // Récupérer toutes les sauces disponibles
+    // Récupérer toutes les sauces disponibles    
+    /**
+     * getAllSauces
+     *
+     * @return array
+     */
     public function getAllSauces(): array
     {
         $query = $this->db->query('SELECT * FROM sauce');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupérer tous les plats 
+    // Récupérer tous les plats     
+    /**
+     * getAllPlats
+     *
+     * @return array
+     */
     public function getAllPlats(): array
     {
         $query = $this->db->query('SELECT * FROM plat');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupérer un plat par ID
+    // Récupérer un plat par ID    
+    /**
+     * getPlatById
+     *
+     * @param  mixed $id
+     * @return array
+     */
     public function getPlatById($id): ?array
     {
         $query = $this->db->prepare('SELECT * FROM plat WHERE id = :id');
@@ -37,7 +61,16 @@ class PlatModel
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un nouveau plat
+    // Ajouter un nouveau plat    
+    /**
+     * ajouterPlat
+     *
+     * @param  mixed $nom
+     * @param  mixed $club_id
+     * @param  mixed $ingredients
+     * @param  mixed $sauces
+     * @return void
+     */
     public function ajouterPlat($nom, $club_id, $ingredients, $sauces): void  // Ajout de $sauces ici
 {
     $query = $this->db->prepare('INSERT INTO plat (nom, club_id) VALUES (:nom, :club_id)');
@@ -51,7 +84,17 @@ class PlatModel
 }
 
 
-    // Modifier un plat existant
+    // Modifier un plat existant    
+    /**
+     * modifierPlat
+     *
+     * @param  mixed $id
+     * @param  mixed $nom
+     * @param  mixed $club_id
+     * @param  mixed $ingredients
+     * @param  mixed $sauces
+     * @return void
+     */
     public function modifierPlat($id, $nom, $club_id, $ingredients, $sauces): void
     {
         $query = $this->db->prepare('UPDATE plat SET nom = :nom, club_id = :club_id WHERE id = :id');
@@ -65,7 +108,14 @@ class PlatModel
         $this->supprimerSaucesDuPlat($id);
         $this->ajouterSaucesAuPlat($id, $sauces);
     }
-
+    
+    /**
+     * ajouterSaucesAuPlat
+     *
+     * @param  mixed $plat_id
+     * @param  mixed $sauces
+     * @return void
+     */
     private function ajouterSaucesAuPlat($plat_id, $sauces): void
     {
         foreach ($sauces as $sauce_id) {
@@ -75,14 +125,26 @@ class PlatModel
             $query->execute();
         }
     }
-
+    
+    /**
+     * supprimerSaucesDuPlat
+     *
+     * @param  mixed $plat_id
+     * @return void
+     */
     private function supprimerSaucesDuPlat($plat_id): void
     {
         $query = $this->db->prepare('DELETE FROM plat_sauce WHERE plat_id = :plat_id');
         $query->bindParam(':plat_id', $plat_id);
         $query->execute();
     }
-
+    
+    /**
+     * getSaucesByPlat
+     *
+     * @param  mixed $plat_id
+     * @return array
+     */
     public function getSaucesByPlat($plat_id): array
     {
         $query = $this->db->prepare('
@@ -95,7 +157,13 @@ class PlatModel
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-    // Supprimer un plat
+    // Supprimer un plat    
+    /**
+     * supprimerPlat
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimerPlat($id): void
 {
     // Supprimer les sauces associées au plat avant de supprimer le plat
@@ -111,7 +179,14 @@ class PlatModel
 }
 
 
-    // Ajouter des ingrédients à un plat
+    // Ajouter des ingrédients à un plat    
+    /**
+     * ajouterIngredientsAuPlat
+     *
+     * @param  mixed $plat_id
+     * @param  mixed $ingredients
+     * @return void
+     */
     private function ajouterIngredientsAuPlat($plat_id, $ingredients): void
     {
         foreach ($ingredients as $ingredient_id) {
@@ -122,7 +197,13 @@ class PlatModel
         }
     }
 
-    // Supprimer les ingrédients d'un plat
+    // Supprimer les ingrédients d'un plat    
+    /**
+     * supprimerIngredientsDuPlat
+     *
+     * @param  mixed $plat_id
+     * @return void
+     */
     private function supprimerIngredientsDuPlat($plat_id): void
     {
         $query = $this->db->prepare('DELETE FROM plat_ingredient WHERE plat_id = :plat_id');
@@ -130,7 +211,13 @@ class PlatModel
         $query->execute();
     }
 
-    // Récupérer les ingrédients d'un plat
+    // Récupérer les ingrédients d'un plat    
+    /**
+     * getIngredientsByPlat
+     *
+     * @param  mixed $plat_id
+     * @return array
+     */
     public function getIngredientsByPlat($plat_id): array
     {
         $query = $this->db->prepare('
@@ -144,7 +231,13 @@ class PlatModel
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // **Nouvelle méthode : Récupérer les plats par club**
+    // **Nouvelle méthode : Récupérer les plats par club**    
+    /**
+     * getPlatsByClub
+     *
+     * @param  mixed $club_id
+     * @return array
+     */
     public function getPlatsByClub($club_id): array
     {
         $query = $this->db->prepare('SELECT * FROM plat WHERE club_id = :club_id');
@@ -153,13 +246,24 @@ class PlatModel
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupérer tous les ingrédients disponibles
+    // Récupérer tous les ingrédients disponibles    
+    /**
+     * getAllIngredients
+     *
+     * @return array
+     */
     public function getAllIngredients(): array
     {
         $query = $this->db->query('SELECT * FROM ingredient');
         return $query->fetchAll(PDO::FETCH_ASSOC);  
     }
-
+    
+    /**
+     * rechercherPlatsParIngredients
+     *
+     * @param  mixed $query
+     * @return array
+     */
     public function rechercherPlatsParIngredients($query): array
 {
     // Requête SQL pour rechercher les plats contenant un ou plusieurs ingrédients partiels

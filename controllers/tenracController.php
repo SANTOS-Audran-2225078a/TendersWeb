@@ -7,8 +7,16 @@ use PHPMailer\PHPMailer\Exception;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 
+/**
+ * tenracController
+ */
 class tenracController
-{
+{    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index(): void
     {
         if (session_status() === PHP_SESSION_NONE) { 
@@ -21,7 +29,12 @@ class tenracController
             require_once 'views/login.php'; // Si non connecté, redirige vers la page de connexion
         } 
     }
-
+    
+    /**
+     * index2
+     *
+     * @return void
+     */
     public function index2(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -40,7 +53,12 @@ class tenracController
             require_once 'views/login.php';
         } 
     }
-
+    
+    /**
+     * connecter
+     *
+     * @return void
+     */
     public function connecter(): void
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

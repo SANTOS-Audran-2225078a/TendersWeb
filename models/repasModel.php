@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * RepasModel
+ */
 class RepasModel
 {
     private $db;
- 
+     
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         try {
@@ -16,6 +24,11 @@ class RepasModel
     } 
     // Récupérer tous les repas
     // Récupérer tous les repas avec le nom du club
+/**
+ * getAllRepas
+ *
+ * @return array
+ */
 public function getAllRepas(): array
 {
     $query = $this->db->query('
@@ -27,7 +40,13 @@ public function getAllRepas(): array
 }
 
 
-    // Récupérer un repas par ID
+    // Récupérer un repas par ID    
+    /**
+     * getRepasById
+     *
+     * @param  mixed $id
+     * @return array
+     */
     public function getRepasById($id): ?array
     {
         $query = $this->db->prepare('SELECT * FROM repas WHERE id = :id');
@@ -36,7 +55,18 @@ public function getAllRepas(): array
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un nouveau repas
+    // Ajouter un nouveau repas    
+    /**
+     * ajouterRepas
+     *
+     * @param  mixed $nom
+     * @param  mixed $adresse
+     * @param  mixed $date
+     * @param  mixed $participants
+     * @param  mixed $plats
+     * @param  mixed $chefDeRencontre
+     * @return void
+     */
     public function ajouterRepas($nom, $adresse, $date, $participants, $plats, $chefDeRencontre): void
 {
     $query = $this->db->prepare('INSERT INTO repas (nom, adresse, date, participants, plats, chef_de_rencontre) 
@@ -65,7 +95,13 @@ public function modifierRepas($id, $nom, $adresse, $date, $participants, $plats,
 
 
 
-    // Supprimer un repas 
+    // Supprimer un repas     
+    /**
+     * supprimerRepas
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimerRepas($id): void
 {
     $query = $this->db->prepare('DELETE FROM repas WHERE id = :id');

@@ -3,9 +3,17 @@
 require_once 'models/platModel.php';
 require_once 'models/clubModel.php';
  
+/**
+ * PlatController
+ */
 class PlatController 
 {
-    // Afficher la liste des plats
+    // Afficher la liste des plats    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index(): void
     {
         $platModel = new PlatModel();
@@ -22,7 +30,12 @@ class PlatController
         // Passer les variables à la vue
         require_once 'views/plat/gestion_plat.php';
     }
-
+    
+    /**
+     * ajouterPlat
+     *
+     * @return void
+     */
     public function ajouterPlat(): void
     {
         if (isset($_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'], $_POST['sauce_ids'])) {
@@ -33,7 +46,13 @@ class PlatController
             echo 'Formulaire incomplet';
         }
     }
-
+    
+    /**
+     * editer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function editer($id): void
 {
     $platModel = new PlatModel();
@@ -56,7 +75,12 @@ class PlatController
     require_once 'views/plat/gestion_plat.php';
 }
 
-
+    
+    /**
+     * modifierPlat
+     *
+     * @return void
+     */
     public function modifierPlat(): void
     {
         if (isset($_POST['id'], $_POST['nom'], $_POST['club_id'], $_POST['ingredient_ids'], $_POST['sauce_ids'])) {
@@ -67,14 +91,25 @@ class PlatController
             echo 'Formulaire incomplet';
         }
     }
-
+    
+    /**
+     * supprimer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function supprimer($id): void
     {
         $platModel = new PlatModel();
         $platModel->supprimerPlat($id);
         header('Location: /plat');
     }
-
+    
+    /**
+     * rechercher
+     *
+     * @return void
+     */
     public function rechercher(): void
 {
     if (isset($_GET['query'])) {

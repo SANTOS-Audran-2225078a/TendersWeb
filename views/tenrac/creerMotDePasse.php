@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Créer un mot de passe</title>
-    <script>
+    <script>        
+        /**
+         * validerMotDePasse
+         *
+         * @return void
+         */
         function validerMotDePasse(event) {
             const password = document.querySelector('input[name="password"]').value;
             const confirmPassword = document.querySelector('input[name="confirm_password"]').value;

@@ -4,9 +4,17 @@ require_once 'models/repasModel.php';
 require_once 'models/platModel.php';
 require_once 'models/clubModel.php';
 
+/**
+ * RepasController
+ */
 class RepasController
 {
-    // Afficher la liste des repas 
+    // Afficher la liste des repas     
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index(): void
     {
         $repasModel = new RepasModel();
@@ -18,7 +26,12 @@ class RepasController
         require_once 'views/repas/gestion_repas.php';
     }
 
-    // Afficher le formulaire pour ajouter un nouveau repas
+    // Afficher le formulaire pour ajouter un nouveau repas    
+    /**
+     * ajouter
+     *
+     * @return void
+     */
     public function ajouter(): void
     {
         $clubModel = new ClubModel();
@@ -29,6 +42,11 @@ class RepasController
 
     // Enregistrer un nouveau repas
     // Enregistrer un nouveau repas
+/**
+ * sauvegarder
+ *
+ * @return void
+ */
 public function sauvegarder(): void
 {
     if (isset($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
@@ -45,7 +63,13 @@ public function sauvegarder(): void
 
 
  
-    // Modifier un repas existant
+    // Modifier un repas existant    
+    /**
+     * editer
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function editer($id): void
     {
         $repasModel = new RepasModel();
@@ -60,7 +84,12 @@ public function sauvegarder(): void
         require_once 'views/repas/gestion_repas.php';
     }
 
-    // Enregistrer les modifications d'un repas
+    // Enregistrer les modifications d'un repas    
+    /**
+     * modifier
+     *
+     * @return void
+     */
     public function modifier(): void
 {
     if (isset($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
@@ -74,7 +103,13 @@ public function sauvegarder(): void
         echo 'Formulaire incomplet';
     }
 }
-
+     
+     /**
+      * supprimer
+      *
+      * @param  mixed $id
+      * @return void
+      */
      public function supprimer($id): void
 {
     if ($id) {
@@ -100,7 +135,13 @@ public function sauvegarder(): void
 
 
     
-    // Charger les plats pour un club donné (appelé via JavaScript)
+    // Charger les plats pour un club donné (appelé via JavaScript)    
+    /**
+     * getPlatsByClub
+     *
+     * @param  mixed $club_id
+     * @return void
+     */
     public function getPlatsByClub($club_id): void
     {
         $platModel = new PlatModel();

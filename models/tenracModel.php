@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * TenracModel
+ */
 class TenracModel
 {
     private $db;
-
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         try {
@@ -14,7 +22,13 @@ class TenracModel
         }
     }
 
-    // Méthode pour vérifier les identifiants du tenrac
+    // Méthode pour vérifier les identifiants du tenrac    
+    /**
+     * verifierTenrac
+     *
+     * @param  mixed $nom
+     * @return array
+     */
     public function verifierTenrac($nom): ?array
 {
     $query = $this->db->prepare('SELECT * FROM tenrac WHERE nom = :nom AND code_securite IS NULL AND expiration IS NULL');

@@ -4,6 +4,9 @@
 
 namespace Composer\Autoload;
 
+/**
+ * ComposerStaticInit90bbf95869b4e88bf0dc5022e708a458
+ */
 class ComposerStaticInit90bbf95869b4e88bf0dc5022e708a458
 {
     public static $prefixLengthsPsr4 = array (
@@ -23,7 +26,13 @@ class ComposerStaticInit90bbf95869b4e88bf0dc5022e708a458
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
-
+    
+    /**
+     * getInitializer
+     *
+     * @param  mixed $loader
+     * @return void
+     */
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {

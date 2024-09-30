@@ -22,11 +22,11 @@ class ClubModel
         }
     }
 
-    // Récupérer tous les clubs    
+    // Récupérer tous les clubs      
     /**
      * getAllClubs
      *
-     * @return void
+     * @return array
      */
     public function getAllClubs(): array
 {
@@ -108,12 +108,12 @@ class ClubModel
         $query->execute();
     }
 
-    // Récupérer un club par son ID    
+    // Récupérer un club par son ID     
     /**
      * getClubById
-     * 
+     *
      * @param  mixed $id
-     * @return void
+     * @return mixed
      */
     public function getClubById($id): mixed 
     {

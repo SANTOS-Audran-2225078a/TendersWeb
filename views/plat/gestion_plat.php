@@ -137,7 +137,12 @@
             }
         });
     });
-
+    
+    /**
+     * ajouterIngredient
+     *
+     * @return void
+     */
     function ajouterIngredient() {
         var container = document.getElementById('ingredients-container');
         var newRow = document.createElement('div');
@@ -153,7 +158,12 @@
         `;
         container.appendChild(newRow);
     }
-
+    
+    /**
+     * supprimerIngredient
+     *
+     * @return void
+     */
     function supprimerIngredient(button) {
         var row = button.parentElement;
         row.remove();

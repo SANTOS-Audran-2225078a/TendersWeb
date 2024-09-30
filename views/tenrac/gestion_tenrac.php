@@ -6,7 +6,12 @@
     les plats et les repas. Vous pourrez aussi en rajouter.">
     <link rel="stylesheet" href="../_assets/styles/stylesheet_accueil.css">
     <script>
-        // Désactive la sélection de club si "Oui" est sélectionné pour l'ordre et inversement
+        // Désactive la sélection de club si "Oui" est sélectionné pour l'ordre et inversement        
+        /**
+         * checkSelection
+         *
+         * @return void
+         */
         function checkSelection() {
             const clubSelect = document.querySelector('select[name="club_id"]');
             const ordreSelect = document.querySelector('select[name="ordre_id"]');
