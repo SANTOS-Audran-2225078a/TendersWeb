@@ -57,7 +57,14 @@ class RepasModel
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un nouveau repas dans la base de données
+    public function getTenrac(): ?array
+    {
+        $query = $this->db->prepare('SELECT * FROM tenrac');
+        $query->execute();
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Ajouter un nouveau repas    
     /**
      * ajouterRepas
      *

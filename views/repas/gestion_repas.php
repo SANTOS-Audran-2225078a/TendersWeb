@@ -70,16 +70,16 @@
 
     <label>Adresse (Club) :</label>
     <select name="adresse" onchange="chargerPlatsParClub(this.value)" required>
-        <option value="">Sélectionnez un club</option>
-        <?php if (!empty($clubs)): ?>
-            <?php foreach ($clubs as $club): ?>
-                <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($repas['adresse']) && $repas['adresse'] == $club['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
-                </option>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <option value="">Aucun club disponible</option>
-        <?php endif; ?>
+         <option value="">Sélectionnez un club</option>
+            <?php if (!empty($clubs)): ?>
+                <?php foreach ($clubs as $club): ?>
+                    <option value="<?= htmlspecialchars($club['id']) ?>" <?= isset($repas['adresse']) && $repas['adresse'] == $club['id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($club['nom']) ?> - <?= htmlspecialchars($club['adresse']) ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <option value="">Aucun club disponible</option>
+            <?php endif; ?>
     </select><br>
 
     <label>Date :</label>
@@ -89,7 +89,18 @@
     <input type="number" name="participants" value="<?= htmlspecialchars($repas['participants'] ?? '') ?>" required><br>
 
     <label>Chef de rencontre :</label>
-    <input type="text" name="chef_de_rencontre" value="<?= htmlspecialchars($repas['chef_de_rencontre'] ?? '') ?>" required><br>
+    <select name="chef_de_rencontre" onchange="chargerTenrac(this.value)" required>
+        <option value="">Sélectionnez un chef de rencontre</option>
+        <?php if (!empty($tenrac)): ?>
+            <?php foreach ($tenrac as $tenrac): ?>
+                <option value="<?= htmlspecialchars($tenrac['id']) ?>" <?= isset($repas['chef_de_rencontre']) && $repas['chef_de_rencontre'] == $tenrac['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($tenrac['nom']) ?> - <?= htmlspecialchars($tenrac['prenom']) ?>
+                </option>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <option value="">Aucun chef de rencontre disponible</option>
+        <?php endif; ?>
+    </select><br>
 
     <label>Carte des plats :</label>
     <div id="cartePlats">

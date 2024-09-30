@@ -42,25 +42,27 @@ class RepasController
 
     // Enregistrer un nouveau repas
     // Enregistrer un nouveau repas
+/**
+ * sauvegarder
+ *
+ * @return void
+ */
+public function sauvegarder(): void
+{
 
-    /**
-     * sauvegarder
-     *
-     * @return void
-     */
-    public function sauvegarder(): void
-    {
-        // si le formulaire est bien rempli
-        if (isset($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
-            $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
+    // Récupération des données tenrac
+    
+    if (isset($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
+        $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
 
-            // Appel à la méthode ajouterRepas avec tous les arguments requis
-            $repasModel = new RepasModel();
-            $repasModel->ajouterRepas($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
-            header('Location: /repas');
-        } else { // sinon affiche que le formulaire est incomplet
-            echo 'Formulaire incomplet';
-        }
+        // Appel à la méthode ajouterRepas avec tous les arguments requis
+        $repasModel = new RepasModel();
+     
+        $tenrac = $repasModel->getTenrac();
+        $repasModel->ajouterRepas($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
+        header('Location: /repas');
+    } else {
+        echo 'Formulaire incomplet';
     }
 
     // Editer un repas existant    
