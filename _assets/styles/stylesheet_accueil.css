@@ -135,6 +135,17 @@ h2 {
     transition: background-color 0.3s ease;
 }
 
+a.button{
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #004080; /* Couleur des boutons */
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
 .buttonSpe{
     padding: 5px 10px;
     border: none;
@@ -224,13 +235,13 @@ h2 {
     }
 
     .boxForm {
-        font-size: 25px;
+        font-size: 20px;
         margin-right: 5em;
         margin-left: 5em;
     }
 
     .boxForm button{
-        font-size: 25px;
+        font-size: 15px;
         margin-right: 5em;
         margin-left: 5em;
     }
@@ -240,11 +251,78 @@ h2 {
     }
 
     .box {
-        font-size: 25px;
+        font-size: 20px;
     }
 
     .butTel {
         height: 150%;
         width: auto;
+    }
+
+    
+    .image {
+        width: 150px;
+        height: auto; 
+    }
+
+    @media only screen and (max-width: 400px){
+.burger-menu {
+        display: flex;
+    }
+    
+    nav.menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: #004080;
+        z-index: 1000;
+        padding: 20px;
+    }
+    
+    nav.menu a {
+        margin: 10px 0;
+        display: block;
+    }
+    
+    /* Activer l'affichage du menu burger */
+    nav.menu.active {
+        display: flex;
+    }
+
+    .boxForm {
+        font-size: 20px;
+    }
+
+    .boxForm button{
+        font-size: 15px;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    .box {
+        font-size: 20px;
+    }
+
+    .butTel {
+        height: 150%;
+        width: auto;
+    }
+
+    
+    .image {
+        width: 150px;
+        height: auto; 
+    }
+
+    .boxForm{
+        margin-right: 0;
+        margin-left: 0;
+    }
+
     }
 }
