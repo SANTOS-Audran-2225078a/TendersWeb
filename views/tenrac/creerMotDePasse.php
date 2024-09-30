@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Créer un mot de passe</title>
-    <script>        
+    <script>                
         /**
          * validerMotDePasse
          *

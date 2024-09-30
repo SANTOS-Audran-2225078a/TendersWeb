@@ -40,7 +40,7 @@ class ClubController
         require_once 'views/club/gestion_club.php';
     }
 
-    // Ajouter ou modifier un club    
+    // Sauvegarder un club    
     /**
      * sauvegarder
      *
@@ -51,9 +51,9 @@ class ClubController
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
         $clubModel = new ClubModel();
         
-        if (isset($_POST['id']) && $_POST['id'] !== '') {
-            $clubModel->modifierClub($_POST['id'], $_POST['nom'], $_POST['adresse']);
-        } else {
+        if (isset($_POST['id']) && $_POST['id'] !== '') { // si formulaire de modification de club rempli
+            $clubModel->modifierClub($_POST['id'], $_POST['nom'], $_POST['adresse']); // alors modification du club
+        } else { // sinon ajout du club car inexistant
             $clubModel->ajouterClub($_POST['nom'], $_POST['adresse']);
         }
 
@@ -89,7 +89,7 @@ class ClubController
     {
         $this->verifierConnexion(); // Vérifie si l'utilisateur est connecté
         $clubModel = new ClubModel();
-        $clubModel->supprimerClubEtRelierTenracs($id);
+        $clubModel->supprimerClubEtRelierTenracs($id); // suppression du club et des tenracs qui y sont reliés
         header('Location: /club');
         exit();
     } 

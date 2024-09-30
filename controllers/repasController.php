@@ -42,28 +42,28 @@ class RepasController
 
     // Enregistrer un nouveau repas
     // Enregistrer un nouveau repas
-/**
- * sauvegarder
- *
- * @return void
- */
-public function sauvegarder(): void
-{
-    if (isset($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
-        $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
 
-        // Appel à la méthode ajouterRepas avec tous les arguments requis
-        $repasModel = new RepasModel();
-        $repasModel->ajouterRepas($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
-        header('Location: /repas');
-    } else {
-        echo 'Formulaire incomplet';
+    /**
+     * sauvegarder
+     *
+     * @return void
+     */
+    public function sauvegarder(): void
+    {
+        // si le formulaire est bien rempli
+        if (isset($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
+            $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
+
+            // Appel à la méthode ajouterRepas avec tous les arguments requis
+            $repasModel = new RepasModel();
+            $repasModel->ajouterRepas($_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
+            header('Location: /repas');
+        } else { // sinon affiche que le formulaire est incomplet
+            echo 'Formulaire incomplet';
+        }
     }
-}
 
-
- 
-    // Modifier un repas existant    
+    // Editer un repas existant    
     /**
      * editer
      *
@@ -91,17 +91,18 @@ public function sauvegarder(): void
      * @return void
      */
     public function modifier(): void
-{
-    if (isset($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
-        $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
-        $repasModel = new RepasModel();
+    {
+        // si le formulaire est bien rempli
+        if (isset($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $_POST['chef_de_rencontre'])) {
+            $plats = isset($_POST['plats']) ? implode(',', $_POST['plats']) : null; // Plats non obligatoires
+            $repasModel = new RepasModel();
 
-        // Appel à la méthode modifierRepas avec tous les arguments requis
-        $repasModel->modifierRepas($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
-        header('Location: /repas');
-    } else {
-        echo 'Formulaire incomplet';
-    }
+            // Appel à la méthode modifierRepas avec tous les arguments requis
+            $repasModel->modifierRepas($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['date'], $_POST['participants'], $plats, $_POST['chef_de_rencontre']);
+            header('Location: /repas');
+        } else { // sinon affiche que le formulaire est incomplet
+            echo 'Formulaire incomplet';
+        }
 }
      
      /**
@@ -110,30 +111,26 @@ public function sauvegarder(): void
       * @param  mixed $id
       * @return void
       */
-     public function supprimer($id): void
-{
-    if ($id) {
-        var_dump($id); // Ajout temporaire pour voir si l'ID est bien récupéré
-        $repasModel = new RepasModel();
+     public function supprimer($id): void // méthode de suppression de repas
+    {
+        if ($id) { // si ID fourni
+            var_dump($id); // Ajout temporaire pour voir si l'ID est bien récupéré
+            $repasModel = new RepasModel();
         
-        // Vérifier si le repas existe avant de tenter de le supprimer
-        $repas = $repasModel->getRepasById($id);
+            // Vérifier si le repas existe avant de tenter de le supprimer
+            $repas = $repasModel->getRepasById($id);
         
-        if ($repas) {
-            $repasModel->supprimerRepas($id);
-            header('Location: /repas');
-            exit(); 
-        } else {
-            echo "Repas introuvable avec l'ID : $id";
+            if ($repas) { // si repas fourni
+                $repasModel->supprimerRepas($id); // suppression du repas
+                header('Location: /repas'); // redirection vers page des repas
+                exit(); 
+            } else { // sinon repas introuvable
+                echo "Repas introuvable avec l'ID : $id";
+            }
+        } else { // sinon suppression impossible
+            echo "Aucun ID de repas fourni pour la suppression.";
         }
-    } else {
-        echo "Aucun ID de repas fourni pour la suppression.";
     }
-}
-
-
-
-
     
     // Charger les plats pour un club donné (appelé via JavaScript)    
     /**

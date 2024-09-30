@@ -12,7 +12,7 @@ class ClubModel
      * 
      * @return void
      */
-    public function __construct()
+    public function __construct() // méthode constructeur
     {
         try {
             $this->db = new PDO('mysql:host=mysql-iut.alwaysdata.net;dbname=iut_tendersweb', 'iut_tendrac', 'tendrac123.');
@@ -22,20 +22,20 @@ class ClubModel
         }
     }
 
-    // Récupérer tous les clubs      
+    // Récupérer tous les clubs depuis la base de données     
     /**
      * getAllClubs
      *
      * @return array
      */
     public function getAllClubs(): array
-{
-    $query = $this->db->query('SELECT * FROM club');
-    return $query->fetchAll(PDO::FETCH_ASSOC); // Retourne un tableau associatif
-}
+    {
+        $query = $this->db->query('SELECT * FROM club');
+        return $query->fetchAll(PDO::FETCH_ASSOC); // Retourne un tableau associatif
+    }
 
 
-    // Ajouter un nouveau club    
+    // Ajouter un nouveau club dans la base de données    
     /**
      * ajouterClub
      *
@@ -45,13 +45,14 @@ class ClubModel
      */
     public function ajouterClub($nom, $adresse): void
     {
+        // insertion du club dans la base de données
         $query = $this->db->prepare('INSERT INTO club (nom, adresse) VALUES (:nom, :adresse)');
         $query->bindParam(':nom', $nom);
         $query->bindParam(':adresse', $adresse);
-        $query->execute();
+        $query->execute(); // exécution de la requête
     }
 
-    // Modifier un club existant    
+    // Modifier un club existant dans la base de données   
     /**
      * modifierClub
      *
@@ -62,6 +63,7 @@ class ClubModel
      */
     public function modifierClub($id, $nom, $adresse): void
     {
+        // modifie le club dans la base de données
         $query = $this->db->prepare('UPDATE club SET nom = :nom, adresse = :adresse WHERE id = :id');
         $query->bindParam(':id', $id);
         $query->bindParam(':nom', $nom);
@@ -69,7 +71,14 @@ class ClubModel
         $query->execute();
     }
 
-
+    
+    /**
+     * supprimerClubEtRelierTenracs
+     *
+     * @param  mixed $clubId
+     * @return void
+     */
+    // suppression du club et relier les tenracs avec l'Ordre (dans la base de données)
     public function supprimerClubEtRelierTenracs($clubId): void
     {
         try {
@@ -94,7 +103,7 @@ class ClubModel
             echo 'Erreur lors de la suppression du club : ' . $e->getMessage();
         }
     }
-    // Supprimer un club    
+    // Supprimer un club dans la base de données   
     /**
      * supprimerClub
      *
@@ -103,12 +112,13 @@ class ClubModel
      */
     public function supprimerClub($id): void
     {
+        // requête de suppression d'un club
         $query = $this->db->prepare('DELETE FROM club WHERE id = :id');
         $query->bindParam(':id', $id);
-        $query->execute();
+        $query->execute(); // exécution de la requête
     }
 
-    // Récupérer un club par son ID     
+    // Récupérer un club par son ID depuis la base de données    
     /**
      * getClubById
      *
@@ -117,9 +127,10 @@ class ClubModel
      */
     public function getClubById($id): mixed 
     {
+        // requête de récupération par ID du club
         $query = $this->db->prepare('SELECT * FROM club WHERE id = :id');
         $query->bindParam(':id', $id);
-        $query->execute();
+        $query->execute(); // exécution de la requête
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 }

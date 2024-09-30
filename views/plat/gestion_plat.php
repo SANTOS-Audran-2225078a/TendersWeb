@@ -143,8 +143,8 @@
      *
      * @return void
      */
-    function ajouterIngredient() {
-        var container = document.getElementById('ingredients-container');
+    function ajouterIngredient() { // méthode d'ajout d'un ingrédient
+        var container = document.getElementById('ingredients-container')
         var newRow = document.createElement('div');
         newRow.classList.add('ingredient-row');
         newRow.innerHTML = `
@@ -164,7 +164,7 @@
      *
      * @return void
      */
-    function supprimerIngredient(button) {
+    function supprimerIngredient(button) { // méthode de suppression d'un ingrédient
         var row = button.parentElement;
         row.remove();
     }
