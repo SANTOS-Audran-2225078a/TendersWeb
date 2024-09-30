@@ -109,8 +109,8 @@
                 <?php if ($plat['club_id'] == $club['id']): ?>
                     <li class="plat" data-ingredients="<?= strtolower(implode(' ', array_column($platModel->getIngredientsByPlat($plat['id']), 'nom'))) ?>" data-plat-name="<?= strtolower(htmlspecialchars($plat['nom'])) ?>">
                         <?= htmlspecialchars($plat['nom']) ?>
-                        <a href="/plat/editer/<?= $plat['id'] ?>">Modifier</a> | 
-                        <a href="/plat/supprimer/<?= $plat['id'] ?>">Supprimer</a>
+                        <a href="/plat/editer/<?= $plat['id'] ?>" class="button">Modifier</a> | 
+                        <a href="/plat/supprimer/<?= $plat['id'] ?>" class="button" >Supprimer</a>
                         <div class="ingredients-text">
                             Ingrédients : 
                             <?= !empty($platModel->getIngredientsByPlat($plat['id'])) ? implode(', ', array_map(fn($ing) => htmlspecialchars($ing['nom']), $platModel->getIngredientsByPlat($plat['id']))) : 'Aucun ingrédient' ?>
