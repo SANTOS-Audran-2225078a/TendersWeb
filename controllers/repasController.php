@@ -23,6 +23,9 @@ class RepasController
         $clubModel = new ClubModel();
         $clubs = $clubModel->getAllClubs();
 
+        $repasModel = new RepasModel();
+        $tenrac = $repasModel->getTenrac(); // Récupère la liste des tenracs
+
         require_once 'views/repas/gestion_repas.php';
     }
 
@@ -36,6 +39,9 @@ class RepasController
     {
         $clubModel = new ClubModel();
         $clubs = $clubModel->getAllClubs(); // Liste des clubs
+
+        $repasModel = new RepasModel();
+        $tenrac = $repasModel->getTenrac(); // Récupère la liste des tenracs
 
         require_once 'views/repas/gestion_repas.php';
     }
@@ -77,6 +83,7 @@ public function sauvegarder(): void
     {
         $repasModel = new RepasModel();
         $repas = $repasModel->getRepasById($id);
+        $tenrac = $repasModel->getTenrac(); // Récupère la liste des tenracs
 
         $clubModel = new ClubModel();
         $clubs = $clubModel->getAllClubs();

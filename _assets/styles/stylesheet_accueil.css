@@ -45,6 +45,17 @@ header nav a button:hover {
     transform: scale(1.2);
 }
 
+/* Ingrédients affichés en petit */
+.ingredients-text {
+    font-size: small;
+    color: black;
+}
+
+/* Liste des plats */
+.plat {
+    margin-bottom: 10px;
+}
+
 /* Style du bouton burger */
 .burger-menu {
     display: none;

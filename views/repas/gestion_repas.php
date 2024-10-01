@@ -56,7 +56,6 @@
     <a href='/tenrac/deconnecter'>Se déconnecter</a>
     </nav>
 </header>
-
 <h1><?= isset($repas['id']) ? 'Modifier un Repas' : 'Ajouter un Repas' ?></h1>
 
 <!-- Formulaire pour ajouter ou modifier un repas -->
@@ -89,18 +88,19 @@
     <input id="partiR" type="number" name="participants" value="<?= htmlspecialchars($repas['participants'] ?? '') ?>" required><br>
 
     <label for="chefR">Chef de rencontre :</label>
-    <select id="chefR" name="chef_de_rencontre" onchange="chargerTenrac(this.value)" required>
+    <select id="chefR" name="chef_de_rencontre" required>
         <option value="">Sélectionnez un chef de rencontre</option>
         <?php if (!empty($tenrac)): ?>
-            <?php foreach ($tenrac as $tenrac): ?>
-                <option value="<?= htmlspecialchars($tenrac['id']) ?>" <?= isset($repas['chef_de_rencontre']) && $repas['chef_de_rencontre'] == $tenrac['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($tenrac['nom']) ?> - <?= htmlspecialchars($tenrac['prenom']) ?>
+            <?php foreach ($tenrac as $t): ?>  <!-- Itérer sur tous les tenracs récupérés -->
+                <option value="<?= htmlspecialchars($t['id']) ?>" <?= isset($repas['chef_de_rencontre']) && $repas['chef_de_rencontre'] == $t['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($t['nom']) ?>
                 </option>
             <?php endforeach; ?>
         <?php else: ?>
             <option value="">Aucun chef de rencontre disponible</option>
         <?php endif; ?>
     </select><br>
+
 
     <label>Carte des plats :</label>
     <div id="cartePlats">

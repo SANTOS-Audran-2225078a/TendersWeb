@@ -57,11 +57,11 @@ class RepasModel
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getTenrac(): ?array
+    public function getTenrac(): array
     {
-        $query = $this->db->prepare('SELECT * FROM tenrac');
+        $query = $this->db->prepare('SELECT * FROM tenrac WHERE grade in ("CHEVALIER", "DAME")');
         $query->execute();
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Ajouter un nouveau repas    
