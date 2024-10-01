@@ -85,7 +85,7 @@ if (isset($_SESSION['tenrac'])) {
         <p> Ici vous pouvez observer un exemple de plat que vous pourrez trouver sur notre site.</p>
         <img class="image" src="../_assets/images/tacos_tender_mangue.webp" alt="Image de tacos tenders mangue">
     </div>
-<section>
+</section>
 
 <h2>Repas existants</h2>
 <?php if (!empty($repas)): ?>
