@@ -36,10 +36,7 @@
 
 <h1><?= isset($plat) ? 'Modifier un Plat' : 'Ajouter un Plat' ?></h1>
 
-<!-- Champ de recherche dynamique -->
-<h2>Recherche de plats par ingrédients ou nom</h2>
-<label for="chercheIng">Rechercher un ingrédient ou un plat</label><br>
-<input id="chercheIng" type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
+
 
 <!-- Formulaire pour ajouter ou modifier un plat -->
 <form action="<?= isset($plat) ? '/plat/modifierPlat' : '/plat/ajouterPlat' ?>" method="POST" class="boxForm">
@@ -103,6 +100,10 @@
 
 <!-- Liste des plats existants par club -->
 <h2>Plats par Club</h2>
+<!-- Champ de recherche dynamique -->
+<h2>Recherche de plats par ingrédients ou nom</h2>
+<label for="chercheIng">Rechercher un ingrédient ou un plat</label><br>
+<input id="chercheIng" type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
 <div class="Liste">
 <?php if (isset($plats) && is_array($plats)): ?>
     <?php foreach ($clubs as $club): ?>
