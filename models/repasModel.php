@@ -12,16 +12,16 @@ class RepasModel
      *
      * @return void
      */
-    public function __construct() // méthode constructeur
+    public function __construct() // méthode constructeur...pour se connecter à la base de données
     {
         try {
+            //connexion à la base de données:
             $this->db = new PDO('mysql:host=mysql-iut.alwaysdata.net;dbname=iut_tendersweb', 'iut_tendrac', 'tendrac123.');
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo 'Erreur de connexion : ' . $e->getMessage();
         }
-        
-    } 
+    }
     // Récupérer tous les repas
     // Récupérer tous les repas avec le nom du club
     /**
@@ -102,8 +102,6 @@ class RepasModel
         $query->bindParam(':chef_de_rencontre', $chefDeRencontre);
         $query->execute();
     }
-
-
 
     // Supprimer un repas dans la base de données
     /**

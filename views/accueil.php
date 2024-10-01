@@ -14,6 +14,23 @@ if (isset($_SESSION['tenrac'])) {
  
 <head> 
     <title>Accueil</title> 
+    <script>
+        // Fonction pour charger les plats en fonction du club sélectionné
+        function chargerPlatsParClub(clubId) {
+            fetch('../repas/getPlatsByClub/' + clubId)
+                .then(response => response.json())
+                .then(data => {
+                    let platsContainer = document.getElementById('cartePlats');
+                    platsContainer.innerHTML = ''; // Vider les plats affichés précédemment
+
+                    data.forEach(function(plat) {
+                        let platDiv = document.createElement('div');
+                        platDiv.textContent = plat.nom;
+                        platsContainer.appendChild(platDiv);
+                    }); 
+                });
+        }
+    </script>
     <link rel="icon" href="../favicon.ico"> 
     <meta name="description" content="Vous êtes ici sur LE site des tenrac. Vous y trouverez des informations sur les différents clubs, 
     les plats et les repas. Vous pourrez aussi en rajouter.">
@@ -70,13 +87,27 @@ if (isset($_SESSION['tenrac'])) {
     </div>
 <section>
 
+<h2>Repas existants</h2>
+<?php if (!empty($repas)): ?>
+    <?php foreach ($repas as $r): ?>
+        <div class="repas-container">
+            <h3><?= htmlspecialchars($r['nom'] ?? 'Repas sans nom') ?></h3> <!-- Affiche uniquement le nom du repas -->
+            <div class="repas-details">
+                <p><strong>Date :</strong> <?= htmlspecialchars($r['date'] ?? '') ?></p>
+                <p><strong>Participants :</strong> <?= htmlspecialchars($r['participants'] ?? '') ?></p>
+                <p><strong>Chef de rencontre :</strong> <?= htmlspecialchars($r['chef_de_rencontre'] ?? '') ?></p>
+                <p><strong>Adresse (Club) :</strong> <?= htmlspecialchars($r['club_nom'] ?? '') ?></p>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p>Aucun repas disponible.</p>
+<?php endif; ?>
 <script>
     document.getElementById('burgerMenu').addEventListener('click', function () {
         var menu = document.getElementById('menu');
         menu.classList.toggle('active');
     });
 </script>
-
 </body>
-
 </html>
