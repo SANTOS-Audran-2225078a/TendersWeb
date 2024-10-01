@@ -90,9 +90,9 @@ if (isset($_SESSION['tenrac'])) {
 <h2>Repas existants</h2>
 <?php if (!empty($repas)): ?>
     <?php foreach ($repas as $r): ?>
-        <div class="repas-container">
+        <div class="accueil-repas-container">
             <h3><?= htmlspecialchars($r['nom'] ?? 'Repas sans nom') ?></h3> <!-- Affiche uniquement le nom du repas -->
-            <div class="repas-details">
+            <div class="accueil-repas-details">
                 <p><strong>Date :</strong> <?= htmlspecialchars($r['date'] ?? '') ?></p>
                 <p><strong>Participants :</strong> <?= htmlspecialchars($r['participants'] ?? '') ?></p>
                 <p><strong>Chef de rencontre :</strong> <?= htmlspecialchars($r['chef_de_rencontre'] ?? '') ?></p>
