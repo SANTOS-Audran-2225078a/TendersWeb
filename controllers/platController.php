@@ -109,21 +109,22 @@ class PlatController
         header('Location: /plat');
     }
     
-    /**
+
+        /**
      * rechercher
      *
      * @return void
      */
     public function rechercher(): void // méthode de recherche d'un plat (dans la base de données)
     {
-        if (isset($_GET['query'])) {
+        if (isset($_GET['query']) && !empty($_GET['query'])) {
             $platModel = new PlatModel();
             $clubModel = new ClubModel();
 
             $query = $_GET['query'];
 
-            // Récupérer les plats en fonction des ingrédients (partiels ou complets)
-            $plats = $platModel->rechercherPlatsParIngredients($query);
+            // Récupérer les plats en fonction du nom ou des ingrédients
+            $plats = $platModel->rechercherPlatsParNomOuIngredients($query);
             $clubs = $clubModel->getAllClubs();
             $ingredients = $platModel->getAllIngredients(); 
             $sauces = $platModel->getAllSauces();
@@ -131,8 +132,11 @@ class PlatController
             // Afficher les résultats de recherche dans la même vue
             require_once 'views/plat/gestion_plat.php';
         } else {
+            // Si aucune requête de recherche n'est définie, redirige vers la page des plats
             header('Location: /plat');
         }
     }
+
+
 }
  

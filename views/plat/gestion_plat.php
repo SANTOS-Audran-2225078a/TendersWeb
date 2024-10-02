@@ -85,15 +85,16 @@
 
     <button type="submit" class="butTel"><?= isset($plat) ? 'Modifier' : 'Ajouter' ?></button>
 </form>
-
 <!-- Liste des plats existants par club -->
 <h2>Plats par Club</h2>
+
 <!-- Champ de recherche dynamique -->
 <div class="barreRech">
     <h2>Recherche de plats par ingrédients ou nom</h2>
     <label for="chercheIng">Rechercher un ingrédient ou un plat</label><br>
     <input id="chercheIng" type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
 </div>
+
 <div class="Liste">
 <?php if (isset($plats) && is_array($plats)): ?>
     <?php foreach ($clubs as $club): ?>
@@ -125,7 +126,8 @@
 </div>
 
 <script>
-    document.getElementById('search-input').addEventListener('input', function() {
+    // Recherche dynamique dans la liste des plats
+    document.getElementById('chercheIng').addEventListener('input', function() {
         var searchQuery = this.value.toLowerCase();
         var plats = document.querySelectorAll('.plat');
 
@@ -142,12 +144,10 @@
     });
     
     /**
-     * ajouterIngredient
-     *
-     * @return void
+     * Ajouter un nouvel ingrédient à la liste des ingrédients du plat
      */
-    function ajouterIngredient() { // méthode d'ajout d'un ingrédient
-        var container = document.getElementById('ingredients-container')
+    function ajouterIngredient() { 
+        var container = document.getElementById('ingredients-container');
         var newRow = document.createElement('div');
         newRow.classList.add('ingredient-row');
         newRow.innerHTML = `
@@ -161,22 +161,22 @@
         `;
         container.appendChild(newRow);
     }
-    
+
     /**
-     * supprimerIngredient
-     *
-     * @return void
+     * Supprimer un ingrédient de la liste
      */
-    function supprimerIngredient(button) { // méthode de suppression d'un ingrédient
+    function supprimerIngredient(button) { 
         var row = button.parentElement;
         row.remove();
     }
-</script> 
+</script>
+
 <script>
+    // Gestion du menu burger
     document.getElementById('burgerMenu').addEventListener('click', function () {
         var menu = document.getElementById('menu');
         menu.classList.toggle('active');
     });
 </script>
 </body>
-</html> 
+</html>

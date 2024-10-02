@@ -277,22 +277,27 @@ class PlatModel
      * @param  mixed $query
      * @return array
      */
-    public function rechercherPlatsParIngredients($query): array // méthode de recherche de plats en fonction des ingrédients
+        /**
+     * rechercherPlatsParNomOuIngredients
+     *
+     * @param  mixed $query
+     * @return array
+     */
+    public function rechercherPlatsParNomOuIngredients($query): array
     {
-        // Requête SQL pour rechercher les plats contenant un ou plusieurs ingrédients partiels
-        $searchQuery = "%" . $query . "%";
-
-        $query = $this->db->prepare("
-            SELECT DISTINCT p.* 
-            FROM plat p
-            JOIN plat_ingredient pi ON p.id = pi.plat_id
-            JOIN ingredient i ON pi.ingredient_id = i.id
-            WHERE i.nom LIKE :query
-        ");
-        $query->bindParam(':query', $searchQuery);
-        $query->execute(); // exécution de requête
-
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        // Utilisation d'une requête SQL qui recherche les plats par nom ou par ingrédient
+        $query = "%$query%";
+        $stmt = $this->db->prepare('
+            SELECT DISTINCT p.* FROM plat p
+            LEFT JOIN plat_ingredient pi ON p.id = pi.plat_id
+            LEFT JOIN ingredient i ON pi.ingredient_id = i.id
+            WHERE p.nom LIKE :query OR i.nom LIKE :query
+        ');
+        $stmt->bindParam(':query', $query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
 
 }
