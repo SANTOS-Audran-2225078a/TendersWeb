@@ -63,6 +63,10 @@ class Routeur
                     $action = 'creerMotDePasse'; // Action pour créer un mot de passe
                     $param = $_GET['id'];  // Récupérer l'ID depuis les paramètres GET
                 }
+                elseif ($urlParts[1] === 'modifierTenrac') {
+                $action = 'modifierTenrac'; // Action pour modifier un tenrac
+                }
+                
             }
 
             // Vérifier si c'est une route pour l'édition ou la suppression avec un ID
@@ -93,6 +97,8 @@ class Routeur
         } else {
             echo "Contrôleur $controleurNom non trouvé";
         }
+
+        
     }
 
     /**

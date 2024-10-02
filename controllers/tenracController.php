@@ -227,35 +227,36 @@ class tenracController //Controller pour page des tenracs
     }
     
     /**
-     * editer
-     *
-     * @param  mixed $id
-     * @return void
-     */
-    public function editer(int $id): void // méthode d'édition de tenrac
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start(); // Démarre la session si elle n'est pas déjà démarrée
-        }
-
-        if (isset($_SESSION['tenrac'])) {
-            $tenracModel = new TenracModel();
-            $tenrac = $tenracModel->getTenracById($id); // Récupère le tenrac par son ID
-
-            if ($tenrac) { // si tenrac fourni
-                $clubModel = new ClubModel();
-                $clubs = $clubModel->getAllClubs(); // Récupère tous les clubs pour afficher dans la liste déroulante
-
-                // Affiche la page de gestion du tenrac avec les données à modifier
-                require_once 'views/tenrac/gestion_tenrac.php';
-            } else {
-                echo "Aucun tenrac trouvé avec l'ID : " . $id;
-            }
-        } else { // redirige vers page de connexion
-            header('Location: /login');
-            exit();
-        }
+ * editer
+ *
+ * @param  mixed $id
+ * @return void
+ */
+public function editer(int $id): void // méthode d'édition de tenrac
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start(); // Démarre la session si elle n'est pas déjà démarrée
     }
+
+    if (isset($_SESSION['tenrac'])) {
+        $tenracModel = new TenracModel();
+        $tenrac = $tenracModel->getTenracById($id); // Récupère le tenrac par son ID
+
+        if ($tenrac) { // si tenrac fourni
+            $clubModel = new ClubModel();
+            $clubs = $clubModel->getAllClubs(); // Récupère tous les clubs pour afficher dans la liste déroulante
+
+            // Affiche la page de gestion du tenrac avec les données à modifier
+            require_once 'views/tenrac/gestion_tenrac.php';
+        } else {
+            echo "Aucun tenrac trouvé avec l'ID : " . $id;
+        }
+    } else { // redirige vers page de connexion
+        header('Location: /login');
+        exit();
+    }
+}
+
     
     /**
      * inscrire
@@ -424,4 +425,59 @@ class tenracController //Controller pour page des tenracs
 
         echo "Mot de passe réinitialisé avec succès."; // affiche un message de confirmation de réinitialisation
     }
+
+    public function modifierTenrac(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            var_dump($_POST); // Affiche les données soumises pour le débogage
+    
+            // Vérifier les champs du formulaire
+            if (isset($_POST['id'], $_POST['nom'], $_POST['adresse'], $_POST['email'], $_POST['tel'], $_POST['grade'], $_POST['rang'], $_POST['titre'], $_POST['dignite'])) {
+    
+                if (!empty($_POST['club_id']) && !empty($_POST['ordre_id'])) { // si les 2 champs ne sont pas vides...
+                    echo 'Erreur : Vous ne pouvez pas sélectionner à la fois un club et un ordre.'; // ...affiche un message d'erreur
+                    return;
+                }
+    
+                $tenracModel = new TenracModel();
+                $tenracData = [
+                    'nom' => $_POST['nom'],
+                    'adresse' => $_POST['adresse'],
+                    'email' => $_POST['email'],
+                    'tel' => $_POST['tel'],
+                    'club_id' => !empty($_POST['club_id']) ? $_POST['club_id'] : null,
+                    'ordre_id' => !empty($_POST['ordre_id']) ? $_POST['ordre_id'] : null,
+                    'grade' => $_POST['grade'],
+                    'rang' => $_POST['rang'],
+                    'titre' => $_POST['titre'],
+                    'dignite' => $_POST['dignite']
+                ];
+    
+                if (!empty($_POST['password'])) {
+                    $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    $tenracData['password'] = $passwordHash;
+                }
+    
+                $tenracModel->modifierTenrac($_POST['id'], $tenracData);
+    
+                header('Location: /tenrac');
+                exit();
+            } else {
+                // Afficher les champs manquants pour le débogage
+                echo 'Formulaire incomplet. Champs manquants : ';
+                if (!isset($_POST['id'])) echo 'id, ';
+                if (!isset($_POST['nom'])) echo 'nom, ';
+                if (!isset($_POST['adresse'])) echo 'adresse, ';
+                if (!isset($_POST['email'])) echo 'email, ';
+                if (!isset($_POST['tel'])) echo 'tel, ';
+                if (!isset($_POST['grade'])) echo 'grade, ';
+                if (!isset($_POST['rang'])) echo 'rang, ';
+                if (!isset($_POST['titre'])) echo 'titre, ';
+                if (!isset($_POST['dignite'])) echo 'dignite, ';
+            }
+        }
+    }
+    
+
+
 }
