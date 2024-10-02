@@ -92,7 +92,7 @@
         <option value="">Sélectionnez un chef de rencontre</option>
         <?php if (!empty($tenrac)): ?>
             <?php foreach ($tenrac as $t): ?>  <!-- Itérer sur tous les tenracs récupérés -->
-                <option value="<?= htmlspecialchars($t['id']) ?>" <?= isset($repas['chef_de_rencontre']) && $repas['chef_de_rencontre'] == $t['id'] ? 'selected' : '' ?>>
+                <option value="<?= htmlspecialchars($t['nom']) ?>" <?= isset($repas['chef_de_rencontre']) && $repas['chef_de_rencontre'] == $t['id'] ? 'selected' : '' ?>>
                     <?= htmlspecialchars($t['nom']) ?>
                 </option>
             <?php endforeach; ?>
@@ -117,7 +117,20 @@
         <div class="repas-container">
             <h3><?= htmlspecialchars($r['nom'] ?? 'Repas sans nom') ?></h3> <!-- Affiche uniquement le nom du repas -->
             <div class="repas-details">
-                <p><strong>Date :</strong> <?= htmlspecialchars($r['date'] ?? '') ?></p>
+            <p><strong>Date :</strong> 
+            <?php 
+                $dateRepas = new DateTime($r['date']); // Date du repas
+                $aujourdhui = new DateTime(); // Date actuelle
+                $difference = $dateRepas->diff($aujourdhui)->days; // Différence en jours entre aujourd'hui et la date du repas
+    
+                // Vérifier si on est un jour avant ou après le repas
+                if ($aujourdhui < $dateRepas && $difference > 1) {
+                    echo "Tenu secret"; // Si on est plus d'un jour avant, afficher "Tenu secret"
+                } else {
+                    echo htmlspecialchars($r['date']); // Sinon, afficher la date du repas
+                }
+            ?>
+            </p>
                 <p><strong>Participants :</strong> <?= htmlspecialchars($r['participants'] ?? '') ?></p>
                 <p><strong>Chef de rencontre :</strong> <?= htmlspecialchars($r['chef_de_rencontre'] ?? '') ?></p>
                 <p><strong>Adresse (Club) :</strong> <?= htmlspecialchars($r['club_nom'] ?? '') ?></p>

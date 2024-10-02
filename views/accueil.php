@@ -87,22 +87,6 @@ if (isset($_SESSION['tenrac'])) {
     </div>
 </section>
 
-<h2>Repas existants</h2>
-<?php if (!empty($repas)): ?>
-    <?php foreach ($repas as $r): ?>
-        <div class="accueil-repas-container">
-            <h3><?= htmlspecialchars($r['nom'] ?? 'Repas sans nom') ?></h3> <!-- Affiche uniquement le nom du repas -->
-            <div class="accueil-repas-details">
-                <p><strong>Date :</strong> <?= htmlspecialchars($r['date'] ?? '') ?></p>
-                <p><strong>Participants :</strong> <?= htmlspecialchars($r['participants'] ?? '') ?></p>
-                <p><strong>Chef de rencontre :</strong> <?= htmlspecialchars($r['chef_de_rencontre'] ?? '') ?></p>
-                <p><strong>Adresse (Club) :</strong> <?= htmlspecialchars($r['club_nom'] ?? '') ?></p>
-            </div>
-        </div>
-    <?php endforeach; ?>
-<?php else: ?>
-    <p>Aucun repas disponible.</p>
-<?php endif; ?>
 <script>
     document.getElementById('burgerMenu').addEventListener('click', function () {
         var menu = document.getElementById('menu');
