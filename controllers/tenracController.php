@@ -70,10 +70,6 @@ class tenracController //Controller pour page des tenracs
             $tenracModel = new TenracModel();
             $tenrac = $tenracModel->verifierTenrac($nom);
 
-            // Ajout de logs pour débogage (facultatif, peut être supprimé en production)
-            var_dump('Mot de passe reçu : ' . $motDePasse);
-            var_dump('Mot de passe haché stocké : ' . $tenrac['password']);
-
             // Vérification du hachage du mot de passe
             if ($tenrac && password_verify($motDePasse, $tenrac['password'])) {
                 // Si le mot de passe est correct, démarrer une session
@@ -86,8 +82,6 @@ class tenracController //Controller pour page des tenracs
                 header('Location: /views/accueil.php');
                 exit();
             } else {
-                // Si la vérification échoue, afficher un message d'erreur
-                var_dump('Mot de passe incorrect ou utilisateur non trouvé.');
                 $messageErreur = "Identifiant ou mot de passe incorrect.";
                 require_once 'views/login.php'; // Affiche la page de connexion avec le message d'erreur
             }

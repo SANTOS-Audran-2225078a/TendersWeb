@@ -38,8 +38,7 @@ class TenracModel
 
         $tenrac = $query->fetch(PDO::FETCH_ASSOC);
 
-        // Ajout d'un log pour voir ce que la base de données renvoie
-        var_dump($tenrac);
+        
 
         return $tenrac ?: null; // Retourne l'utilisateur ou null si non trouvé ou si validation incomplète
     }
