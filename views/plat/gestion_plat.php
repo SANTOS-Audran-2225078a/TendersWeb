@@ -89,9 +89,11 @@
 <!-- Liste des plats existants par club -->
 <h2>Plats par Club</h2>
 <!-- Champ de recherche dynamique -->
-<h2>Recherche de plats par ingrédients ou nom</h2>
-<label for="chercheIng">Rechercher un ingrédient ou un plat</label><br>
-<input id="chercheIng" type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
+<div class="barreRech">
+    <h2>Recherche de plats par ingrédients ou nom</h2>
+    <label for="chercheIng">Rechercher un ingrédient ou un plat</label><br>
+    <input id="chercheIng" type="text" id="search-input" placeholder="Rechercher un ingrédient ou un plat...">
+</div>
 <div class="Liste">
 <?php if (isset($plats) && is_array($plats)): ?>
     <?php foreach ($clubs as $club): ?>
